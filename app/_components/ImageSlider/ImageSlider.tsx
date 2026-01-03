@@ -2,7 +2,12 @@
 
 import Image from "next/image";
 import { useEffect, useMemo, useRef, useState } from "react";
+import type { CSSProperties } from "react";
 import styles from "./ImageSlider.module.css";
+
+type PageStyle = CSSProperties & {
+  "--perView"?: number;
+};
 
 export default function ImageSlider() {
   const images = useMemo(
@@ -19,7 +24,6 @@ export default function ImageSlider() {
       "/event3.png",
       "/event4.png",
       "/event5.png",
-      "/event6.png",
       "/event7.png",
       "/pagod1.png",
       "/pagod3.png",
@@ -42,17 +46,23 @@ export default function ImageSlider() {
   useEffect(() => {
     function calcPerView() {
       const w = window.innerWidth;
-      if (w < 560) return 1;
-      if (w < 980) return 2;
-      return 4;
+      if (w <= 560) return 1; // mobile: 1 por vez
+      if (w <= 980) return 2; // tablet: 2 por vez
+      return 4; // desktop: 4 por vez
     }
 
-    setPerView(calcPerView());
+    const initial = calcPerView();
+    setPerView(initial);
+    setPage(0);
 
     function onResize() {
       const next = calcPerView();
       setPerView(next);
-      setPage((p) => Math.min(p, Math.ceil(images.length / next) - 1));
+
+      setPage((p) => {
+        const nextPageCount = Math.max(1, Math.ceil(images.length / next));
+        return Math.min(p, nextPageCount - 1);
+      });
     }
 
     window.addEventListener("resize", onResize);
@@ -100,8 +110,10 @@ export default function ImageSlider() {
 
   function onTouchEnd() {
     pausedRef.current = false;
+
     if (deltaX.current > 50) goTo(page - 1);
     if (deltaX.current < -50) goTo(page + 1);
+
     startX.current = null;
     deltaX.current = 0;
   }
@@ -110,9 +122,7 @@ export default function ImageSlider() {
     <section className={styles.section} id="imagens">
       <div className={styles.container}>
         <h2 className={styles.title}>Destaques</h2>
-        <p className={styles.subtitle}>
-          Alguns registros e experiências da Capadócia.
-        </p>
+        <p className={styles.subtitle}>Alguns registros e experiências da Capadócia.</p>
 
         <div
           className={styles.shell}
@@ -122,24 +132,30 @@ export default function ImageSlider() {
           onTouchMove={onTouchMove}
           onTouchEnd={onTouchEnd}
         >
-          <div
-            className={styles.track}
-            style={{ transform: `translateX(-${page * 100}%)` }}
-          >
+          <div className={styles.track} style={{ transform: `translateX(-${page * 100}%)` }}>
             {Array.from({ length: pageCount }).map((_, p) => {
-              const slice = images.slice(p * perView, p * perView + perView);
-              while (slice.length < perView) slice.push(images[0]);
+              // ✅ sempre gera EXATAMENTE perView itens (sem “buraco” no grid)
+              const startIndex = p * perView;
+              const slice = Array.from({ length: perView }, (_, i) => {
+                const idx = (startIndex + i) % images.length;
+                return images[idx];
+              });
 
               return (
-                <div key={p} className={styles.page}>
+                <div
+                  key={p}
+                  className={styles.page}
+                  style={{ "--perView": perView } as PageStyle}
+                >
                   {slice.map((src, i) => (
-                    <div key={`${src}-${i}`} className={styles.card}>
+                    <div key={`${p}-${i}-${src}`} className={styles.card}>
                       <Image
                         src={src}
                         alt="Evento Capadócia"
                         fill
                         className={styles.img}
-                        sizes="(max-width: 560px) 92vw, (max-width: 980px) 46vw, 25vw"
+                        sizes="(max-width: 560px) 100vw, (max-width: 980px) 50vw, 25vw"
+                        priority={p === 0 && i < perView}
                       />
                     </div>
                   ))}
@@ -152,11 +168,10 @@ export default function ImageSlider() {
             {Array.from({ length: pageCount }).map((_, i) => (
               <button
                 key={i}
-                className={`${styles.dot} ${
-                  i === page ? styles.dotActive : ""
-                }`}
+                className={`${styles.dot} ${i === page ? styles.dotActive : ""}`}
                 onClick={() => goTo(i)}
                 aria-label={`Ir para página ${i + 1}`}
+                type="button"
               />
             ))}
           </div>

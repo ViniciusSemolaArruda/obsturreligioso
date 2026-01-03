@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useMemo, useState, useCallback } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import styles from "./Header.module.css";
 
 export default function Header() {
@@ -20,7 +20,6 @@ export default function Header() {
 
   const rightLinks = useMemo(
     () => [
-      
       { label: "Perguntas Frequentes", href: "#faq" },
       { label: "Contato", href: "#contato" },
     ],
@@ -40,12 +39,22 @@ export default function Header() {
     return () => document.removeEventListener("keydown", onKeyDown);
   }, [close]);
 
-  // trava scroll quando abre
+  // trava scroll quando abre (HTML + BODY) — evita bug mobile
   useEffect(() => {
-    const prev = document.body.style.overflow;
-    if (open) document.body.style.overflow = "hidden";
+    const prevHtml = document.documentElement.style.overflow;
+    const prevBody = document.body.style.overflow;
+
+    if (open) {
+      document.documentElement.style.overflow = "hidden";
+      document.body.style.overflow = "hidden";
+    } else {
+      document.documentElement.style.overflow = prevHtml;
+      document.body.style.overflow = prevBody;
+    }
+
     return () => {
-      document.body.style.overflow = prev;
+      document.documentElement.style.overflow = prevHtml;
+      document.body.style.overflow = prevBody;
     };
   }, [open]);
 
@@ -63,8 +72,6 @@ export default function Header() {
 
         {/* Logo */}
         <Link href="#inicio" className={styles.logoWrap} aria-label="Capadócia Produções">
-          {/* Dica de qualidade: passe um "intrinsic" maior (ex: 300)
-              e controle o tamanho no CSS (150px). */}
           <Image
             src="/novaLOGO.png"
             alt="Capadócia Produções e Eventos"
@@ -93,6 +100,7 @@ export default function Header() {
             className={styles.burger}
             aria-label={open ? "Fechar menu" : "Abrir menu"}
             aria-expanded={open}
+            aria-controls="mobile-drawer"
             onClick={() => setOpen((v) => !v)}
             type="button"
           >
@@ -113,10 +121,13 @@ export default function Header() {
       />
 
       {/* Drawer fullscreen */}
-      <aside className={`${styles.drawer} ${open ? styles.drawerOpen : ""}`} aria-hidden={!open}>
+      <aside
+        id="mobile-drawer"
+        className={`${styles.drawer} ${open ? styles.drawerOpen : ""}`}
+        aria-hidden={!open}
+      >
         <div className={styles.drawerTop}>
           <Link href="#inicio" className={styles.drawerBrand} onClick={close} aria-label="Início">
-            {/* Logo no drawer com 150px e ALTA QUALIDADE */}
             <Image
               src="/novaLOGO.png"
               alt="Capadócia Produções e Eventos"
