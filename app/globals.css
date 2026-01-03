@@ -22,9 +22,8 @@
 /* Corrige navegação por âncoras com header sticky */
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 30px; /* valor único para todas as seções */
+  scroll-padding-top: 200px;
 }
-
 body {
   margin: 0;
   background: #070707;
