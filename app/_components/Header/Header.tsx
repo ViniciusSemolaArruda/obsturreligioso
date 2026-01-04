@@ -150,7 +150,7 @@ export default function Header() {
           >
             <Image
               src="/novaLOGO2.png"
-              alt="Instituto Eu Acredito"
+              alt="INSTITUTO EU ACREDITO"
               width={400}
               height={400}
               priority

@@ -20,7 +20,7 @@ export default function WhoWeAre() {
           </p>
 
           <p className={styles.text}>
-            No <strong>Instituto Eu Acredito</strong>, atuamos como um agente transformador na vida
+            No <strong>INSTITUTO EU ACREDITO</strong>, atuamos como um agente transformador na vida
             de indivíduos em situação de vulnerabilidade, promovendo <strong>dignidade</strong> e{" "}
             <strong>autonomia</strong> por meio de oportunidades integradas que abrangem os pilares
             do desenvolvimento humano.
@@ -51,7 +51,7 @@ export default function WhoWeAre() {
 
           <p className={styles.cta}>
             <strong>
-              No Instituto Eu Acredito, o amanhã se constrói hoje — mas sem esquecer do ontem.
+              No INSTITUTO EU ACREDITO, o amanhã se constrói hoje, mas sem esquecer do ontem!
             </strong>
           </p>
         </div>
@@ -61,7 +61,7 @@ export default function WhoWeAre() {
           <div className={styles.rightSticky}>
             <Image
               src="/novaLOGO2.png"
-              alt="Instituto Eu Acredito"
+              alt="INSTITUTO EU ACREDITO"
               width={1400}
               height={900}
               priority

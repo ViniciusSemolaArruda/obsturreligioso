@@ -4,7 +4,7 @@ import styles from "./Values.module.css";
 const items = [
   {
     title: "Nossa Missão",
-    text: "Atuar como um agente permanente de transformação social, promovendo dignidade, autonomia e oportunidades reais para pessoas em situação de vulnerabilidade. O Instituto Eu Acredito nasce da convicção de que o desenvolvimento humano acontece quando há acesso a ferramentas adequadas, acompanhamento contínuo e estímulo ao potencial individual. Por isso, investimos em ações integradas que abrangem educação, tecnologia, cultura, esporte e saúde, criando caminhos concretos para a inclusão social e para a construção de um futuro mais justo, sustentável e igualitário.",
+    text: "Atuar como um agente permanente de transformação social, promovendo dignidade, autonomia e oportunidades reais para pessoas em situação de vulnerabilidade. O INSTITUTO EU ACREDITO nasce da convicção de que o desenvolvimento humano acontece quando há acesso a ferramentas adequadas, acompanhamento contínuo e estímulo ao potencial individual. Por isso, investimos em ações integradas que abrangem educação, tecnologia, cultura, esporte e saúde, criando caminhos concretos para a inclusão social e para a construção de um futuro mais justo, sustentável e igualitário.",
     icon: "/icons/missao.png",
   },
   {
@@ -25,7 +25,7 @@ export default function Values() {
       <div className={styles.container}>
         <h2 className={styles.title}>Nossos pilares</h2>
         <p className={styles.subtitle}>
-          Valores que orientam, sustentam e fortalecem a atuação do Instituto Eu Acredito.
+          Valores que orientam, sustentam e fortalecem a atuação do INSTITUTO EU ACREDITO.
         </p>
 
         <div className={styles.grid}>

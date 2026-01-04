@@ -45,9 +45,9 @@ export default function Hero() {
 
       <div className={styles.inner}>
         <h1 className={styles.title}>
-          Instituto Eu Acredito
+          INSTITUTO EU ACREDITO
           <span className={styles.sub}>
-            Transformação social com dignidade, transparência e impacto real.
+            O amanhã se constrói hoje, mas sem esquecer do ontem!
           </span>
         </h1>
 

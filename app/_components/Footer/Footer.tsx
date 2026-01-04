@@ -7,10 +7,9 @@ export default function Footer() {
     <footer className={styles.footer} id="contato">
       <div className={styles.container}>
         <div>
-          <h3 className={styles.brand}>Instituto Eu Acredito</h3>
+          <h3 className={styles.brand}>INSTITUTO EU ACREDITO</h3>
           <p className={styles.text}>
-            Instituição sem fins lucrativos dedicada à transformação social,
-            promovendo dignidade, oportunidades e impacto real.
+            O amanhã se constrói hoje, mas sem esquecer do ontem!
           </p>
         </div>
 
@@ -30,7 +29,7 @@ export default function Footer() {
             target="_blank"
             rel="noopener noreferrer"
             className={styles.socialLink}
-            aria-label="Instagram Instituto EU ACREDITO"
+            aria-label="Instagram INSTITUTO EU ACREDITO"
           >
             <Image
               src="/icons/instagram.png"

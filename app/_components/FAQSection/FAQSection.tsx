@@ -16,13 +16,13 @@ export default function FAQSection() {
   () => [
     {
       question:
-        "Em quais áreas o Instituto EU ACREDITO atua?",
+        "Em quais áreas o INSTITUTO EU ACREDITO atua?",
       answer:
-        "O Instituto EU ACREDITO atua de forma integrada nas áreas de Sustentabilidade, Meio Ambiente, Educação, Tecnologia, Desenvolvimento Social, Cultura, Saúde, Esporte e Turismo. Nossos projetos são pensados para gerar impacto real, promovendo dignidade, inclusão, bem-estar e oportunidades para indivíduos e comunidades em situação de vulnerabilidade.",
+        "O INSTITUTO EU ACREDITO atua de forma integrada nas áreas de Sustentabilidade, Meio Ambiente, Educação, Tecnologia, Desenvolvimento Social, Cultura, Saúde, Esporte e Turismo. Nossos projetos são pensados para gerar impacto real, promovendo dignidade, inclusão, bem-estar e oportunidades para indivíduos e comunidades em situação de vulnerabilidade.",
     },
     {
       question:
-        "Qual é o principal objetivo do Instituto EU ACREDITO?",
+        "Qual é o principal objetivo do INSTITUTO EU ACREDITO?",
       answer:
         "Nosso objetivo é atuar como agente de transformação social, investindo no potencial humano e contribuindo para a redução das desigualdades. Acreditamos que o acesso a oportunidades, conhecimento e cuidado é essencial para romper ciclos de escassez e construir um futuro mais justo.",
     },
@@ -46,7 +46,7 @@ export default function FAQSection() {
     },
     {
       question:
-        "Como posso apoiar ou contribuir com o Instituto EU ACREDITO?",
+        "Como posso apoiar ou contribuir com o INSTITUTO EU ACREDITO?",
       answer:
         "Você pode apoiar o Instituto por meio de parcerias, doações, voluntariado ou divulgação dos nossos projetos. Entre em contato conosco para conhecer as formas de contribuição e fazer parte da transformação social que acreditamos.",
     },

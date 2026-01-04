@@ -16,13 +16,13 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Instituto EU ACREDITO",
+    default: "INSTITUTO EU ACREDITO",
     template: "%s | Instituto EU ACREDITO",
   },
   description:
-    "Instituição sem fins lucrativos dedicada à transformação social, promovendo dignidade, oportunidades e impacto real em diferentes segmentos da sociedade.",
+    "O amanhã se constrói hoje, mas sem esquecer do ontem!",
   applicationName: "Instituto EU ACREDITO",
-  metadataBase: new URL("https://capadociaproducoes.vercel.app/"),
+  metadataBase: new URL("https://institutoeuacredito.vercel.app/"),
   icons: {
     icon: [
       { url: "/favicon.ico" },
@@ -35,7 +35,7 @@ export const metadata: Metadata = {
     title: "Instituto EU ACREDITO",
     description:
       "Acreditamos que a transformação social nasce da ação consciente e do investimento no potencial humano. Projetos com transparência, ética e impacto real.",
-    url: "https://capadociaproducoes.vercel.app/",
+    url: "https://institutoeuacredito.vercel.app/",
     siteName: "Instituto EU ACREDITO",
     locale: "pt_BR",
     type: "website",
