@@ -1,10 +1,14 @@
 @import "tailwindcss";
 
+/* =========================
+   VARIÁVEIS GLOBAIS
+   ========================= */
 :root {
   --background: #ffffff;
   --foreground: #171717;
 }
 
+/* Integração com Tailwind Theme */
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -12,21 +16,30 @@
   --font-mono: var(--font-geist-mono);
 }
 
+/* ❌ REMOVIDO dark mode automático */
+/* 
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
   }
 }
+*/
+
+/* =========================
+   CONFIGURAÇÕES GERAIS
+   ========================= */
 
 /* Corrige navegação por âncoras com header sticky */
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 200px;
 }
+
+/* Força fundo CLARO sempre */
 body {
   margin: 0;
-  background: #070707;
+  background-color: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }

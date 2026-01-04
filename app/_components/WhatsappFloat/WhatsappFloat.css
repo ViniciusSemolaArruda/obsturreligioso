@@ -1,0 +1,34 @@
+.whatsapp-float {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 9999;
+  width: 60px;
+  height: 60px;
+
+  transform-origin: center;
+  will-change: transform;
+}
+
+.whatsapp-icon {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.whatsapp-icon img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: contain;
+}
+
+/* Mobile: um pouco maior e mais confortável */
+@media (max-width: 600px) {
+  .whatsapp-float {
+    width: 64px;
+    height: 64px;
+    bottom: 18px;
+    right: 18px;
+  }
+}

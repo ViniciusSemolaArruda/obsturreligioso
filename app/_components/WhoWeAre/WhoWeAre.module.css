@@ -1,6 +1,6 @@
 .section {
-  background: #0b0b0b;
-  color: #fff;
+  background: #ffffff; /* ✅ fundo branco */
+  color: #111111;
   padding: 70px 18px;
   min-height: auto;
 }
@@ -12,7 +12,7 @@
   grid-template-columns: 1.05fr 0.95fr;
   gap: 28px;
 
-  /* 🔥 centraliza verticalmente texto + logo */
+  /* centraliza verticalmente texto + logo */
   align-items: center;
 }
 
@@ -27,35 +27,37 @@
   font-size: 56px;
   line-height: 1;
   letter-spacing: -0.8px;
+  color: #111111;
 }
 
 .headingLight {
   font-weight: 400;
-  opacity: 0.9;
+  color: #333333;
 }
 
 .headingStrong {
   font-weight: 800;
+  color: #111111;
 }
 
 .lead {
   margin: 0 0 18px;
   font-size: 16px;
-  color: rgba(255, 255, 255, 0.92);
+  color: #222222;
 }
 
 .text {
   margin: 0 0 18px;
   font-size: 14px;
   line-height: 1.65;
-  color: rgba(255, 255, 255, 0.72);
+  color: #444444;
   max-width: 520px;
 }
 
 .cta {
   margin-top: 18px;
   font-size: 16px;
-  color: rgba(255, 255, 255, 0.9);
+  color: #111111;
 }
 
 /* DIREITA — logo */
@@ -63,21 +65,21 @@
   position: relative;
 }
 
-/* 🔥 centralização vertical real da logo */
+/* centralização vertical real da logo */
 .rightSticky {
   position: sticky;
   top: 140px;
 
   display: flex;
-  align-items: center;       /* centraliza vertical */
-  justify-content: flex-end; /* mantém à direita */
+  align-items: center;
+  justify-content: flex-end;
 
   height: 100%;
 }
 
-/* 🔥 logo um pouco menor */
+/* logo */
 .art {
-  width: min(680px, 62vw); /* antes: 820px / 70vw */
+  width: min(680px, 62vw);
   height: auto;
   display: block;
   object-fit: contain;
@@ -85,7 +87,8 @@
   transform: none !important;
   transition: none !important;
 
-  filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.85));
+  /* sombra bem sutil em fundo branco */
+  filter: drop-shadow(0 6px 18px rgba(0, 0, 0, 0.12));
 }
 
 /* RESPONSIVO */

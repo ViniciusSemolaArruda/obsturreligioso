@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import HeaderOffset from "./_components/HeaderOffset/HeaderOffset";
+import WhatsappFloat from "./_components/WhatsappFloat/WhatsappFloat";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -15,12 +16,12 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Capadócia Produções e Eventos",
-    template: "%s | Capadócia Produções",
+    default: "Instituto EU ACREDITO",
+    template: "%s | Instituto EU ACREDITO",
   },
   description:
-    "Produtora cultural e de eventos com quase 30 anos de atuação. Projetos com propósito, ética, excelência e soluções digitais.",
-  applicationName: "Capadócia Produções e Eventos",
+    "Instituição sem fins lucrativos dedicada à transformação social, promovendo dignidade, oportunidades e impacto real em diferentes segmentos da sociedade.",
+  applicationName: "Instituto EU ACREDITO",
   metadataBase: new URL("https://capadociaproducoes.vercel.app/"),
   icons: {
     icon: [
@@ -31,11 +32,11 @@ export const metadata: Metadata = {
     apple: [{ url: "/apple-touch-icon.png", sizes: "180x180" }],
   },
   openGraph: {
-    title: "Capadócia Produções e Eventos",
+    title: "Instituto EU ACREDITO",
     description:
-      "Produção de eventos culturais, esportivos e corporativos com soluções digitais e excelência na execução.",
+      "Acreditamos que a transformação social nasce da ação consciente e do investimento no potencial humano. Projetos com transparência, ética e impacto real.",
     url: "https://capadociaproducoes.vercel.app/",
-    siteName: "Capadócia Produções e Eventos",
+    siteName: "Instituto EU ACREDITO",
     locale: "pt_BR",
     type: "website",
     images: [
@@ -43,15 +44,15 @@ export const metadata: Metadata = {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "Capadócia Produções e Eventos",
+        alt: "Instituto EU ACREDITO",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Capadócia Produções e Eventos",
+    title: "Instituto EU ACREDITO",
     description:
-      "Produção de eventos com propósito, ética, excelência e soluções digitais.",
+      "Instituição sem fins lucrativos dedicada à transformação social com ética, transparência e impacto real.",
     images: ["/og-image.png"],
   },
 };
@@ -66,7 +67,11 @@ export default function RootLayout({
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         {/* Ajusta automaticamente o scroll-padding-top com base na altura do header */}
         <HeaderOffset />
+
         {children}
+
+        {/* Botão flutuante do WhatsApp (fixo na tela) */}
+        <WhatsappFloat />
       </body>
     </html>
   );

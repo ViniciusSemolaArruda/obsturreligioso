@@ -14,59 +14,54 @@ export default function WhoWeAre() {
 
           <p className={styles.lead}>
             <strong>
-              Somos a produtora que transforma boas ideias em grandes realizações.
+              Somos uma instituição sem fins lucrativos movida pela convicção de que a
+              transformação social nasce da ação consciente e do investimento no potencial humano.
             </strong>
           </p>
 
           <p className={styles.text}>
-            Com quase 30 anos de trajetória, a <strong>Capadócia Produções e Eventos</strong>{" "}
-            consolidou-se como referência no setor criativo, atuando na produção
-            de eventos culturais, esportivos, empresariais e de entretenimento,
-            sempre com excelência, inovação e propósito.
+            No <strong>Instituto Eu Acredito</strong>, atuamos como um agente transformador na vida
+            de indivíduos em situação de vulnerabilidade, promovendo <strong>dignidade</strong> e{" "}
+            <strong>autonomia</strong> por meio de oportunidades integradas que abrangem os pilares
+            do desenvolvimento humano.
           </p>
 
           <p className={styles.text}>
-            Acreditamos que toda ideia bem sonhada pode ser concretizada — seja a
-            maior árvore de Natal flutuante do mundo ou uma experiência inesquecível
-            na Baía de Guanabara. Independentemente da escala, da complexidade ou
-            do orçamento, buscamos sempre a melhor solução para tirar projetos do
-            papel e transformá-los em experiências memoráveis.
+            Nossa existência se justifica pela urgência de reduzir as desigualdades sociais.
+            Acreditamos que, ao oferecer as ferramentas certas, podemos <strong>romper ciclos de
+            escassez</strong> e construir um futuro em que o <strong>CEP de nascimento</strong> não
+            determine o destino de uma criança, de uma família ou de uma comunidade.
           </p>
 
           <p className={styles.text}>
-            Nossa equipe é multidisciplinar, formada por engenheiros, arquitetos,
-            comunicólogos, designers e especialistas em tecnologia, unindo
-            criatividade, capacidade técnica e planejamento estratégico para
-            garantir resultados consistentes em todos os pontos de contato do
-            projeto.
+            Para gerar impacto real, trabalhamos em frentes multidisciplinares:{" "}
+            <strong>Educação e Tecnologia</strong>, unindo ensino e inovação para preparar nossos
+            assistidos para os desafios da era digital; <strong>Cultura e Esporte</strong>, como
+            caminhos de expressão, disciplina, saúde e convivência; e <strong>Saúde</strong>, com
+            ações de bem-estar e acesso, entendendo que o equilíbrio físico e mental é base para
+            qualquer evolução.
           </p>
 
           <p className={styles.text}>
-            Além da produção de eventos, integramos tecnologia e inovação aos
-            nossos projetos, desenvolvendo sites, plataformas digitais, sistemas
-            de inscrição, gestão de público e soluções de pagamento, ampliando o
-            alcance das ações e oferecendo experiências completas, eficientes e
-            conectadas às novas demandas do mercado.
-          </p>
-
-          <p className={styles.text}>
-            Aqui, o público e os parceiros estão sempre no centro das decisões.
-            Trabalhamos com dedicação e atenção absoluta aos detalhes para
-            fortalecer a relação das marcas com as pessoas, gerar impacto real e
-            entregar resultados que vão além do evento.
+            Nosso compromisso é guiado por responsabilidade social, transparência e ética.
+            Prestamos contas de cada recurso e de cada passo dado, porque a confiança da sociedade
+            e de nossos parceiros é o nosso maior patrimônio — sempre buscando equilíbrio com o
+            planeta por meio de práticas de responsabilidade ambiental.
           </p>
 
           <p className={styles.cta}>
-            <strong>Quer dar vida à sua ideia? Pode contar com a gente.</strong>
+            <strong>
+              No Instituto Eu Acredito, o amanhã se constrói hoje — mas sem esquecer do ontem.
+            </strong>
           </p>
         </div>
 
-        {/* DIREITA — logo */}
+        {/* DIREITA — imagem */}
         <div className={styles.right}>
           <div className={styles.rightSticky}>
             <Image
-              src="/novaLOGO.png"
-              alt="Capadócia Produções"
+              src="/novaLOGO2.png"
+              alt="Instituto Eu Acredito"
               width={1400}
               height={900}
               priority

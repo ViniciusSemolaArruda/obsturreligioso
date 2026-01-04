@@ -13,35 +13,47 @@ export default function FAQSection() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   const faqs: FaqItem[] = useMemo(
-    () => [
-      {
-        question: "Que tipo de eventos a Capadócia produz?",
-        answer:
-          "Atuamos em eventos culturais, esportivos, corporativos e de entretenimento. Do planejamento à execução, cuidamos de cada etapa para transformar a ideia em uma experiência memorável.",
-      },
-      {
-        question: "Vocês atendem projetos de diferentes tamanhos e orçamentos?",
-        answer:
-          "Sim. Ajustamos o escopo à realidade do cliente, com soluções inteligentes para diferentes níveis de complexidade e investimento — sempre com organização e qualidade.",
-      },
-      {
-        question: "Vocês também fazem tecnologia para eventos?",
-        answer:
-          "Sim. Além da produção, desenvolvemos sites e páginas do evento, sistemas de inscrição e credenciamento, integrações com pagamento, controle de público e soluções digitais para otimizar a gestão e a experiência do participante.",
-      },
-      {
-        question: "Como funciona o processo de contratação?",
-        answer:
-          "Começamos entendendo objetivo, público, local e prazos. Depois apresentamos proposta com escopo, cronograma e necessidades técnicas. Com a aprovação, entramos em produção com checkpoints e alinhamentos.",
-      },
-      {
-        question: "Como solicitar uma proposta?",
-        answer:
-          "Basta entrar em contato e contar sobre o seu projeto (data, local, público e objetivo). Retornamos com os próximos passos e uma proposta alinhada ao que você precisa.",
-      },
-    ],
-    []
-  );
+  () => [
+    {
+      question:
+        "Em quais áreas o Instituto EU ACREDITO atua?",
+      answer:
+        "O Instituto EU ACREDITO atua de forma integrada nas áreas de Sustentabilidade, Meio Ambiente, Educação, Tecnologia, Desenvolvimento Social, Cultura, Saúde, Esporte e Turismo. Nossos projetos são pensados para gerar impacto real, promovendo dignidade, inclusão, bem-estar e oportunidades para indivíduos e comunidades em situação de vulnerabilidade.",
+    },
+    {
+      question:
+        "Qual é o principal objetivo do Instituto EU ACREDITO?",
+      answer:
+        "Nosso objetivo é atuar como agente de transformação social, investindo no potencial humano e contribuindo para a redução das desigualdades. Acreditamos que o acesso a oportunidades, conhecimento e cuidado é essencial para romper ciclos de escassez e construir um futuro mais justo.",
+    },
+    {
+      question:
+        "Quem pode participar ou ser beneficiado pelos projetos?",
+      answer:
+        "Nossos projetos são voltados principalmente para pessoas e comunidades em situação de vulnerabilidade social. Também atuamos em parceria com instituições, coletivos, escolas, organizações públicas e privadas que compartilham dos mesmos valores de impacto social e responsabilidade.",
+    },
+    {
+      question:
+        "Como funcionam as parcerias com o Instituto?",
+      answer:
+        "As parcerias podem acontecer de diversas formas: apoio institucional, voluntariado, patrocínio de projetos, cooperação técnica ou desenvolvimento de ações conjuntas. Avaliamos cada proposta de acordo com sua relevância social, viabilidade e alinhamento com a missão do Instituto.",
+    },
+    {
+      question:
+        "Como o Instituto garante transparência e responsabilidade?",
+      answer:
+        "Prezamos pela ética e pela transparência em todas as nossas ações. Prestamos contas sobre a aplicação de recursos, o andamento dos projetos e os resultados alcançados, fortalecendo a confiança da sociedade, dos parceiros e dos apoiadores.",
+    },
+    {
+      question:
+        "Como posso apoiar ou contribuir com o Instituto EU ACREDITO?",
+      answer:
+        "Você pode apoiar o Instituto por meio de parcerias, doações, voluntariado ou divulgação dos nossos projetos. Entre em contato conosco para conhecer as formas de contribuição e fazer parte da transformação social que acreditamos.",
+    },
+  ],
+  []
+);
+
 
   function toggle(i: number) {
     setOpenIndex((prev) => (prev === i ? null : i));

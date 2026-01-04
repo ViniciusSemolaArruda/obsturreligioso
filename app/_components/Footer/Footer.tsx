@@ -7,16 +7,17 @@ export default function Footer() {
     <footer className={styles.footer} id="contato">
       <div className={styles.container}>
         <div>
-          <h3 className={styles.brand}>Capadócia Produções</h3>
+          <h3 className={styles.brand}>Instituto Eu Acredito</h3>
           <p className={styles.text}>
-            Produções, eventos e projetos com propósito, ética e excelência.
+            Instituição sem fins lucrativos dedicada à transformação social,
+            promovendo dignidade, oportunidades e impacto real.
           </p>
         </div>
 
         <div className={styles.col}>
           <p className={styles.label}>Contato</p>
           <p className={styles.text}>
-        contato.capadociaeventos@gmail.com
+            contato.capadociaeventos@gmail.com
           </p>
           <p className={styles.text}>WhatsApp: (21) 97658-6293</p>
         </div>
@@ -25,11 +26,11 @@ export default function Footer() {
           <p className={styles.label}>Redes</p>
 
           <Link
-            href="https://www.instagram.com/capadocia_producoes/"
+            href="https://www.instagram.com/instituto_euacredito/"
             target="_blank"
             rel="noopener noreferrer"
             className={styles.socialLink}
-            aria-label="Instagram Capadócia Produções"
+            aria-label="Instagram Instituto EU ACREDITO"
           >
             <Image
               src="/icons/instagram.png"
@@ -39,7 +40,6 @@ export default function Footer() {
               className={styles.socialIcon}
             />
           </Link>
-          
         </div>
       </div>
 

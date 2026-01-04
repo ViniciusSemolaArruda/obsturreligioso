@@ -1,19 +1,35 @@
 .header {
   position: sticky;
   top: 0;
-  z-index: 100; /* ✅ header sempre acima */
+  z-index: 100;
   width: 100%;
   max-width: 100%;
   background: transparent;
+  transition: transform 280ms ease, opacity 200ms ease;
+}
+.headerHidden {
+  transform: translateY(-110%);
+  opacity: 0;
+  pointer-events: none;
 }
 
+/* ✅ vidro claro (tipo glassmorphism) */
 .header::before {
   content: "";
   position: absolute;
   inset: 0;
-  background: rgba(8, 8, 8, 0.72);
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+
+  /* vidro: branco + transparência */
+  background: rgba(255, 255, 255, 0.90);
+
+  /* blur + saturate dá sensação de vidro */
+  backdrop-filter: blur(14px) saturate(1.25);
+  -webkit-backdrop-filter: blur(14px) saturate(1.25);
+
+  /* borda fina e sombra sutil (pra destacar do fundo) */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.55);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+
   pointer-events: none;
 }
 
@@ -45,52 +61,57 @@
   justify-content: flex-end;
 }
 
+/* links */
 .link {
-  color: rgba(255, 255, 255, 0.86);
+  color: #572A03;
   text-decoration: none;
-  font-size: 14px;
+
+  font-size: 15.5px;      /* ⬆️ um pouco maior */
+  font-weight: 700;       /* ✅ negrito */
+  letter-spacing: 0.3px;  /* melhora leitura */
+
   padding: 8px 2px;
   border-bottom: 2px solid transparent;
   transition: color 160ms ease, border-color 160ms ease;
 }
 
-.link:hover {
-  color: #ffffff;
-  border-bottom-color: #FE0000; /* 🔴 sublinhado vermelho */
-}
 
+.link:hover {
+  color: #096F47;
+  border-bottom-color: #096F47;
+}
 
 .logoWrap {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 5px 0;
+  
   text-decoration: none;
 }
 
 .logo {
-  width: 170px;
-  height: 170px;
+  width: 200px;
+  height: 200px;
   object-fit: contain;
 }
 
+/* botão CTA */
 .cta {
   margin-left: 6px;
-  background: #e11d2a;
-  color: #ffffff;
+  background: #43FFF0;
+  color: #572A03;
   text-decoration: none;
   font-size: 13px;
   padding: 10px 12px;
   border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(0, 0, 0, 0.14);
   transition: background-color 160ms ease, color 160ms ease;
 }
 
 .cta:hover {
-  background: #0025E5; /* 🔵 azul */
+  background: #096F47;
   color: #ffffff;
 }
-
 
 /* burger */
 .burger {
@@ -99,8 +120,13 @@
   width: 46px;
   height: 44px;
   border-radius: 14px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  background: rgba(255, 255, 255, 0.06);
+
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  background: rgba(255, 255, 255, 0.55);
+
+  backdrop-filter: blur(12px) saturate(1.2);
+  -webkit-backdrop-filter: blur(12px) saturate(1.2);
+
   cursor: pointer;
   position: relative;
 }
@@ -109,7 +135,7 @@
   display: block;
   height: 2px;
   width: 18px;
-  background: rgba(255, 255, 255, 0.92);
+  background: #572A03;
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
@@ -135,8 +161,7 @@
   opacity: 0;
   pointer-events: none;
   transition: opacity 200ms ease;
-  z-index: 90; /* ✅ abaixo do header/menu */
-  border: 0;
+  z-index: 90;
 }
 
 .overlayOpen {
@@ -144,14 +169,14 @@
   pointer-events: auto;
 }
 
-/* menu abaixo do header (fixo) */
+/* menu mobile */
 .mobileMenu {
   position: fixed;
   left: 0;
   right: 0;
   top: var(--header-mobile-h, 178px);
 
-  z-index: 95; /* ✅ abaixo do header, acima do overlay */
+  z-index: 95;
   opacity: 0;
   transform: translateY(-8px);
   pointer-events: none;
@@ -169,10 +194,13 @@
   margin: 0 auto;
   padding: 14px 14px 16px;
 
-  background: rgba(8, 8, 8, 0.92);
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.10);
-  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.45);
+  /* ✅ vidro claro no menu mobile também */
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(14px) saturate(1.2);
+  -webkit-backdrop-filter: blur(14px) saturate(1.2);
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.55);
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.14);
 
   display: grid;
   gap: 10px;
@@ -180,36 +208,39 @@
 
 .mobileLink {
   text-decoration: none;
-  color: rgba(255, 255, 255, 0.92);
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.10);
+  color: #572A03;
+
+  background: rgba(255, 255, 255, 0.55);
+  border: 1px solid rgba(0, 0, 0, 0.10);
+
   padding: 14px;
   border-radius: 16px;
-  transition: border-color 160ms ease;
+  transition: border-color 160ms ease, color 160ms ease, background 160ms ease;
 }
 
 .mobileLink:hover {
-  border-color: #FE0000; /* 🔴 detalhe vermelho elegante */
+  color: #096F47;
+  border-color: #096F47;
+  background: rgba(9, 111, 71, 0.10);
 }
 
 .mobileCTA {
   display: block;
   text-align: center;
   text-decoration: none;
-  background: #e11d2a;
-  color: #ffffff;
+  background: #43FFF0;
+  color: #572A03;
   padding: 14px;
   border-radius: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(0, 0, 0, 0.14);
   font-weight: 800;
   transition: background-color 160ms ease, color 160ms ease;
 }
 
 .mobileCTA:hover {
-  background: #0025E5; /* 🔵 azul */
+  background: #096F47;
   color: #ffffff;
 }
-
 
 /* MOBILE */
 @media (max-width: 860px) {
@@ -239,9 +270,6 @@
     left: 50%;
     transform: translateX(-50%);
     padding: 5px 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
   }
 
   .logo {

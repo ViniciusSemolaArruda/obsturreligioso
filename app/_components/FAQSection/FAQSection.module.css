@@ -1,11 +1,10 @@
 .section {
-  background: #070707; /* seu fundo do site */
+  background: #f4f6f8; /* cinza claro profissional */
   padding: 70px 18px;
-  color: #fff;
+  color: #000000;
 }
 
 .wrap {
-  /* tamanho tipo o print: centrado e não “gigante” */
   max-width: 980px;
   margin: 0 auto;
 }
@@ -18,36 +17,37 @@
   margin: 0 0 6px;
   font-size: 22px;
   letter-spacing: -0.3px;
-  color: rgba(255, 255, 255, 0.95);
+  color: #000000;
 }
 
 .subtitle {
   margin: 0;
   font-size: 14px;
   line-height: 1.6;
-  color: rgba(255, 255, 255, 0.65);
+  color: rgba(0, 0, 0, 0.7);
   max-width: 720px;
 }
 
-/* Lista com espaçamento tipo print */
+/* Lista */
 .list {
   display: grid;
   gap: 14px;
 }
 
+/* Card */
 .card {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.10);
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.12);
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.28);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.08);
 }
 
 .cardOpen {
-  border-color: rgba(255, 255, 255, 0.16);
-  background: rgba(255, 255, 255, 0.045);
+  border-color: rgba(130, 94, 68, 0.45);
 }
 
+/* Botão */
 .button {
   width: 100%;
   border: 0;
@@ -65,7 +65,7 @@
 }
 
 .button:focus-visible {
-  outline: 2px solid rgba(255, 255, 255, 0.22);
+  outline: 2px solid rgba(0, 0, 0, 0.35);
   outline-offset: 2px;
   border-radius: 12px;
 }
@@ -77,6 +77,7 @@
   min-width: 0;
 }
 
+/* Ícone */
 .icon {
   width: 22px;
   height: 22px;
@@ -84,28 +85,28 @@
   display: grid;
   place-items: center;
 
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  background: rgba(255, 255, 255, 0.04);
-  color: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(0, 0, 0, 0.35);
+  background: rgba(0, 0, 0, 0.04);
+  color: #000000;
   font-weight: 700;
   font-size: 13px;
   flex: 0 0 auto;
 }
 
+/* Pergunta */
 .question {
   font-size: 14px;
   line-height: 1.35;
-  color: rgba(255, 255, 255, 0.92);
+  color: #000000;
 
-  /* quebra bonita igual ao print */
   text-decoration: underline;
   text-underline-offset: 3px;
 
-  /* evita estourar */
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
+/* Chevron */
 .chevron {
   width: 36px;
   height: 36px;
@@ -113,21 +114,22 @@
   display: grid;
   place-items: center;
 
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.10);
+  background: rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(0, 0, 0, 0.14);
 
   transition: transform 220ms ease, background 220ms ease, border-color 220ms ease;
   transform: rotate(0deg);
   flex: 0 0 auto;
+  color: #000000;
 }
 
 .chevronOpen {
-  transform: rotate(180deg); /* vira ↑ */
-  background: rgba(255, 255, 255, 0.07);
-  border-color: rgba(255, 255, 255, 0.16);
+  transform: rotate(180deg);
+  background: rgba(130, 94, 68, 0.12);
+  border-color: rgba(130, 94, 68, 0.55);
 }
 
-/* animação “desce a resposta” sem pulo */
+/* Resposta */
 .answerWrap {
   display: grid;
   grid-template-rows: 0fr;
@@ -144,17 +146,18 @@
 
 .answer {
   margin: 0;
-  padding: 0 18px 18px 52px; /* alinhado com o texto (ícone) */
+  padding: 0 18px 18px 52px;
   font-size: 13.5px;
   line-height: 1.7;
-  color: rgba(255, 255, 255, 0.70);
+  color: rgba(0, 0, 0, 0.8);
 }
 
-/* Responsivo: mantém o “tamanho print” sem ficar apertado */
+/* Responsivo */
 @media (max-width: 600px) {
   .button {
     padding: 16px 14px;
   }
+
   .answer {
     padding: 0 14px 16px 48px;
   }

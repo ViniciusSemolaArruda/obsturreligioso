@@ -1,0 +1,243 @@
+:root {
+  --black: #171717;
+  --ink: #116744;     /* verde principal */
+  --accent: #825E44;  /* marrom institucional */
+  --bg: #ffffff;
+}
+
+/* Seção base */
+/* ✅ Offset para âncora não ficar escondida atrás do header */
+.pai {
+  padding: clamp(48px, 6vw, 96px) 16px;
+  background-color: #ffffff;
+  color: var(--ink);
+
+  /* quando clicar em link #como-fazemos */
+  scroll-margin-top: 210px; /* ajuste conforme altura do seu header */
+}
+
+/* ✅ No mobile, dá um respiro extra pra não ficar colado no header */
+@media (max-width: 600px) {
+  .pai {
+    scroll-margin-top: 190px;  /* header mobile costuma ser menor/igual */
+    padding-top: 96px;         /* empurra conteúdo pra baixo */
+  }
+}
+
+
+/* Layout */
+
+.layout {
+  margin: 0 auto;
+  max-width: 1200px;
+  display: grid;
+  grid-template-columns: minmax(380px, 640px) minmax(260px, 1fr);
+  gap: clamp(24px, 5vw, 80px);
+  align-items: center;
+}
+
+@media (max-width: 900px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Colunas */
+.left {
+  position: relative;
+}
+
+.right {
+  position: relative;
+}
+
+/* Timeline */
+.linee {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  padding-left: 60px;
+}
+
+/* Trilho */
+.linee::before {
+  content: "";
+  position: absolute;
+  top: 8px;
+  bottom: 8px;
+  left: 20px;
+  width: 3px;
+  background-color: rgba(17, 103, 68, 0.25); /* verde suave */
+  border-radius: 999px;
+  transform: scaleY(0.96);
+}
+
+@media (max-width: 600px) {
+  .linee {
+    padding-left: 42px;
+  }
+  .linee::before {
+    left: 12px;
+  }
+}
+
+/* Progresso animado */
+.progress {
+  position: absolute;
+  top: 8px;
+  left: 20px;
+  width: 3px;
+  height: 0%;
+  background: linear-gradient(
+    180deg,
+    var(--accent),
+    var(--ink)
+  );
+  border-radius: 999px;
+  transform: scaleY(0.96);
+  transform-origin: top;
+}
+
+@media (max-width: 600px) {
+  .progress {
+    left: 12px;
+  }
+}
+
+/* Card do passo */
+.text {
+  position: relative;
+  background-color: var(--bg);
+  border-left: 4px solid var(--accent);
+  border-radius: 14px;
+  padding: 18px 20px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  transition: transform 200ms ease, box-shadow 200ms ease, background-color 200ms ease;
+}
+
+.text::before {
+  content: "";
+  position: absolute;
+  top: 24px;
+  left: -34px;
+  width: 12px;
+  height: 12px;
+  background-color: var(--ink);
+  border-radius: 50%;
+  border: 3px solid var(--accent);
+  box-shadow: 0 0 0 2px #ffffff;
+}
+
+.text:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.12);
+  background-color: #fdfcfb;
+}
+
+@media (max-width: 600px) {
+  .text {
+    padding: 16px 16px;
+  }
+  .text::before {
+    left: -22px;
+  }
+}
+
+/* Cabeçalho do passo */
+.stepHead {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+
+/* Número */
+.badge {
+  display: inline-grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+/* Ícone */
+.iconBox {
+  width: 56px;
+  height: 56px;
+  border: 2px solid var(--ink);
+  border-radius: 12px;
+  display: inline-grid;
+  place-items: center;
+  color: var(--ink);
+}
+
+.iconBox svg {
+  width: 28px;
+  height: 28px;
+  display: block;
+}
+
+/* Título do passo */
+.stepTitle {
+  margin: 0;
+  font-size: 1.02rem;
+  font-weight: 900;
+  letter-spacing: 0.01em;
+  color: var(--ink);
+}
+
+/* Texto do passo */
+.stepText {
+  margin: 0;
+  color: var(--ink);
+  font-size: 1rem;
+  line-height: 1.55;
+}
+
+/* Título e subtítulo da seção */
+.title {
+  font-size: clamp(1.8rem, 1.2rem + 2vw, 2.6rem);
+  line-height: 1.1;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  margin: 0 0 10px 0;
+  
+  text-align: center;
+}
+
+.subtitle {
+  margin: 0;
+  
+  font-size: clamp(1rem, 0.9rem + 0.4vw, 1.1rem);
+  text-align: center;
+}
+
+/* Título e subtítulo da seção (lado esquerdo) */
+.left .title {
+  color: var(--black);
+}
+
+.left .subtitle {
+  color: rgba(0, 0, 0, 0.75);
+}
+
+/* Reduz movimento */
+@media (prefers-reduced-motion: reduce) {
+  .text,
+  .progress {
+    transition: none !important;
+  }
+}
+
+@media (max-width: 860px) {
+  .pai {
+    scroll-margin-top: calc(var(--header-mobile-h, 168px) + 16px);
+    padding-top: calc(var(--header-mobile-h, 178px) - 40px);
+  }
+}

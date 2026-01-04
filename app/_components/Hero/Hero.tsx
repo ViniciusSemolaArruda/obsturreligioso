@@ -3,6 +3,18 @@
 import { useCallback } from "react";
 import styles from "./Hero.module.css";
 
+const topics = [
+  "Sustentabilidade",
+  "Meio Ambiente",
+  "Educação",
+  "Tecnologia",
+  "Social",
+  "Cultural",
+  "Saúde",
+  "Esporte",
+  "Turismo",
+];
+
 export default function Hero() {
   const scrollToHash = useCallback((hash: string) => {
     const id = hash.replace("#", "");
@@ -12,7 +24,7 @@ export default function Hero() {
     const header = document.getElementById("site-header");
     const headerH = header?.getBoundingClientRect().height ?? 0;
 
-    const gap = 10; // respiro
+    const gap = -230;
     const y = window.scrollY + el.getBoundingClientRect().top - headerH - gap;
 
     window.scrollTo({ top: Math.max(0, y), behavior: "smooth" });
@@ -22,8 +34,6 @@ export default function Hero() {
     (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
       if (!href.startsWith("#")) return;
       e.preventDefault();
-
-      // espera 1 frame pro layout estar 100% estável
       requestAnimationFrame(() => scrollToHash(href));
     },
     [scrollToHash]
@@ -34,25 +44,28 @@ export default function Hero() {
       <div className={styles.bg} aria-hidden="true" />
 
       <div className={styles.inner}>
-        <p className={styles.badge}>Produções • Eventos • Cultura • Experiências</p>
-
         <h1 className={styles.title}>
-          Capadócia Produções
-          <span className={styles.sub}>Transformando ideias em eventos memoráveis.</span>
+          Instituto Eu Acredito
+          <span className={styles.sub}>
+            Transformação social com dignidade, transparência e impacto real.
+          </span>
         </h1>
 
-        <p className={styles.desc}>
-          Planejamento, execução e comunicação com seriedade, impacto e excelência — do
-          conceito ao palco.
-        </p>
+        <div className={styles.topics} aria-label="Áreas de atuação">
+          {topics.map((t) => (
+            <span key={t} className={styles.topic}>
+              {t}
+            </span>
+          ))}
+        </div>
 
         <div className={styles.actions}>
           <a
-            href="#faq"
+            href="#pilares"
             className={styles.primary}
-            onClick={(e) => onAnchorClick(e, "#faq")}
+            onClick={(e) => onAnchorClick(e, "#pilares")}
           >
-            Perguntas Frequentes
+            Nossos pilares
           </a>
 
           <a
@@ -60,23 +73,8 @@ export default function Hero() {
             className={styles.secondary}
             onClick={(e) => onAnchorClick(e, "#contato")}
           >
-            Solicitar Orçamento
+            Apoiar o Instituto
           </a>
-        </div>
-
-        <div className={styles.highlight}>
-          <div className={styles.kpi}>
-            <strong>+ Experiência</strong>
-            <span>em eventos e ativações</span>
-          </div>
-          <div className={styles.kpi}>
-            <strong>+ Impacto</strong>
-            <span>com responsabilidade social</span>
-          </div>
-          <div className={styles.kpi}>
-            <strong>+ Credibilidade</strong>
-            <span>ética e transparência</span>
-          </div>
         </div>
       </div>
     </section>
