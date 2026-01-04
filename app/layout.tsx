@@ -32,11 +32,11 @@ export const metadata: Metadata = {
     apple: [{ url: "/apple-touch-icon.png", sizes: "180x180" }],
   },
   openGraph: {
-    title: "Instituto EU ACREDITO",
+    title: "INSTITUTO EU ACREDITO",
     description:
-      "Acreditamos que a transformação social nasce da ação consciente e do investimento no potencial humano. Projetos com transparência, ética e impacto real.",
+      "O amanhã se constrói hoje, mas sem esquecer do ontem!",
     url: "https://institutoeuacredito.vercel.app/",
-    siteName: "Instituto EU ACREDITO",
+    siteName: "INSTITUTO EU ACREDITO",
     locale: "pt_BR",
     type: "website",
     images: [
@@ -44,15 +44,15 @@ export const metadata: Metadata = {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "Instituto EU ACREDITO",
+        alt: "INSTITUTO EU ACREDITO",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Instituto EU ACREDITO",
+    title: "INSTITUTO EU ACREDITO",
     description:
-      "Instituição sem fins lucrativos dedicada à transformação social com ética, transparência e impacto real.",
+      "O amanhã se constrói hoje, mas sem esquecer do ontem!",
     images: ["/og-image.png"],
   },
 };
