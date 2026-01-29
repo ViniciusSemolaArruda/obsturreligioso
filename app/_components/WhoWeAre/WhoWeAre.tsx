@@ -14,44 +14,51 @@ export default function WhoWeAre() {
 
           <p className={styles.lead}>
             <strong>
-              Somos uma instituição sem fins lucrativos movida pela convicção de que a
-              transformação social nasce da ação consciente e do investimento no potencial humano.
+              Somos uma instituição dedicada à produção, organização e difusão de
+              dados estratégicos sobre o turismo religioso, conectando fé,
+              desenvolvimento econômico, cultura e inovação.
             </strong>
           </p>
 
           <p className={styles.text}>
-            No <strong>INSTITUTO EU ACREDITO</strong>, atuamos como um agente transformador na vida
-            de indivíduos em situação de vulnerabilidade, promovendo <strong>dignidade</strong> e{" "}
-            <strong>autonomia</strong> por meio de oportunidades integradas que abrangem os pilares
-            do desenvolvimento humano.
+            O <strong>Observatório do Turismo Religioso Internacional</strong> nasce
+            a partir da constatação de que o turismo religioso é um dos maiores
+            segmentos do turismo mundial, movimentando entre{" "}
+            <strong>330 e 350 milhões de pessoas por ano</strong> e representando
+            aproximadamente <strong>12% a 15% das viagens internacionais</strong>.
+            No Brasil, o setor gera cerca de <strong>18 milhões de viagens
+            anuais</strong> e uma receita aproximada de{" "}
+            <strong>R$ 15 bilhões por ano</strong>, consolidando-se como um vetor
+            estratégico de desenvolvimento.
           </p>
 
           <p className={styles.text}>
-            Nossa existência se justifica pela urgência de reduzir as desigualdades sociais.
-            Acreditamos que, ao oferecer as ferramentas certas, podemos <strong>romper ciclos de
-            escassez</strong> e construir um futuro em que o <strong>CEP de nascimento</strong> não
-            determine o destino de uma criança, de uma família ou de uma comunidade.
+            Atuamos como um centro de inteligência que monitora fluxos, tendências,
+            destinos, rotas, perfis de peregrinos e impactos econômicos, oferecendo
+            informações qualificadas para governos, destinos, instituições
+            religiosas, investidores e profissionais do setor.
           </p>
 
           <p className={styles.text}>
-            Para gerar impacto real, trabalhamos em frentes multidisciplinares:{" "}
-            <strong>Educação e Tecnologia</strong>, unindo ensino e inovação para preparar nossos
-            assistidos para os desafios da era digital; <strong>Cultura e Esporte</strong>, como
-            caminhos de expressão, disciplina, saúde e convivência; e <strong>Saúde</strong>, com
-            ações de bem-estar e acesso, entendendo que o equilíbrio físico e mental é base para
-            qualquer evolução.
+            Nosso trabalho considera a diversidade do turismo religioso no Brasil,
+            que se distribui principalmente entre o Sudeste, Nordeste, Norte, Sul e
+            Centro-Oeste, e também sua dimensão global, com forte presença na Ásia,
+            Europa, Américas, África e Oceania, conectando o país às principais rotas
+            internacionais de peregrinação.
           </p>
 
           <p className={styles.text}>
-            Nosso compromisso é guiado por responsabilidade social, transparência e ética.
-            Prestamos contas de cada recurso e de cada passo dado, porque a confiança da sociedade
-            e de nossos parceiros é o nosso maior patrimônio — sempre buscando equilíbrio com o
-            planeta por meio de práticas de responsabilidade ambiental.
+            Além do impacto cultural e espiritual, reconhecemos o papel do turismo
+            religioso como gerador de empregos diretos e indiretos em áreas como
+            hotelaria, transporte, gastronomia, comércio, eventos e tecnologia,
+            fortalecendo economias locais e regionais.
           </p>
 
           <p className={styles.cta}>
             <strong>
-              No INSTITUTO EU ACREDITO, o amanhã se constrói hoje, mas sem esquecer do ontem!
+              O Observatório do Turismo Religioso Internacional existe para
+              transformar dados em inteligência, fé em desenvolvimento e destinos em
+              oportunidades sustentáveis.
             </strong>
           </p>
         </div>
@@ -60,8 +67,8 @@ export default function WhoWeAre() {
         <div className={styles.right}>
           <div className={styles.rightSticky}>
             <Image
-              src="/novaLOGO2.png"
-              alt="INSTITUTO EU ACREDITO"
+              src="/novaLOGO3.png"
+              alt="Observatório do Turismo Religioso Internacional"
               width={1400}
               height={900}
               priority

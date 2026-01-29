@@ -63,7 +63,7 @@
 
 /* links */
 .link {
-  color: #572A03;
+  color: #0E2656;
   text-decoration: none;
 
   font-size: 15.5px;      /* ⬆️ um pouco maior */
@@ -77,8 +77,8 @@
 
 
 .link:hover {
-  color: #096F47;
-  border-bottom-color: #096F47;
+  color: #DFA748;
+  border-bottom-color: #DFA748;
 }
 
 .logoWrap {
@@ -98,8 +98,8 @@
 /* botão CTA */
 .cta {
   margin-left: 6px;
-  background: #43FFF0;
-  color: #572A03;
+  background: #DFA748;
+  color: #0E2A5A;
   text-decoration: none;
   font-size: 13px;
   padding: 10px 12px;
@@ -109,8 +109,8 @@
 }
 
 .cta:hover {
-  background: #096F47;
-  color: #ffffff;
+  background: #C3C2C5;
+  color: #000;
 }
 
 /* burger */
@@ -228,8 +228,8 @@
   display: block;
   text-align: center;
   text-decoration: none;
-  background: #43FFF0;
-  color: #572A03;
+  background: #DFA748;
+  color: #0E2A5A;
   padding: 14px;
   border-radius: 16px;
   border: 1px solid rgba(0, 0, 0, 0.14);

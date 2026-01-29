@@ -10,50 +10,43 @@ type FaqItem = {
 
 export default function FAQSection() {
   const uid = useId();
-  const [openIndex, setOpenIndex] = useState<number | null>(0);
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   const faqs: FaqItem[] = useMemo(
-  () => [
-    {
-      question:
-        "Em quais áreas o INSTITUTO EU ACREDITO atua?",
-      answer:
-        "O INSTITUTO EU ACREDITO atua de forma integrada nas áreas de Sustentabilidade, Meio Ambiente, Educação, Tecnologia, Desenvolvimento Social, Cultura, Saúde, Esporte e Turismo. Nossos projetos são pensados para gerar impacto real, promovendo dignidade, inclusão, bem-estar e oportunidades para indivíduos e comunidades em situação de vulnerabilidade.",
-    },
-    {
-      question:
-        "Qual é o principal objetivo do INSTITUTO EU ACREDITO?",
-      answer:
-        "Nosso objetivo é atuar como agente de transformação social, investindo no potencial humano e contribuindo para a redução das desigualdades. Acreditamos que o acesso a oportunidades, conhecimento e cuidado é essencial para romper ciclos de escassez e construir um futuro mais justo.",
-    },
-    {
-      question:
-        "Quem pode participar ou ser beneficiado pelos projetos?",
-      answer:
-        "Nossos projetos são voltados principalmente para pessoas e comunidades em situação de vulnerabilidade social. Também atuamos em parceria com instituições, coletivos, escolas, organizações públicas e privadas que compartilham dos mesmos valores de impacto social e responsabilidade.",
-    },
-    {
-      question:
-        "Como funcionam as parcerias com o Instituto?",
-      answer:
-        "As parcerias podem acontecer de diversas formas: apoio institucional, voluntariado, patrocínio de projetos, cooperação técnica ou desenvolvimento de ações conjuntas. Avaliamos cada proposta de acordo com sua relevância social, viabilidade e alinhamento com a missão do Instituto.",
-    },
-    {
-      question:
-        "Como o Instituto garante transparência e responsabilidade?",
-      answer:
-        "Prezamos pela ética e pela transparência em todas as nossas ações. Prestamos contas sobre a aplicação de recursos, o andamento dos projetos e os resultados alcançados, fortalecendo a confiança da sociedade, dos parceiros e dos apoiadores.",
-    },
-    {
-      question:
-        "Como posso apoiar ou contribuir com o INSTITUTO EU ACREDITO?",
-      answer:
-        "Você pode apoiar o Instituto por meio de parcerias, doações, voluntariado ou divulgação dos nossos projetos. Entre em contato conosco para conhecer as formas de contribuição e fazer parte da transformação social que acreditamos.",
-    },
-  ],
-  []
-);
-
+    () => [
+      {
+        question: "O que é o Observatório do Turismo Religioso Internacional?",
+        answer:
+          "É uma iniciativa voltada à produção, organização e difusão de dados estratégicos sobre o turismo religioso no Brasil e no mundo. Atuamos como centro de inteligência para apoiar decisões, planejamento e desenvolvimento sustentável do setor.",
+      },
+      {
+        question: "Quais tipos de dados e análises o Observatório acompanha?",
+        answer:
+          "Monitoramos fluxos de visitantes, destinos e rotas, perfis de peregrinos, tendências de mercado, sazonalidade, impactos econômicos e indicadores sociais. Também estruturamos panoramas por regiões do Brasil e por continentes no cenário global.",
+      },
+      {
+        question: "Como as informações do Observatório podem ajudar destinos e instituições?",
+        answer:
+          "Os dados ajudam a orientar políticas públicas, planejar infraestrutura, qualificar serviços, organizar calendários de eventos, estruturar produtos turísticos e atrair investimentos. O objetivo é transformar informação em ações mais eficientes e mensuráveis.",
+      },
+      {
+        question: "O Observatório produz relatórios ou boletins periódicos?",
+        answer:
+          "Sim. Podemos consolidar dados em relatórios temáticos e boletins de inteligência, com indicadores e leituras de cenário para apoiar gestores, parceiros e profissionais do setor ao longo do ano.",
+      },
+      {
+        question: "O Observatório trabalha com parcerias?",
+        answer:
+          "Sim. Desenvolvemos cooperação com órgãos públicos, destinos turísticos, instituições religiosas, universidades, empresas e entidades do setor. As parcerias podem envolver dados, estudos, eventos, produção de conteúdo e ações estratégicas.",
+      },
+      {
+        question: "Como posso solicitar informações ou propor uma parceria?",
+        answer:
+          "Você pode entrar em contato pelo canal oficial do Observatório para apresentar sua demanda, objetivo e contexto. A partir disso, avaliamos o melhor formato de apoio, estudos, entregáveis e colaboração.",
+      },
+    ],
+    []
+  );
 
   function toggle(i: number) {
     setOpenIndex((prev) => (prev === i ? null : i));
@@ -65,7 +58,7 @@ export default function FAQSection() {
         <header className={styles.header}>
           <h2 className={styles.title}>Perguntas frequentes</h2>
           <p className={styles.subtitle}>
-            Respostas rápidas sobre produção, planejamento e soluções digitais.
+            Respostas rápidas sobre dados, análises e atuação do Observatório.
           </p>
         </header>
 

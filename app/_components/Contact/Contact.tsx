@@ -52,7 +52,7 @@ export default function Contact() {
           <div className={styles.infoBox}>
             <div className={styles.infoRow}>
               <span className={styles.infoLabel}>Atendimento</span>
-              <span className={styles.infoValue}>Rio de Janeiro • Produções e Eventos</span>
+              <span className={styles.infoValue}>Rio de Janeiro</span>
             </div>
             <div className={styles.infoRow}>
               <span className={styles.infoLabel}>Resposta</span>
@@ -125,7 +125,7 @@ export default function Contact() {
           </button>
 
           <p className={styles.note}>
-            Ao enviar, você concorda em ser contatado pela Capadócia Produções para retorno.
+            Ao enviar, você concorda em ser contatado pelO Observatório Internacional do Turismo Religioso para retorno.
           </p>
         </form>
       </div>

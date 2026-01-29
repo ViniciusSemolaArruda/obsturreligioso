@@ -24,7 +24,8 @@
   letter-spacing: 0.6px;
   text-transform: uppercase;
   margin: 0 0 14px;
-  color: #116744;
+ 
+  color: #0E2A5A;
 }
 
 /* título */
@@ -135,8 +136,8 @@
   width: 100%;
   border: 0;
   border-radius: 16px;
-  background: #116744;
-  color: #ffffff;
+  background: #DFA748;
+  color: #0E2A5A;
   font-weight: 800;
   padding: 14px;
   cursor: pointer;

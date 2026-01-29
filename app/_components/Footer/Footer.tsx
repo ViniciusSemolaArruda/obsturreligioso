@@ -7,9 +7,9 @@ export default function Footer() {
     <footer className={styles.footer} id="contato">
       <div className={styles.container}>
         <div>
-          <h3 className={styles.brand}>INSTITUTO EU ACREDITO</h3>
+          <h3 className={styles.brand}>Observatório Internacional do Turismo Religioso</h3>
           <p className={styles.text}>
-            O amanhã se constrói hoje, mas sem esquecer do ontem!
+            Fé no Turismo!
           </p>
         </div>
 
@@ -44,7 +44,7 @@ export default function Footer() {
 
       <div className={styles.bottom}>
         <span>
-          © {new Date().getFullYear()} Capadócia Produções, Festas e Eventos Ltda.
+          © {new Date().getFullYear()} Observatório Internacional do Turismo Religioso. Todos os direitos reservados.
         </span>
       </div>
     </footer>

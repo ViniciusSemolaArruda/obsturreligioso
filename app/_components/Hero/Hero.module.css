@@ -18,7 +18,7 @@
       rgba(0, 0, 0, 0.55),
       rgba(0, 0, 0, 0.70)
     ),
-    url("/hero.png");
+    url("/hero3.png");
 
   background-size: cover;
   background-position: center;
@@ -108,15 +108,15 @@
 
 /* CTA principal */
 .primary {
-  background: #43FFF0;
-  color: #002e2a;
+  background: #DFA748;
+  color: #0E2A5A;
   box-shadow: 0 14px 40px rgba(0, 0, 0, 0.45);
 }
 
 .primary:hover {
   transform: translateY(-2px);
-  background: #096F47;
-  color: #ffffff;
+  background: #C3C2C5;
+  color: #000;
 }
 
 /* CTA secundário */

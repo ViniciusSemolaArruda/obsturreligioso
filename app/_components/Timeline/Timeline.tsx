@@ -18,26 +18,26 @@ const steps: Step[] = [
   {
     num: "01",
     icon: "user",
-    title: "Escutamos a realidade",
-    text: "Tudo começa com pessoas. Acolhemos demandas, entendemos o contexto e mapeamos as necessidades reais da comunidade com respeito e sensibilidade.",
+    title: "Mapeamos o setor",
+    text: "Monitoramos o turismo religioso no Brasil e no mundo, reunindo dados sobre fluxo de visitantes, destinos, perfis de peregrinos e comportamento do mercado.",
   },
   {
     num: "02",
     icon: "whatsapp",
-    title: "Conectamos quem pode ajudar",
-    text: "Unimos voluntários, parceiros e lideranças locais para tirar a ideia do papel. Comunicação ágil, humana e transparente — do primeiro contato ao próximo passo.",
+    title: "Organizamos os panoramas",
+    text: "Estruturamos análises por regiões e continentes, conectando o Brasil às principais rotas internacionais e polos globais de peregrinação.",
   },
   {
     num: "03",
     icon: "note",
-    title: "Planejamos com propósito",
-    text: "Transformamos a intenção em ação: metas, organização e responsabilidade. Definimos prioridades, recursos e cronograma para gerar impacto consistente e mensurável.",
+    title: "Mensuramos impacto",
+    text: "Analisamos geração de empregos, movimentação econômica e efeitos sociais do turismo religioso nas economias locais e regionais.",
   },
   {
     num: "04",
     icon: "laptop",
-    title: "Executamos e prestamos contas",
-    text: "Colocamos o projeto em prática e acompanhamos de perto os resultados. Registramos ações, avaliamos impacto e prestamos contas com ética e transparência.",
+    title: "Transformamos em inteligência",
+    text: "Convertimos dados em relatórios, boletins e conteúdos estratégicos para apoiar decisões, investimentos e planejamento do setor.",
   },
 ];
 
@@ -94,12 +94,14 @@ export default function Timeline() {
     if (!root || !line || !progress) return;
 
     const cards = Array.from(root.querySelectorAll<HTMLElement>(`.${styles.text}`));
+
+    // ✅ blur só no estado inicial (antes de entrar na área)
     gsap.set(cards, { opacity: 0, y: 12, filter: "blur(8px)" });
 
+    // ✅ mantém scrub + stagger, mas não anima blur junto (evita “texto ilegível” no mobile)
     const cardsTween = gsap.to(cards, {
       opacity: 1,
       y: 0,
-      filter: "blur(0px)",
       duration: 0.5,
       ease: "power2.out",
       stagger: 0.15,
@@ -108,6 +110,10 @@ export default function Timeline() {
         start: "top 80%",
         end: "bottom 55%",
         scrub: true,
+      },
+      onStart: () => {
+        // assim que começar a animar, já zera o blur e mantém legível
+        gsap.set(cards, { filter: "blur(0px)" });
       },
     });
 
@@ -126,6 +132,8 @@ export default function Timeline() {
       }
     );
 
+    ScrollTrigger.refresh();
+
     return () => {
       cardsTween.kill();
       lineTween.kill();
@@ -136,7 +144,6 @@ export default function Timeline() {
   return (
     <section ref={rootRef} className={styles.pai} id="como-fazemos">
       <div className={styles.layout}>
-        {/* ESQUERDA: título */}
         <aside className={styles.left}>
           <h2 className={styles.title}>Como geramos impacto</h2>
           <p className={styles.subtitle}>
@@ -144,7 +151,6 @@ export default function Timeline() {
           </p>
         </aside>
 
-        {/* DIREITA: timeline */}
         <div className={styles.right}>
           <div ref={lineRef} className={styles.linee}>
             <div ref={progressRef} className={styles.progress} />

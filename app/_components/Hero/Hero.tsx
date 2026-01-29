@@ -4,15 +4,15 @@ import { useCallback } from "react";
 import styles from "./Hero.module.css";
 
 const topics = [
-  "Sustentabilidade",
-  "Meio Ambiente",
-  "Educação",
-  "Tecnologia",
-  "Social",
-  "Cultural",
-  "Saúde",
-  "Esporte",
-  "Turismo",
+  "Catolicismo",
+  "Cristianismo",
+  "Islamismo",
+  "Judaísmo",
+  "Hinduísmo",
+  "Budismo",
+  "Espiritismo",
+  "Religiões de Matriz Africana",
+  "Espiritualidade",
 ];
 
 export default function Hero() {
@@ -45,9 +45,9 @@ export default function Hero() {
 
       <div className={styles.inner}>
         <h1 className={styles.title}>
-          INSTITUTO EU ACREDITO
+          Observatório Internacional do Turismo Religioso
           <span className={styles.sub}>
-            O amanhã se constrói hoje, mas sem esquecer do ontem!
+            Fé no Turismo!
           </span>
         </h1>
 
@@ -73,7 +73,7 @@ export default function Hero() {
             className={styles.secondary}
             onClick={(e) => onAnchorClick(e, "#contato")}
           >
-            Apoiar o Instituto
+            Contato
           </a>
         </div>
       </div>

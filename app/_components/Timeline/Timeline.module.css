@@ -3,6 +3,8 @@
   --ink: #116744;     /* verde principal */
   --accent: #825E44;  /* marrom institucional */
   --bg: #ffffff;
+  --ouro: #DFA748;
+  --azul: #0E2A5A;
 }
 
 /* Seção base */
@@ -10,7 +12,7 @@
 .pai {
   padding: clamp(48px, 6vw, 96px) 16px;
   background-color: #ffffff;
-  color: var(--ink);
+  color: var(--azul);
 
   /* quando clicar em link #como-fazemos */
   scroll-margin-top: 210px; /* ajuste conforme altura do seu header */
@@ -91,8 +93,8 @@
   height: 0%;
   background: linear-gradient(
     180deg,
-    var(--accent),
-    var(--ink)
+    var(--ouro),
+    var(--azul)
   );
   border-radius: 999px;
   transform: scaleY(0.96);
@@ -109,7 +111,7 @@
 .text {
   position: relative;
   background-color: var(--bg);
-  border-left: 4px solid var(--accent);
+  border-left: 4px solid var(--ouro);
   border-radius: 14px;
   padding: 18px 20px;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
@@ -123,9 +125,9 @@
   left: -34px;
   width: 12px;
   height: 12px;
-  background-color: var(--ink);
+  background-color: var(--azul);
   border-radius: 50%;
-  border: 3px solid var(--accent);
+  border: 3px solid var(--ouro);
   box-shadow: 0 0 0 2px #ffffff;
 }
 
@@ -160,7 +162,7 @@
   width: 34px;
   height: 34px;
   border-radius: 999px;
-  background: var(--accent);
+  background: var(--ouro);
   color: #ffffff;
   font-weight: 700;
   font-size: 0.9rem;
@@ -170,11 +172,11 @@
 .iconBox {
   width: 56px;
   height: 56px;
-  border: 2px solid var(--ink);
+  border: 2px solid var(--azul);
   border-radius: 12px;
   display: inline-grid;
   place-items: center;
-  color: var(--ink);
+  color: var(--azul);
 }
 
 .iconBox svg {
@@ -189,13 +191,13 @@
   font-size: 1.02rem;
   font-weight: 900;
   letter-spacing: 0.01em;
-  color: var(--ink);
+  color: var(--azul);
 }
 
 /* Texto do passo */
 .stepText {
   margin: 0;
-  color: var(--ink);
+  color: var(--azul);
   font-size: 1rem;
   line-height: 1.55;
 }

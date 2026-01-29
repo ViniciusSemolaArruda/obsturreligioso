@@ -16,13 +16,17 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "INSTITUTO EU ACREDITO",
-    template: "%s | Instituto EU ACREDITO",
+    default: "Observatório Internacional do Turismo Religioso",
+    template: "%s | Observatório Internacional do Turismo Religioso",
   },
+
   description:
-    "O amanhã se constrói hoje, mas sem esquecer do ontem!",
-  applicationName: "Instituto EU ACREDITO",
-  metadataBase: new URL("https://institutoeuacredito.vercel.app/"),
+    "Plataforma dedicada ao monitoramento, análise e fortalecimento do turismo religioso no Brasil e no mundo, conectando dados, destinos, instituições e mercados.",
+
+  applicationName: "Observatório Internacional do Turismo Religioso",
+
+  metadataBase: new URL("https://obsturreligioso.vercel.app/"),
+
   icons: {
     icon: [
       { url: "/favicon.ico" },
@@ -31,12 +35,13 @@ export const metadata: Metadata = {
     ],
     apple: [{ url: "/apple-touch-icon.png", sizes: "180x180" }],
   },
+
   openGraph: {
-    title: "INSTITUTO EU ACREDITO",
+    title: "Observatório Internacional do Turismo Religioso",
     description:
-      "O amanhã se constrói hoje, mas sem esquecer do ontem!",
-    url: "https://institutoeuacredito.vercel.app/",
-    siteName: "INSTITUTO EU ACREDITO",
+      "Fortalecendo o turismo religioso como vetor de desenvolvimento cultural, social e econômico, no Brasil e no cenário internacional.",
+    url: "https://obsturreligioso.vercel.app/",
+    siteName: "Observatório Internacional do Turismo Religioso",
     locale: "pt_BR",
     type: "website",
     images: [
@@ -44,33 +49,36 @@ export const metadata: Metadata = {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "INSTITUTO EU ACREDITO",
+        alt: "Observatório Internacional do Turismo Religioso",
       },
     ],
   },
+
   twitter: {
     card: "summary_large_image",
-    title: "INSTITUTO EU ACREDITO",
+    title: "Observatório Internacional do Turismo Religioso",
     description:
-      "O amanhã se constrói hoje, mas sem esquecer do ontem!",
+      "Monitoramento, inteligência e desenvolvimento do turismo religioso no Brasil e no mundo.",
     images: ["/og-image.png"],
   },
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="pt-BR">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      >
         {/* Ajusta automaticamente o scroll-padding-top com base na altura do header */}
         <HeaderOffset />
 
         {children}
 
-        {/* Botão flutuante do WhatsApp (fixo na tela) */}
+        {/* Botão flutuante do WhatsApp */}
         <WhatsappFloat />
       </body>
     </html>
