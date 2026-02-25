@@ -1,0 +1,160 @@
+.wrap {
+  position: relative;
+  width: 100%;
+  margin-top: 12px;
+  /* não precisa do overflow hidden se você quer ver tudo atrás */
+  overflow: visible;
+}
+
+.scroller {
+  position: relative;
+  z-index: 1;
+
+  display: flex;
+  gap: 14px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+
+  /* espaço pro botão */
+  padding: 10px 62px 10px 2px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.scroller::-webkit-scrollbar {
+  height: 10px;
+}
+.scroller::-webkit-scrollbar-thumb {
+  background: rgba(15, 23, 42, 0.12);
+  border-radius: 999px;
+}
+.scroller::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Card */
+.card {
+  scroll-snap-align: start;
+  flex: 0 0 auto;
+
+  width: 120px;
+  height: 92px;
+
+  border-radius: 14px;
+  background: #ffffff;
+  border: 1px solid rgba(15, 23, 42, 0.1);
+  box-shadow: 0 10px 26px rgba(2, 6, 23, 0.06);
+
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: 8px;
+
+  cursor: pointer;
+  transition: transform 140ms ease, border-color 140ms ease, box-shadow 140ms ease;
+}
+
+.card:hover {
+  transform: translateY(-1px);
+  border-color: rgba(15, 23, 42, 0.16);
+  box-shadow: 0 14px 34px rgba(2, 6, 23, 0.08);
+}
+
+.active {
+  border-color: rgba(249, 115, 22, 0.45);
+  box-shadow: 0 16px 38px rgba(249, 115, 22, 0.12), 0 10px 26px rgba(2, 6, 23, 0.06);
+}
+
+.iconWrap {
+  width: 34px;
+  height: 34px;
+  border-radius: 12px;
+
+  display: grid;
+  place-items: center;
+
+  background: rgba(2, 6, 23, 0.04);
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  display: block;
+}
+
+.label {
+  font-size: 13px;
+  font-weight: 900;
+  color: rgba(15, 23, 42, 0.86);
+  text-align: center;
+  line-height: 1.1;
+  padding: 0 10px;
+}
+
+/* fades */
+.fade {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 70px; /* um pouco maior pra “aparecer” atrás da seta */
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 160ms ease;
+  z-index: 2;
+}
+
+.fadeOn {
+  opacity: 1;
+}
+
+.fadeLeft {
+  left: 0;
+  background: linear-gradient(90deg, #f8fafc 0%, rgba(248, 250, 252, 0) 100%);
+}
+
+/* ✅ deixa o fade aparecer ATÉ o canto (atrás/ao lado da seta) */
+.fadeRight {
+  right: 0;
+  background: linear-gradient(270deg, #f8fafc 0%, rgba(248, 250, 252, 0) 100%);
+}
+
+/* botão > */
+.nextBtn {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 3;
+
+  width: 42px;
+  height: 42px;
+  border-radius: 999px;
+
+  border: 1px solid rgba(15, 23, 42, 0.14);
+
+  /* ✅ opaco (não vaza o card dentro do círculo) */
+  background: #ffffff;
+
+  box-shadow: 0 14px 30px rgba(2, 6, 23, 0.12);
+
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+
+  transition: transform 140ms ease, filter 140ms ease;
+}
+
+/* ✅ NÃO tem ::after aqui */
+.nextBtn:hover {
+  transform: translateY(-50%) translateX(1px);
+  filter: brightness(0.98);
+}
+
+.nextBtn:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+#noticias {
+  scroll-margin-top: 30px;
+}

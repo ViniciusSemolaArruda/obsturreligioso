@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import styles from "./Header.module.css";
+import styles from "./HeaderObservatorio.module.css";
 
 export default function Header() {
   const [open, setOpen] = useState(false);
@@ -172,12 +172,12 @@ export default function Header() {
             ))}
 
             <Link
-              href="#contato"
-              className={styles.cta}
-              onClick={(e) => onNavClick(e, "#contato")}
-            >
-              Fale Conosco
-            </Link>
+  href="#noticias"
+  className={styles.cta}
+  onClick={(e) => onNavClick(e, "#noticias")}
+>
+  Notícias
+</Link>
 
             {/* ✅ Burger aparece no mobile via CSS */}
             <button
@@ -218,11 +218,11 @@ export default function Header() {
           ))}
 
           <Link
-            href="#contato"
+            href="#noticias"
             className={styles.mobileCTA}
-            onClick={(e) => onNavClick(e, "#contato")}
+            onClick={(e) => onNavClick(e, "#noticias")}
           >
-            Fale Conosco
+            Notícias
           </Link>
         </div>
       </div>

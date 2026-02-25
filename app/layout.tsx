@@ -1,32 +1,28 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
-import HeaderOffset from "./_components/HeaderOffset/HeaderOffset";
-import WhatsappFloat from "./_components/WhatsappFloat/WhatsappFloat";
+import type { Metadata } from "next"
+import { Geist, Geist_Mono } from "next/font/google"
+import "./globals.css"
+import HeaderOffset from "./_components/HeaderOffset/HeaderOffset"
+import WhatsappConditional from "./_components/WhatsappConditional/WhatsappConditional"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
-});
+})
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
-});
+})
 
 export const metadata: Metadata = {
   title: {
     default: "Observatório Internacional do Turismo Religioso",
     template: "%s | Observatório Internacional do Turismo Religioso",
   },
-
   description:
     "Plataforma dedicada ao monitoramento, análise e fortalecimento do turismo religioso no Brasil e no mundo, conectando dados, destinos, instituições e mercados.",
-
   applicationName: "Observatório Internacional do Turismo Religioso",
-
   metadataBase: new URL("https://obsturreligioso.vercel.app/"),
-
   icons: {
     icon: [
       { url: "/favicon.ico" },
@@ -35,7 +31,6 @@ export const metadata: Metadata = {
     ],
     apple: [{ url: "/apple-touch-icon.png", sizes: "180x180" }],
   },
-
   openGraph: {
     title: "Observatório Internacional do Turismo Religioso",
     description:
@@ -53,7 +48,6 @@ export const metadata: Metadata = {
       },
     ],
   },
-
   twitter: {
     card: "summary_large_image",
     title: "Observatório Internacional do Turismo Religioso",
@@ -61,7 +55,7 @@ export const metadata: Metadata = {
       "Monitoramento, inteligência e desenvolvimento do turismo religioso no Brasil e no mundo.",
     images: ["/og-image.png"],
   },
-};
+}
 
 export default function RootLayout({
   children,
@@ -70,16 +64,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="pt-BR">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {/* Ajusta automaticamente o scroll-padding-top com base na altura do header */}
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        {/* ✅ ESSENCIAL para âncoras funcionarem no mobile */}
         <HeaderOffset />
 
         {children}
 
-        {/* Botão flutuante do WhatsApp */}
-        <WhatsappFloat />
+        <WhatsappConditional />
       </body>
     </html>
   );

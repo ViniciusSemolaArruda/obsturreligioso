@@ -8,6 +8,7 @@ import Footer from "./_components/Footer/Footer";
 
 import FAQSection from "./_components/FAQSection/FAQSection";
 import Timeline from "./_components/Timeline/Timeline";
+import TraditionNewsSection from "./_components/Tradition/TraditionNewsSection";
 
 export default function HomePage() {
   return (
@@ -15,6 +16,7 @@ export default function HomePage() {
       <Header />
       <main>
         <Hero />
+        <TraditionNewsSection/>
         <WhoWeAre />
         <Values />
         <Timeline />

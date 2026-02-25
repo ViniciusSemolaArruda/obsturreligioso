@@ -1,80 +1,186 @@
 .footer {
-  background: #f2f2f2;
-  color: #171717;
-  border-top: 1px solid rgba(0,0,0,0.08);
+  width: 100%;
+  background: #0b1222;
+  color: rgba(255, 255, 255, 0.86);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
+/* CONTAINER CENTRAL (organiza e deixa profissional) */
 .container {
   max-width: 1180px;
   margin: 0 auto;
-  padding: 42px 18px;
-  display: grid;
-  grid-template-columns: 2fr 1fr 1fr;
-  gap: 18px;
+  padding: 36px 18px 28px;
 }
 
-.brand {
-  margin: 0;
-  font-size: 18px;
-  font-weight: 700;
-  color: #171717;
-}
-
-.label {
-  margin: 0 0 10px;
-  font-weight: 700;
-  font-size: 13px;
-  color: rgba(0,0,0,0.80);
-}
-
-.text {
-  margin: 8px 0 0;
-  color: rgba(0,0,0,0.65);
-  font-size: 14px;
-  line-height: 1.5;
-}
-
-.col {
-  align-self: start;
-}
-
-/* rodapé inferior */
-.bottom {
-  padding: 14px 18px;
-  border-top: 1px solid rgba(0,0,0,0.08);
-  color: rgba(0,0,0,0.55);
-  font-size: 12px;
+/* TEXTO CENTRAL (o que você pediu manter no meio) */
+.centerText {
+  margin: 0 auto;
   text-align: center;
-  background: #ededed;
+  max-width: 820px;
+  font-size: 14px;
+  line-height: 1.75;
+  color: rgba(255, 255, 255, 0.78);
 }
 
-/* responsivo */
-@media (max-width: 920px) {
-  .container {
-    grid-template-columns: 1fr;
-  }
+/* ÁREA DAS 2 COLUNAS */
+.columns {
+  margin-top: 24px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+  align-items: flex-start;
+  position: relative;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-/* redes sociais */
+/* SEPARADOR VERTICAL (entre contato e redes) */
+.columns::before {
+  content: "";
+  position: absolute;
+  top: 20px;
+  bottom: 0;
+  left: 50%;
+  width: 1px;
+  background: rgba(255, 255, 255, 0.08);
+  transform: translateX(-0.5px);
+}
+
+/* COLUNA ESQUERDA */
+.colLeft {
+  padding-right: 24px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* COLUNA DIREITA */
+.colRight {
+  padding-left: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+/* TÍTULOS (Contato / Institucional / Redes) */
+.label {
+  margin: 0 0 12px;
+  font-weight: 800;
+  font-size: 12px;
+  letter-spacing: 0.7px;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.68);
+}
+
+/* BLOCO DO CONTATO (GARANTE QUE PULE LINHA) */
+.contactBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* LINKS (EMAIL E WHATSAPP) */
+.link {
+  display: block; /* ESSENCIAL para não colar tudo na mesma linha */
+  color: rgba(255, 255, 255, 0.80);
+  text-decoration: none;
+  font-size: 14px;
+  line-height: 1.6;
+  word-break: break-word;
+}
+
+.link:hover {
+  color: #c9a261;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+/* BLOCO DIREITO (redes + login) */
+.rightBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* LINK DE REDE SOCIAL */
 .socialLink {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  color: inherit;
+  gap: 10px;
   text-decoration: none;
+  font-weight: 700;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.82);
+  transition: all 0.2s ease;
+}
+
+.socialLink:hover {
+  color: #c9a261;
 }
 
 .socialIcon {
-  opacity: 0.75;
-  transition: opacity 0.2s ease, transform 0.2s ease;
+  opacity: 0.9;
+  transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
 .socialLink:hover .socialIcon {
-  opacity: 1;
   transform: translateY(-1px);
+  opacity: 1;
 }
 
-/* hover de texto (opcional e elegante) */
-.socialLink:hover {
-  color: #116744;
+/* TEXTO DO INSTAGRAM */
+.socialText {
+  font-size: 14px;
+}
+
+/* LINK DE LOGIN (discreto e institucional) */
+.loginLink {
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.62);
+  text-decoration: none;
+  margin-top: 2px;
+  transition: all 0.2s ease;
+}
+
+.loginLink:hover {
+  color: #c9a261;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+/* BARRA INFERIOR */
+.bottom {
+  padding: 14px 18px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.56);
+  font-size: 12px;
+  text-align: center;
+  background: #070d19;
+}
+
+/* RESPONSIVO (mobile) */
+@media (max-width: 860px) {
+  .columns {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  /* remove separador vertical no mobile */
+  .columns::before {
+    display: none;
+  }
+
+  .colLeft,
+  .colRight {
+    padding: 0;
+  }
+
+  .colRight {
+    align-items: flex-start;
+  }
+
+  .centerText {
+    text-align: left;
+    max-width: 100%;
+  }
 }

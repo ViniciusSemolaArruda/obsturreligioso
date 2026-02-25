@@ -7,6 +7,7 @@
   background: transparent;
   transition: transform 280ms ease, opacity 200ms ease;
 }
+
 .headerHidden {
   transform: translateY(-110%);
   opacity: 0;
@@ -75,7 +76,6 @@
   transition: color 160ms ease, border-color 160ms ease;
 }
 
-
 .link:hover {
   color: #DFA748;
   border-bottom-color: #DFA748;
@@ -85,7 +85,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  
+
   text-decoration: none;
 }
 
@@ -242,6 +242,39 @@
   color: #ffffff;
 }
 
+/* =========================
+   ✅ OFFSET GLOBAL DAS ÂNCORAS (#noticias etc.)
+   ========================= */
+/* CSS Module -> usar :global para garantir que pega no html/root */
+:global(:root) {
+  /* desktop */
+  --scroll-offset: 88px;
+
+  /* mobile header */
+  --header-mobile-h: 178px;
+}
+
+/* ✅ aqui é o pulo do gato:
+   no mobile o offset precisa ser MENOR que o header
+   pra “subir mais” quando clicar no link */
+@media (max-width: 860px) {
+  :global(:root) {
+    /* 178px - 40px = 138px (fica mais pra cima) */
+    --scroll-offset: calc(var(--header-mobile-h) - 30px);
+  }
+}
+
+/* scroll suave e compensação do header */
+:global(html) {
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--scroll-offset) + env(safe-area-inset-top));
+}
+
+/* garante que qualquer id pare no lugar certo */
+:global([id]) {
+  scroll-margin-top: calc(var(--scroll-offset) + env(safe-area-inset-top));
+}
+
 /* MOBILE */
 @media (max-width: 860px) {
   .nav {
@@ -281,9 +314,5 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-  }
-
-  :root {
-    --header-mobile-h: 178px;
   }
 }
