@@ -125,7 +125,7 @@ export default function Contact() {
           </button>
 
           <p className={styles.note}>
-            Ao enviar, você concorda em ser contatado pelO Observatório Internacional do Turismo Religioso para retorno.
+            Ao enviar, você concorda em ser contatado pelo Observatório Internacional do Turismo Religioso Laico no Brasil e na America Latina para retorno.
           </p>
         </form>
       </div>

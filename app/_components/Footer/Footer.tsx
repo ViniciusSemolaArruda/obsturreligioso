@@ -74,7 +74,7 @@ export default function Footer() {
 
       <div className={styles.bottom}>
         <span>
-          © {year} Observatório Internacional do Turismo Religioso Laico. Todos
+          © {year} Observatório Internacional do Turismo Religioso Laico no Brasil e na America Latina. Todos
           os direitos reservados.
         </span>
       </div>

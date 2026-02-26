@@ -15,7 +15,7 @@ export default function FAQSection() {
   const faqs: FaqItem[] = useMemo(
     () => [
       {
-        question: "O que é o Observatório do Turismo Religioso Internacional?",
+        question: "O que é o Observatório Internacional do Turismo Religioso Laico no Brasil e na America Latina?",
         answer:
           "É uma iniciativa voltada à produção, organização e difusão de dados estratégicos sobre o turismo religioso no Brasil e no mundo. Atuamos como centro de inteligência para apoiar decisões, planejamento e desenvolvimento sustentável do setor.",
       },

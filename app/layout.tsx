@@ -16,12 +16,12 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Observatório Internacional do Turismo Religioso",
-    template: "%s | Observatório Internacional do Turismo Religioso",
+    default: "Observatório Internacional do Turismo Religioso Laico no Brasil e na America Latina",
+    template: "%s | Observatório Internacional do Turismo Religioso Laico no Brasil e na America Latina",
   },
   description:
     "Plataforma dedicada ao monitoramento, análise e fortalecimento do turismo religioso no Brasil e no mundo, conectando dados, destinos, instituições e mercados.",
-  applicationName: "Observatório Internacional do Turismo Religioso",
+  applicationName: "Observatório Internacional do Turismo Religioso Laico no Brasil e na America Latina",
   metadataBase: new URL("https://obsturreligioso.vercel.app/"),
   icons: {
     icon: [
@@ -32,11 +32,11 @@ export const metadata: Metadata = {
     apple: [{ url: "/apple-touch-icon.png", sizes: "180x180" }],
   },
   openGraph: {
-    title: "Observatório Internacional do Turismo Religioso",
+    title: "Observatório Internacional do Turismo Religioso Laico no Brasil e na America Latina",
     description:
       "Fortalecendo o turismo religioso como vetor de desenvolvimento cultural, social e econômico, no Brasil e no cenário internacional.",
     url: "https://obsturreligioso.vercel.app/",
-    siteName: "Observatório Internacional do Turismo Religioso",
+    siteName: "Observatório Internacional do Turismo Religioso Laico no Brasil e na America Latina",
     locale: "pt_BR",
     type: "website",
     images: [
@@ -44,13 +44,13 @@ export const metadata: Metadata = {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "Observatório Internacional do Turismo Religioso",
+        alt: "Observatório Internacional do Turismo Religioso Laico no Brasil e na America Latina",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Observatório Internacional do Turismo Religioso",
+    title: "Observatório Internacional do Turismo Religioso Laico no Brasil e na America Latina",
     description:
       "Monitoramento, inteligência e desenvolvimento do turismo religioso no Brasil e no mundo.",
     images: ["/og-image.png"],
