@@ -6,8 +6,13 @@ import WhatsappFloat from "../WhatsappFloat/WhatsappFloat"
 export default function WhatsappConditional() {
   const pathname = usePathname()
 
-  // ❌ NÃO mostrar no login (nem em rotas admin futuramente)
-  if (pathname === "/login") return null
+  // ❌ Esconder no login e em TODA área admin
+  if (
+    pathname === "/login" ||
+    pathname.startsWith("/admin")
+  ) {
+    return null
+  }
 
   return <WhatsappFloat />
 }

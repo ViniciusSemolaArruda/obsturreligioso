@@ -1,0 +1,283 @@
+/* Layout base */
+.app{
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  background: #f3f6fb;
+}
+
+/* ======================
+   SIDEBAR (desktop)
+   ====================== */
+.sidebar{
+  background: #0b1222;
+  color: #fff;
+  padding: 18px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  border-right: 1px solid rgba(255,255,255,.06);
+}
+
+.brand{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 8px 14px;
+  border-bottom: 1px solid rgba(255,255,255,.12);
+}
+
+.logo{
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.nav{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.item{
+  display: flex;
+  align-items: center;
+  padding: 12px 12px;
+  border-radius: 12px;
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.10);
+  color: #fff;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.item:hover{
+  background: rgba(255,255,255,.10);
+}
+
+.active{
+  background: rgba(255,255,255,.18);
+  border-color: rgba(255,255,255,.22);
+}
+
+.footerArea{
+  margin-top: auto;
+  display: grid;
+  gap: 10px;
+}
+
+.logout{
+  width: 100%;
+  padding: 12px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,.18);
+  background: rgba(0,0,0,.14);
+  color: #fff;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.logout:hover{
+  background: rgba(0,0,0,.22);
+}
+
+.smallNote{
+  font-size: 11px;
+  color: rgba(255,255,255,.55);
+  text-align: center;
+}
+
+/* ======================
+   MAIN
+   ====================== */
+.main{
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.topbar{
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 22px;
+  background: #ffffff;
+  border-bottom: 1px solid rgba(0,0,0,.08);
+}
+
+.topTitle{
+  font-size: 18px;
+  font-weight: 900;
+  color: #0b0b0b;
+  letter-spacing: -0.2px;
+}
+
+.topRight{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.pill{
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(0,0,0,.10);
+  background: rgba(0,0,0,.03);
+  font-size: 12px;
+  font-weight: 900;
+  color: rgba(0,0,0,.75);
+  white-space: nowrap;
+}
+
+.content{
+  padding: 22px;
+}
+
+/* ======================
+   MOBILE TOPBAR + DRAWER
+   ====================== */
+.mobileTopbar{
+  display: none;
+}
+
+.overlay{
+  display: none;
+}
+
+/* ======================
+   RESPONSIVO
+   ====================== */
+@media (max-width: 900px){
+  .app{
+    grid-template-columns: 1fr;
+  }
+
+  /* Esconde topbar desktop */
+  .topbar{
+    display: none;
+  }
+
+  /* Mostra topbar mobile */
+  .mobileTopbar{
+    display: flex;
+    position: sticky;
+    top: 0;
+    z-index: 60;
+    height: 64px;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 14px;
+    background: #0b1222;
+    border-bottom: 1px solid rgba(255,255,255,.08);
+  }
+
+  .mobileBrand{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .mobileLogo{
+    height: 36px;
+    width: auto;
+    object-fit: contain;
+  }
+
+  .mobileRight{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .pill{
+    border: 1px solid rgba(255,255,255,.14);
+    background: rgba(255,255,255,.08);
+    color: rgba(255,255,255,.92);
+  }
+
+  /* Burger */
+  .burger{
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,.14);
+    background: rgba(255,255,255,.06);
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+  }
+
+  .burgerLine{
+    display: block;
+    width: 18px;
+    height: 2px;
+    background: rgba(255,255,255,.9);
+    margin: 2px 0;
+    border-radius: 999px;
+  }
+
+  /* Drawer sidebar */
+  .sidebar{
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: min(86vw, 320px);
+    z-index: 70;
+    transform: translateX(-110%);
+    transition: transform .22s ease;
+    box-shadow: 30px 0 80px rgba(0,0,0,.35);
+    padding-top: 14px;
+  }
+
+  .sidebarOpen{
+    transform: translateX(0);
+  }
+
+  /* Overlay */
+  .overlay{
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 65;
+    background: rgba(0,0,0,.45);
+    border: none;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .18s ease;
+  }
+
+  .overlayOpen{
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* Ajustes gerais mobile */
+  .brand{
+    justify-content: flex-start;
+  }
+  .logo{
+    width: 170px;
+  }
+
+  .content{
+    padding: 14px;
+  }
+}
+
+@media (max-width: 420px){
+  .mobileLogo{
+    height: 32px;
+  }
+  .logo{
+    width: 160px;
+  }
+}

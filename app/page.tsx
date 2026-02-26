@@ -9,13 +9,17 @@ import Footer from "./_components/Footer/Footer";
 import FAQSection from "./_components/FAQSection/FAQSection";
 import Timeline from "./_components/Timeline/Timeline";
 import TraditionNewsSection from "./_components/Tradition/TraditionNewsSection";
+import HashScroller from "./_components/HashScroller";
+
 
 export default function HomePage() {
   return (
     <>
       <Header />
       <main>
+        <HashScroller />
         <Hero />
+        
         <TraditionNewsSection/>
         <WhoWeAre />
         <Values />

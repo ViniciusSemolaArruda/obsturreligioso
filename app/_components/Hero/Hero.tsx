@@ -2,10 +2,11 @@
 
 import Link from "next/link"
 import Image from "next/image"
+import { useEffect, useMemo, useState } from "react"
 import styles from "./Hero.module.css"
 import { scrollToHash } from "@/app/_lib/scrollToHash"
 
-type NewsItem = {
+type TrendingItem = {
   id: string
   href: string
   category: string
@@ -23,50 +24,77 @@ const featured = {
   image: "/hero3.png",
 }
 
-const trending: NewsItem[] = [
+// fallback caso ainda não tenha 5 notícias no banco
+const FALLBACK_TRENDING: TrendingItem[] = [
   {
-    id: "1",
-    href: "/brasil/sincretismo-identidade-cultural",
-    category: "Brasil",
-    title: "Sincretismo e Identidade Cultural no Nordeste Brasileiro",
-    readTime: "8 min de leitura",
+    id: "f1",
+    href: "/noticias",
+    category: "Portal",
+    title: "Publicações em construção",
+    readTime: "1 min de leitura",
     image: "/event1.png",
-  },
-  {
-    id: "2",
-    href: "/opiniao/laicidade-estado-moderno",
-    category: "Opinião",
-    title: "Novas Perspectivas sobre a Laicidade no Estado Moderno",
-    readTime: "6 min de leitura",
-    image: "/event2.png",
-  },
-  {
-    id: "3",
-    href: "/brasil/festivais-hindus-sao-paulo",
-    category: "Brasil",
-    title: "Festivais Hindus ganham espaço no calendário oficial de São Paulo",
-    readTime: "4 min de leitura",
-    image: "/event3.png",
-  },
-  {
-    id: "4",
-    href: "/brasil/festivais-hindus-sao-paulo-2",
-    category: "Brasil",
-    title: "Roteiros de peregrinação: novas rotas e experiências no Sudeste",
-    readTime: "5 min de leitura",
-    image: "/event4.png",
-  },
-  {
-    id: "5",
-    href: "/america-latina/patrimonio-fe",
-    category: "América Latina",
-    title: "Patrimônio, fé e turismo: destinos em alta na América Latina",
-    readTime: "7 min de leitura",
-    image: "/event5.png",
   },
 ]
 
+function calcReadTimeFromText(text: string) {
+  const words = String(text || "")
+    .trim()
+    .split(/\s+/)
+    .filter(Boolean).length
+
+  const minutes = Math.max(1, Math.round(words / 180))
+  return `${minutes} min de leitura`
+}
+
 export default function Hero() {
+  const [trending, setTrending] = useState<TrendingItem[]>([])
+  const [loadingTrending, setLoadingTrending] = useState(true)
+
+  useEffect(() => {
+    let alive = true
+
+    async function loadTrending() {
+      try {
+        const res = await fetch("/api/news?take=5", { cache: "no-store" })
+        const data = await res.json()
+
+        if (!alive) return
+
+        if (data?.ok && Array.isArray(data.items)) {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const mapped: TrendingItem[] = data.items.map((n: any) => ({
+            id: String(n.id),
+            href: String(n.href || `/noticias/${n.slug || ""}`),
+            category: String(n.category || "Notícia"),
+            title: String(n.title || ""),
+            // ✅ seu endpoint já manda excerpt — usamos pra estimar tempo
+            readTime: calcReadTimeFromText(String(n.excerpt || "")),
+            image: String(n.image || "/event1.png"),
+          }))
+
+          setTrending(mapped)
+        } else {
+          setTrending([])
+        }
+      } catch (e) {
+        console.error("Erro ao carregar EM ALTA:", e)
+        if (alive) setTrending([])
+      } finally {
+        if (alive) setLoadingTrending(false)
+      }
+    }
+
+    loadTrending()
+    return () => {
+      alive = false
+    }
+  }, [])
+
+  const trendingToRender = useMemo(() => {
+    if (loadingTrending) return FALLBACK_TRENDING
+    return trending.length ? trending : FALLBACK_TRENDING
+  }, [loadingTrending, trending])
+
   return (
     <section className={styles.hero} id="inicio">
       <div className={styles.bg} aria-hidden="true" />
@@ -82,7 +110,7 @@ export default function Hero() {
               className={styles.primary}
               onClick={(e) => {
                 e.preventDefault()
-                requestAnimationFrame(() => scrollToHash("#pilares", 10)) // ✅ sobe 10px
+                requestAnimationFrame(() => scrollToHash("#pilares", 10))
               }}
             >
               Nossos pilares
@@ -93,7 +121,7 @@ export default function Hero() {
               className={styles.secondary}
               onClick={(e) => {
                 e.preventDefault()
-                requestAnimationFrame(() => scrollToHash("#contato", 10)) // ✅ sobe 10px
+                requestAnimationFrame(() => scrollToHash("#contato", 10))
               }}
             >
               Contato
@@ -109,7 +137,7 @@ export default function Hero() {
           <div className={styles.rightHeader}>EM ALTA</div>
 
           <div className={styles.list}>
-            {trending.map((item) => (
+            {trendingToRender.map((item) => (
               <Link key={item.id} href={item.href} className={styles.item}>
                 <div className={styles.thumb}>
                   <Image

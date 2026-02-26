@@ -1,146 +1,178 @@
-import Image from "next/image"
-import Link from "next/link"
+// app/noticias/[slug]/page.tsx
+/* eslint-disable @next/next/no-html-link-for-pages */
+
 import { notFound } from "next/navigation"
+import Image from "next/image"
 import styles from "./Noticia.module.css"
-import { getPostBySlug, getTrending } from "../data"
+import { prisma } from "@/lib/prisma"
 
-export default function NoticiaPage({
-  params,
-}: {
-  params: { slug: string }
-}) {
-  const post = getPostBySlug(params.slug)
-  if (!post) return notFound()
+// ✅ seus componentes existentes
 
-  const related = getTrending(5).filter((p) => p.slug !== post.slug)
+import Footer from "@/app/_components/Footer/Footer"
+
+import Header from "@/app/_components/Header/Header"
+
+function formatBR(d: Date) {
+  return new Intl.DateTimeFormat("pt-BR", {
+    day: "2-digit",
+    month: "long",
+    year: "numeric",
+  }).format(d)
+}
+
+function splitParagraphs(text: string) {
+  return text
+    .replace(/\r\n/g, "\n")
+    .split("\n\n")
+    .map((p) => p.trim())
+    .filter(Boolean)
+}
+
+type RouteParams = { slug: string }
+type Props = { params: RouteParams | Promise<RouteParams> }
+
+export default async function NoticiaPage({ params }: Props) {
+  const { slug } = await Promise.resolve(params)
+  if (!slug) return notFound()
+
+  const news = await prisma.news.findUnique({
+    where: { slug },
+    select: {
+      title: true,
+      slug: true,
+      content: true,
+      imageUrl: true,
+      category: true,
+      createdAt: true,
+      author: { select: { name: true, email: true } },
+    },
+  })
+
+  if (!news) return notFound()
+
+  const paragraphs = splitParagraphs(news.content)
+
+  const latest = await prisma.news.findMany({
+    where: { slug: { not: news.slug } },
+    orderBy: { createdAt: "desc" },
+    take: 5,
+    select: { slug: true, title: true, category: true, createdAt: true, imageUrl: true },
+  })
 
   return (
-    <main className={styles.noticiaPage}>
-      <div className={styles.noticiaContainer}>
-        <div className={styles.noticiaBreadcrumb}>
-          <Link href="/" className={styles.noticiaBreadcrumbLink}>
-            Início
-          </Link>
-          <span className={styles.noticiaBreadcrumbSep}>/</span>
-          <Link href="/noticias" className={styles.noticiaBreadcrumbLink}>
-            Notícias
-          </Link>
-          <span className={styles.noticiaBreadcrumbSep}>/</span>
-          <span className={styles.noticiaBreadcrumbCurrent}>{post.title}</span>
-        </div>
+    <>
+      <Header/>
 
-        <header className={styles.noticiaHeader}>
-          <div className={styles.noticiaTopMeta}>
-            <span className={styles.noticiaCategory}>{post.category}</span>
-            <span className={styles.noticiaDot}>•</span>
-            <span className={styles.noticiaReadTime}>{post.readTime}</span>
-            <span className={styles.noticiaDot}>•</span>
-            <span className={styles.noticiaDate}>{post.dateISO}</span>
-          </div>
+      <main className={styles.noticiaPage}>
+        <div className={styles.noticiaContainer}>
+          <nav className={styles.noticiaBreadcrumb}>
+            <a className={styles.noticiaBreadcrumbLink} href="/">Início</a>
+            <span className={styles.noticiaBreadcrumbSep}>›</span>
+            <a className={styles.noticiaBreadcrumbLink} href="/noticias">Notícias</a>
+            <span className={styles.noticiaBreadcrumbSep}>›</span>
+            <span className={styles.noticiaBreadcrumbCurrent}>{news.category}</span>
+          </nav>
 
-          <h1 className={styles.noticiaTitle}>{post.title}</h1>
-          <p className={styles.noticiaExcerpt}>{post.excerpt}</p>
-
-          <div className={styles.noticiaCoverWrap}>
-            <Image
-              src={post.cover}
-              alt={post.title}
-              fill
-              className={styles.noticiaCoverImg}
-              priority
-            />
-          </div>
-
-          <div className={styles.noticiaAuthor}>Por {post.author}</div>
-        </header>
-
-        <section className={styles.noticiaGrid}>
-          <article className={styles.noticiaArticle}>
-            {post.content.map((block, idx) => {
-              if (block.type === "h2") {
-                return (
-                  <h2 key={idx} className={styles.noticiaH2}>
-                    {block.text}
-                  </h2>
-                )
-              }
-
-              if (block.type === "p") {
-                return (
-                  <p key={idx} className={styles.noticiaP}>
-                    {block.text}
-                  </p>
-                )
-              }
-
-              if (block.type === "list") {
-                return (
-                  <ul key={idx} className={styles.noticiaUl}>
-                    {block.items.map((it, i) => (
-                      <li key={i} className={styles.noticiaLi}>
-                        {it}
-                      </li>
-                    ))}
-                  </ul>
-                )
-              }
-
-              if (block.type === "quote") {
-                return (
-                  <figure key={idx} className={styles.noticiaQuote}>
-                    <blockquote className={styles.noticiaBlockquote}>
-                      {block.text}
-                    </blockquote>
-                    {block.cite ? (
-                      <figcaption className={styles.noticiaCite}>
-                        — {block.cite}
-                      </figcaption>
-                    ) : null}
-                  </figure>
-                )
-              }
-
-              return null
-            })}
-
-            <div className={styles.noticiaBackRow}>
-              <Link href="/noticias" className={styles.noticiaBackLink}>
-                ← Voltar para Notícias
-              </Link>
+          <header className={styles.noticiaHeader}>
+            <div className={styles.noticiaBadgeRow}>
+              <span className={styles.noticiaBadge}>{news.category}</span>
             </div>
-          </article>
 
-          <aside className={styles.noticiaSidebar}>
-            <div className={styles.noticiaSideTitle}>EM ALTA</div>
+            <h1 className={styles.noticiaTitle}>{news.title}</h1>
 
-            <div className={styles.noticiaSideList}>
-              {related.map((p) => (
-                <Link
-                  key={p.slug}
-                  href={`/noticias/${p.slug}`}
-                  className={styles.noticiaSideItem}
-                >
-                  <div className={styles.noticiaSideThumb}>
-                    <Image
-                      src={p.cover}
-                      alt={p.title}
-                      fill
-                      className={styles.noticiaSideThumbImg}
-                      sizes="90px"
-                    />
-                  </div>
+            <p className={styles.noticiaExcerpt}>
+              Observatório apresenta dados inéditos sobre crescimento do setor e impactos econômicos nas comunidades locais
+            </p>
 
-                  <div className={styles.noticiaSideMeta}>
-                    <div className={styles.noticiaSideCat}>{p.category}</div>
-                    <div className={styles.noticiaSideT}>{p.title}</div>
-                    <div className={styles.noticiaSideTime}>{p.readTime}</div>
-                  </div>
-                </Link>
+            <div className={styles.noticiaMetaRow}>
+              <span className={styles.noticiaMetaItem}>
+                {news.author?.name || news.author?.email ? (
+                  <> {news.author.name || news.author.email}</>
+                ) : (
+                  <>Observatório</>
+                )}
+              </span>
+              <span className={styles.noticiaMetaSep}>•</span>
+              <time className={styles.noticiaMetaItem} dateTime={news.createdAt.toISOString()}>
+                {formatBR(news.createdAt)}
+              </time>
+            </div>
+
+            {news.imageUrl ? (
+              <div className={styles.noticiaCoverWrap}>
+                <Image
+                  src={news.imageUrl}
+                  alt={news.title}
+                  fill
+                  priority
+                  className={styles.noticiaCoverImg}
+                  sizes="(max-width: 980px) 100vw, 1200px"
+                />
+              </div>
+            ) : null}
+          </header>
+
+          <div className={styles.noticiaGrid}>
+            <article className={styles.noticiaArticle}>
+              {paragraphs.map((p, i) => (
+                <p key={i} className={styles.noticiaP} data-first={i === 0 ? "true" : "false"}>
+                  {p}
+                </p>
               ))}
-            </div>
-          </aside>
-        </section>
-      </div>
-    </main>
+
+              <div className={styles.noticiaBackRow}>
+                <a className={styles.noticiaBackLink} href="/">← Voltar para Notícias</a>
+              </div>
+            </article>
+
+            <aside className={styles.noticiaSidebar}>
+              <section className={styles.noticiaSideCard}>
+                <div className={styles.noticiaSideTitle}>Últimas Notícias</div>
+
+                <div className={styles.noticiaSideList}>
+                  {latest.map((n) => (
+                    <a key={n.slug} className={styles.noticiaSideItem} href={`/noticias/${n.slug}`}>
+                      <div className={styles.noticiaSideThumb}>
+                        {n.imageUrl ? (
+                          <Image
+                            src={n.imageUrl}
+                            alt=""
+                            fill
+                            className={styles.noticiaSideThumbImg}
+                            sizes="84px"
+                          />
+                        ) : (
+                          <div className={styles.noticiaSideThumbFallback} />
+                        )}
+                      </div>
+
+                      <div className={styles.noticiaSideMeta}>
+                        <div className={styles.noticiaSideCat}>{n.category}</div>
+                        <div className={styles.noticiaSideT}>{n.title}</div>
+                        <div className={styles.noticiaSideTime}>{formatBR(n.createdAt)}</div>
+                      </div>
+                    </a>
+                  ))}
+                </div>
+              </section>
+
+              <section className={styles.newsletterCard}>
+                <div className={styles.newsletterTitle}>Receba nossas notícias</div>
+                <div className={styles.newsletterText}>
+                  Inscreva-se para receber análises e estudos sobre turismo religioso.
+                </div>
+
+                <form className={styles.newsletterForm} action="#" method="post">
+                  <input className={styles.newsletterInput} placeholder="Seu e-mail" type="email" name="email" />
+                  <button className={styles.newsletterButton} type="submit">Inscrever-se</button>
+                </form>
+              </section>
+            </aside>
+          </div>
+        </div>
+      </main>
+
+      <Footer />
+    </>
   )
 }

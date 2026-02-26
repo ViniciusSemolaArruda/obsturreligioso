@@ -1,3 +1,4 @@
+//app\_components\Tradition\TraditionCard\TraditionFilterCards.tsx
 "use client"
 
 import Image from "next/image"

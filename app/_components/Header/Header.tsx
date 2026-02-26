@@ -1,131 +1,144 @@
-"use client";
+"use client"
 
-import Image from "next/image";
-import Link from "next/link";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import styles from "./HeaderObservatorio.module.css";
+import Image from "next/image"
+import Link from "next/link"
+import { useCallback, useEffect, useMemo, useRef, useState } from "react"
+import { usePathname, useRouter } from "next/navigation"
+import styles from "./HeaderObservatorio.module.css"
 
 export default function Header() {
-  const [open, setOpen] = useState(false);
-  const [hidden, setHidden] = useState(false);
-  const lastScrollY = useRef(0);
+  const router = useRouter()
+  const pathname = usePathname()
 
+  const [open, setOpen] = useState(false)
+  const [hidden, setHidden] = useState(false)
+  const lastScrollY = useRef(0)
+
+  // ✅ agora os links SEMPRE apontam para a HOME + hash
+  // Assim, em páginas secundárias, o clique te leva para "/" e para a seção correta.
   const leftLinks = useMemo(
     () => [
-      { label: "Início", href: "#inicio" },
-      { label: "Quem Somos", href: "#quem-somos" },
-      { label: "Pilares", href: "#pilares" },
-      { label: "Como fazemos", href: "#como-fazemos" },
+      { label: "Início", href: "/#inicio" },
+      { label: "Quem Somos", href: "/#quem-somos" },
+      { label: "Pilares", href: "/#pilares" },
+      { label: "Como fazemos", href: "/#como-fazemos" },
     ],
     []
-  );
+  )
 
   const rightLinks = useMemo(
     () => [
-      { label: "Perguntas Frequentes", href: "#faq" },
-      { label: "Contato", href: "#contato" },
+      { label: "Perguntas Frequentes", href: "/#faq" },
+      { label: "Contato", href: "/#contato" },
     ],
     []
-  );
+  )
 
-  const allLinks = useMemo(
-    () => [...leftLinks, ...rightLinks],
-    [leftLinks, rightLinks]
-  );
+  const allLinks = useMemo(() => [...leftLinks, ...rightLinks], [leftLinks, rightLinks])
 
-  const close = useCallback(() => setOpen(false), []);
-  const toggleMenu = useCallback(() => setOpen((v) => !v), []);
+  const close = useCallback(() => setOpen(false), [])
+  const toggleMenu = useCallback(() => setOpen((v) => !v), [])
 
   /* 🔽🔼 ESCONDE / MOSTRA HEADER NO SCROLL (MAS NÃO SOME COM MENU ABERTO) */
   useEffect(() => {
     const onScroll = () => {
-      if (open) return; // ✅ com menu aberto, mantém header visível
+      if (open) return
 
-      const currentY = window.scrollY;
+      const currentY = window.scrollY
 
-      // evita flicker com micro scroll
-      if (Math.abs(currentY - lastScrollY.current) < 10) return;
+      if (Math.abs(currentY - lastScrollY.current) < 10) return
 
       if (currentY > lastScrollY.current && currentY > 120) {
-        setHidden(true); // rolando pra baixo
+        setHidden(true)
       } else {
-        setHidden(false); // rolando pra cima
+        setHidden(false)
       }
 
-      lastScrollY.current = currentY;
-    };
+      lastScrollY.current = currentY
+    }
 
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, [open]);
+    window.addEventListener("scroll", onScroll, { passive: true })
+    return () => window.removeEventListener("scroll", onScroll)
+  }, [open])
 
   /* ESC fecha menu */
   useEffect(() => {
     function onKeyDown(e: KeyboardEvent) {
-      if (e.key === "Escape") close();
+      if (e.key === "Escape") close()
     }
-    document.addEventListener("keydown", onKeyDown);
-    return () => document.removeEventListener("keydown", onKeyDown);
-  }, [close]);
+    document.addEventListener("keydown", onKeyDown)
+    return () => document.removeEventListener("keydown", onKeyDown)
+  }, [close])
 
-  /* trava scroll do body quando menu abre (opcional mas profissional) */
+  /* trava scroll do body quando menu abre */
   useEffect(() => {
     if (!open) {
-      document.body.style.overflow = "";
-      return;
+      document.body.style.overflow = ""
+      return
     }
-    document.body.style.overflow = "hidden";
+    document.body.style.overflow = "hidden"
     return () => {
-      document.body.style.overflow = "";
-    };
-  }, [open]);
+      document.body.style.overflow = ""
+    }
+  }, [open])
 
-  /* scroll com offset real */
+  /**
+   * ✅ scroll com offset REAL (SÓ QUANDO JÁ ESTÁ NA HOME)
+   * Mantive sua lógica e seu "gap" exatamente como estava.
+   */
   const scrollToHash = useCallback((hash: string) => {
-  const id = hash.replace("#", "");
-  const el = document.getElementById(id);
-  if (!el) return;
+    const id = hash.replace("#", "")
+    const el = document.getElementById(id)
+    if (!el) return
 
-  const header = document.getElementById("site-header");
+    const header = document.getElementById("site-header")
+    const headerH = header?.getBoundingClientRect().height ?? 0
 
-  // altura real do header visível
-  const headerH = header?.getBoundingClientRect().height ?? 0;
+    // ⚠️ mantém seu ajuste fino
+    const gap = -230
 
-  // respiro extra (ajuste fino)
-  const gap = -230;
+    const y = window.scrollY + el.getBoundingClientRect().top - headerH - gap
+    window.scrollTo({ top: Math.max(0, y), behavior: "smooth" })
+  }, [])
 
-  const y = window.scrollY + el.getBoundingClientRect().top - headerH - gap;
-  window.scrollTo({ top: Math.max(0, y), behavior: "smooth" });
-}, []);
-
-
+  /**
+   * ✅ Clique inteligente:
+   * - Se estiver na HOME: faz scroll suave com offset.
+   * - Se estiver em página secundária: navega pra "/#secao" (home + âncora).
+   */
   const onNavClick = useCallback(
-  (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    if (!href.startsWith("#")) return;
+    (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+      // pega apenas a parte do hash (aceita "/#x" e "#x")
+      const hashIndex = href.indexOf("#")
+      if (hashIndex === -1) return
 
-    e.preventDefault();
+      e.preventDefault()
 
-    // ✅ garante que o header esteja visível antes de medir
-    setHidden(false);
-    close();
+      const hash = href.slice(hashIndex) // "#inicio"
 
-    // ✅ 2 frames: 1) aplicar hidden=false / fechar menu, 2) layout estável e mede certo
-    requestAnimationFrame(() => {
+      // garante header visível, fecha menu
+      setHidden(false)
+      close()
+
+      if (pathname !== "/") {
+        // ✅ está fora da home: vai pra home com hash
+        router.push(`/${hash}`)
+        return
+      }
+
+      // ✅ já está na home: scroll com offset (seu comportamento atual)
       requestAnimationFrame(() => {
-        scrollToHash(href);
-      });
-    });
-  },
-  [close, scrollToHash]
-);
-
+        requestAnimationFrame(() => {
+          scrollToHash(hash)
+        })
+      })
+    },
+    [close, pathname, router, scrollToHash]
+  )
 
   return (
     <>
-      <header
-        id="site-header"
-        className={`${styles.header} ${hidden ? styles.headerHidden : ""}`}
-      >
+      <header id="site-header" className={`${styles.header} ${hidden ? styles.headerHidden : ""}`}>
         <nav className={styles.nav}>
           {/* Esquerda (desktop) */}
           <div className={styles.side}>
@@ -143,9 +156,9 @@ export default function Header() {
 
           {/* Logo */}
           <Link
-            href="#inicio"
+            href="/#inicio"
             className={styles.logoWrap}
-            onClick={(e) => onNavClick(e, "#inicio")}
+            onClick={(e) => onNavClick(e, "/#inicio")}
             aria-label="Voltar ao início"
           >
             <Image
@@ -171,15 +184,11 @@ export default function Header() {
               </Link>
             ))}
 
-            <Link
-  href="#noticias"
-  className={styles.cta}
-  onClick={(e) => onNavClick(e, "#noticias")}
->
-  Notícias
-</Link>
+            <Link href="/#noticias" className={styles.cta} onClick={(e) => onNavClick(e, "/#noticias")}>
+              Notícias
+            </Link>
 
-            {/* ✅ Burger aparece no mobile via CSS */}
+            {/* Burger aparece no mobile via CSS */}
             <button
               type="button"
               className={styles.burger}
@@ -195,7 +204,7 @@ export default function Header() {
         </nav>
       </header>
 
-      {/* ✅ Overlay */}
+      {/* Overlay */}
       <button
         type="button"
         aria-label="Fechar menu"
@@ -203,7 +212,7 @@ export default function Header() {
         onClick={close}
       />
 
-      {/* ✅ Menu mobile */}
+      {/* Menu mobile */}
       <div className={`${styles.mobileMenu} ${open ? styles.mobileMenuOpen : ""}`}>
         <div className={styles.mobileMenuInner}>
           {allLinks.map((l) => (
@@ -217,15 +226,11 @@ export default function Header() {
             </Link>
           ))}
 
-          <Link
-            href="#noticias"
-            className={styles.mobileCTA}
-            onClick={(e) => onNavClick(e, "#noticias")}
-          >
+          <Link href="/#noticias" className={styles.mobileCTA} onClick={(e) => onNavClick(e, "/#noticias")}>
             Notícias
           </Link>
         </div>
       </div>
     </>
-  );
+  )
 }
