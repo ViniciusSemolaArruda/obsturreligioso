@@ -101,39 +101,50 @@ export default function Timeline() {
     const ctx = gsap.context(() => {
       const cards = gsap.utils.toArray<HTMLElement>(`.${styles.text}`)
 
-      // Estado inicial (visível o efeito)
+      // ✅ estado inicial BEM perceptível
       gsap.set(cards, {
         opacity: reduceMotion ? 1 : 0,
-        y: reduceMotion ? 0 : 16,
-        filter: reduceMotion ? "none" : "blur(12px)",
+        y: reduceMotion ? 0 : 26,
+        filter: reduceMotion ? "none" : "blur(22px)",
         willChange: "transform, opacity, filter",
       })
 
-      // ✅ 1) Cards aparecem ao entrar na viewport (sem scrub)
-      const cardTriggers: ScrollTrigger[] = []
-
+      // ✅ cards entram quando VOCÊ REALMENTE CHEGA neles
       cards.forEach((el) => {
         const tween = gsap.to(el, {
           opacity: 1,
           y: 0,
           filter: "blur(0px)",
-          duration: 0.7,
-          ease: "power2.out",
+          duration: 0.9,
+          ease: "power3.out",
           paused: true,
         })
 
-        const st = ScrollTrigger.create({
+        ScrollTrigger.create({
           trigger: el,
-          start: "top 85%",
-          end: "top 55%",
-          onEnter: () => tween.play(),
-          onLeaveBack: () => tween.reverse(), // se quiser “uma vez só”, me fala que eu coloco once:true
-        })
 
-        cardTriggers.push(st)
+          // 🔥 mais tarde (antes era 85%)
+          start: "top 60%",
+          end: "top 40%",
+
+          // ✅ ajuda em layouts responsivos
+          invalidateOnRefresh: true,
+          refreshPriority: 1,
+
+          // ✅ anima só uma vez (não “some” quando volta)
+          once: true,
+
+          onEnter: () => tween.play(),
+
+          // Se você quiser voltar ao rolar pra cima, remova once:true e use isso:
+          // onLeaveBack: () => tween.reverse(),
+
+          // DEBUG (se quiser calibrar):
+          // markers: true,
+        })
       })
 
-      // ✅ 2) Linha de progresso continua com scrub
+      // ✅ linha de progresso com scrub (pode ficar)
       gsap.fromTo(
         progress,
         { height: "0%" },
@@ -142,19 +153,16 @@ export default function Timeline() {
           ease: "none",
           scrollTrigger: {
             trigger: line,
-            start: "top 80%",
+            start: "top 78%",
             end: "bottom 35%",
             scrub: true,
+            invalidateOnRefresh: true,
           },
         }
       )
 
+      // força recalcular após montar
       ScrollTrigger.refresh()
-
-      // cleanup só do que foi criado aqui
-      return () => {
-        cardTriggers.forEach((t) => t.kill())
-      }
     }, root)
 
     return () => ctx.revert()
