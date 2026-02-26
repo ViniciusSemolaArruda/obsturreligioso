@@ -20,6 +20,15 @@ function makeExcerpt(text: string, max = 160) {
   return clean.slice(0, max).trimEnd() + "…"
 }
 
+// ✅ helper pra TS entender que saiu null
+function isString(v: unknown): v is string {
+  return typeof v === "string" && v.trim().length > 0
+}
+
+type CatRow = {
+  category: string | null
+}
+
 export default async function HomeNewsSection() {
   // ✅ filtro pra NÃO trazer notícia teste
   const baseWhere = {
@@ -48,15 +57,15 @@ export default async function HomeNewsSection() {
   })
 
   // chips (categorias mais recentes)
-  const cats = await prisma.news.findMany({
+  const cats: CatRow[] = await prisma.news.findMany({
     where: baseWhere,
     orderBy: { createdAt: "desc" },
     take: 24,
     select: { category: true },
   })
 
-  const uniqueCats = Array.from(
-    new Set(cats.map((c) => c.category).filter(Boolean))
+  const uniqueCats: string[] = Array.from(
+    new Set(cats.map((c: CatRow) => c.category).filter(isString))
   ).slice(0, 8)
 
   const analyses = items.slice(0, 3)
@@ -74,8 +83,11 @@ export default async function HomeNewsSection() {
       {uniqueCats.length > 0 ? (
         <div className={styles.chipsRow}>
           {uniqueCats.map((c) => (
-            // se você ainda não tem filtro por categoria no /noticias, deixa só /noticias
-            <Link key={c} className={styles.chip} href={`/noticias?cat=${encodeURIComponent(c)}`}>
+            <Link
+              key={c}
+              className={styles.chip}
+              href={`/noticias?cat=${encodeURIComponent(c)}`}
+            >
               {c}
             </Link>
           ))}
@@ -91,10 +103,16 @@ export default async function HomeNewsSection() {
 
           <div className={styles.newsList}>
             {items.length === 0 ? (
-              <div className={styles.empty}>Ainda não há notícias publicadas.</div>
+              <div className={styles.empty}>
+                Ainda não há notícias publicadas.
+              </div>
             ) : (
               items.map((n) => (
-                <Link key={n.id} href={`/noticias/${n.slug}`} className={styles.card}>
+                <Link
+                  key={n.id}
+                  href={`/noticias/${n.slug}`}
+                  className={styles.card}
+                >
                   <div className={styles.thumb}>
                     {n.imageUrl ? (
                       <Image
@@ -110,7 +128,9 @@ export default async function HomeNewsSection() {
                   <div className={styles.content}>
                     <div className={styles.metaRow}>
                       <span className={styles.metaPill}>{n.category}</span>
-                      <span className={styles.metaDate}>{formatBR(n.createdAt)}</span>
+                      <span className={styles.metaDate}>
+                        {formatBR(n.createdAt)}
+                      </span>
                     </div>
 
                     <div className={styles.title}>{n.title}</div>
