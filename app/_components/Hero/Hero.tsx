@@ -26,14 +26,7 @@ const featured = {
 
 // fallback caso ainda não tenha 5 notícias no banco
 const FALLBACK_TRENDING: TrendingItem[] = [
-  {
-    id: "f1",
-    href: "/noticias",
-    category: "Portal",
-    title: "Publicações em construção",
-    readTime: "1 min de leitura",
-    image: "/event1.png",
-  },
+  
 ]
 
 function calcReadTimeFromText(text: string) {
