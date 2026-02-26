@@ -1,5 +1,5 @@
 generator client {
-  provider = "prisma-client-js"
+  provider = "prisma-client"
 }
 
 datasource db {
@@ -18,9 +18,7 @@ model User {
   passwordHash String
   role         Role     @default(USER)
   createdAt    DateTime @default(now())
-
-  // ✅ lado oposto da relação
-  news News[]
+  news         News[]
 }
 
 model News {
