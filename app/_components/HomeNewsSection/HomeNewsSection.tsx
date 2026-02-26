@@ -2,6 +2,7 @@ import Link from "next/link"
 import Image from "next/image"
 import { prisma } from "@/lib/prisma"
 import styles from "./HomeNewsSection.module.css"
+import type { Prisma } from "@prisma/client"
 
 function formatBR(d: Date) {
   return new Intl.DateTimeFormat("pt-BR", {
@@ -25,12 +26,23 @@ function isString(v: unknown): v is string {
   return typeof v === "string" && v.trim().length > 0
 }
 
-type CatRow = {
-  category: string | null
-}
+type CatRow = { category: string | null }
+
+// ✅ Tipos do Prisma (garante que items NÃO vira any[])
+type NewsItem = Prisma.NewsGetPayload<{
+  select: {
+    id: true
+    slug: true
+    title: true
+    content: true
+    category: true
+    imageUrl: true
+    createdAt: true
+    author: { select: { name: true; email: true } }
+  }
+}>
 
 export default async function HomeNewsSection() {
-  // ✅ filtro pra NÃO trazer notícia teste
   const baseWhere = {
     NOT: [
       { title: { contains: "teste", mode: "insensitive" as const } },
@@ -40,7 +52,7 @@ export default async function HomeNewsSection() {
     ],
   }
 
-  const items = await prisma.news.findMany({
+  const items: NewsItem[] = await prisma.news.findMany({
     where: baseWhere,
     orderBy: { createdAt: "desc" },
     take: 6,
@@ -56,7 +68,6 @@ export default async function HomeNewsSection() {
     },
   })
 
-  // chips (categorias mais recentes)
   const cats: CatRow[] = await prisma.news.findMany({
     where: baseWhere,
     orderBy: { createdAt: "desc" },
@@ -68,7 +79,7 @@ export default async function HomeNewsSection() {
     new Set(cats.map((c: CatRow) => c.category).filter(isString))
   ).slice(0, 8)
 
-  const analyses = items.slice(0, 3)
+  const analyses: NewsItem[] = items.slice(0, 3)
 
   return (
     <section id="noticias" className={styles.section}>
@@ -107,7 +118,7 @@ export default async function HomeNewsSection() {
                 Ainda não há notícias publicadas.
               </div>
             ) : (
-              items.map((n) => (
+              items.map((n: NewsItem) => (
                 <Link
                   key={n.id}
                   href={`/noticias/${n.slug}`}
@@ -127,7 +138,10 @@ export default async function HomeNewsSection() {
 
                   <div className={styles.content}>
                     <div className={styles.metaRow}>
-                      <span className={styles.metaPill}>{n.category}</span>
+                      {/* se category puder ser null no seu schema, deixa fallback */}
+                      <span className={styles.metaPill}>
+                        {n.category ?? "Geral"}
+                      </span>
                       <span className={styles.metaDate}>
                         {formatBR(n.createdAt)}
                       </span>
@@ -157,9 +171,9 @@ export default async function HomeNewsSection() {
           <div className={styles.sideCard}>
             <div className={styles.sideTitle}>Análises</div>
 
-            {analyses.map((a) => (
+            {analyses.map((a: NewsItem) => (
               <div key={a.id} className={styles.sideItem}>
-                <div className={styles.sideTag}>{a.category}</div>
+                <div className={styles.sideTag}>{a.category ?? "Geral"}</div>
                 <div className={styles.sideHeadline}>{a.title}</div>
                 <div className={styles.sideTime}>{formatBR(a.createdAt)}</div>
               </div>
