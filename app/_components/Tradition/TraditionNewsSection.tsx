@@ -145,37 +145,40 @@ export default function TraditionNewsSection() {
         </div>
 
         {/* SIDEBAR DIREITA (mantida igual) */}
-        <aside className={styles.rightCol}>
-          <div className={styles.sideCard}>
-            <div className={styles.sideTitle}>
-              Análises e Contexto
-            </div>
+        {/* SIDEBAR DIREITA — ANÁLISES E CONTEXTO (INSTITUCIONAL) */}
+<aside className={styles.rightCol}>
+  <div className={styles.sideCard}>
+    <div className={styles.sideTitle}>
+      Análises & Contexto
+    </div>
 
-            <div className={styles.sideItem}>
-              <div className={styles.sideTag}>OPINIÃO</div>
-              <div className={styles.sideHeadline}>
-                A secularização irreversível da juventude urbana latino-americana
-              </div>
-              <div className={styles.sideTime}>
-                🕒 10 min de leitura
-              </div>
-            </div>
+    {/* 
+      Seção institucional do Observatório.
+      Não é uma área de notícias.
+      Futuramente exibirá análises estratégicas, dados, estudos e inteligência
+      sobre turismo religioso, manifestações de fé e contexto sociocultural
+      no Brasil e na América Latina.
+    */}
 
-            <div className={styles.sideItem}>
-              <div className={styles.sideTag}>OPINIÃO</div>
-              <div className={styles.sideHeadline}>
-                A secularização irreversível da juventude urbana latino-americana
-              </div>
-              <div className={styles.sideTime}>
-                🕒 10 min de leitura
-              </div>
-            </div>
+    <div className={styles.sideItem}>
+      <div className={styles.sideTag}>OBSERVATÓRIO</div>
+      <div className={styles.sideHeadline}>
+        Espaço dedicado à análise estratégica, dados e contextualização das 
+        principais tendências do turismo religioso e das manifestações de fé 
+        no Brasil e na América Latina.
+      </div>
+    </div>
 
-            <Link className={styles.sideBtn} href="/analises">
-              Ver todas as análises
-            </Link>
-          </div>
-        </aside>
+    <div className={styles.sideItem}>
+      <div className={styles.sideTag}>INTELIGÊNCIA</div>
+      <div className={styles.sideHeadline}>
+        O Observatório busca ir além da notícia, oferecendo interpretações 
+        analíticas, estudos socioculturais e visão institucional sobre o 
+        impacto religioso na cultura, economia e sociedade contemporânea.
+      </div>
+    </div>
+  </div>
+</aside>
       </div>
     </section>
   )
