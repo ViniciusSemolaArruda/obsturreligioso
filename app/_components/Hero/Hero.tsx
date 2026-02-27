@@ -13,6 +13,7 @@ type TrendingItem = {
   title: string
   readTime: string
   image: string
+  createdAt?: string // ✅ pra garantir ordenação
 }
 
 const featured = {
@@ -24,10 +25,8 @@ const featured = {
   image: "/hero3.png",
 }
 
-// fallback caso ainda não tenha 5 notícias no banco
-const FALLBACK_TRENDING: TrendingItem[] = [
-  
-]
+// fallback caso ainda não tenha notícias no banco
+const FALLBACK_TRENDING: TrendingItem[] = []
 
 function calcReadTimeFromText(text: string) {
   const words = String(text || "")
@@ -48,7 +47,8 @@ export default function Hero() {
 
     async function loadTrending() {
       try {
-        const res = await fetch("/api/news?take=5", { cache: "no-store" })
+        // ✅ pede 3 direto (menos peso e mais rápido)
+        const res = await fetch("/api/news?take=3", { cache: "no-store" })
         const data = await res.json()
 
         if (!alive) return
@@ -60,12 +60,21 @@ export default function Hero() {
             href: String(n.href || `/noticias/${n.slug || ""}`),
             category: String(n.category || "Notícia"),
             title: String(n.title || ""),
-            // ✅ seu endpoint já manda excerpt — usamos pra estimar tempo
             readTime: calcReadTimeFromText(String(n.excerpt || "")),
             image: String(n.image || "/event1.png"),
+            createdAt: n.createdAt ? String(n.createdAt) : undefined,
           }))
 
-          setTrending(mapped)
+          // ✅ Garante que sempre serão os 3 últimos (mais recentes)
+          const sorted = [...mapped].sort((a, b) => {
+            const ad = a.createdAt ? new Date(a.createdAt).getTime() : 0
+            const bd = b.createdAt ? new Date(b.createdAt).getTime() : 0
+            // se createdAt não vier, mantém ordem do backend
+            if (!ad && !bd) return 0
+            return bd - ad
+          })
+
+          setTrending(sorted.slice(0, 3))
         } else {
           setTrending([])
         }
@@ -120,9 +129,9 @@ export default function Hero() {
               Contato
             </a>
 
-            <Link href={featured.href} className={styles.secondary}>
+            {/* <Link href={featured.href} className={styles.secondary}>
               Ler destaque
-            </Link>
+            </Link> */}
           </div>
         </div>
 
@@ -138,7 +147,7 @@ export default function Hero() {
                     alt={item.title}
                     fill
                     className={styles.thumbImg}
-                    sizes="120px"
+                    sizes="(max-width: 980px) 72px, 120px"
                   />
                 </div>
 

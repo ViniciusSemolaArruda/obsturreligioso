@@ -1,496 +1,241 @@
 .hero {
-
   width: 100%;
-
   position: relative;
-
   overflow: hidden;
-
-
-
-  /* ocupa tela cheia com presença institucional */
-
   min-height: clamp(520px, 72vh, 760px);
-
 }
-
-
 
 /* Fundo full hero */
-
 .bg {
-
   position: absolute;
-
   inset: 0;
-
   background-image:
-
     linear-gradient(90deg, rgba(2, 6, 23, 0.78) 0%, rgba(2, 6, 23, 0.40) 56%, rgba(2, 6, 23, 0.18) 100%),
-
     linear-gradient(0deg, rgba(2, 6, 23, 0.78) 0%, rgba(2, 6, 23, 0.22) 62%, rgba(2, 6, 23, 0.08) 100%),
-
     url("/hero3.png");
-
   background-size: cover;
-
   background-position: center;
-
   background-repeat: no-repeat;
-
 }
-
-
 
 /* Container principal do hero */
-
 .stage {
-
   position: relative;
-
   z-index: 1;
-
   width: 100%;
-
   min-height: inherit;
 
-
-
-  /* 🔥 CENTRALIZA VERTICALMENTE */
-
   display: flex;
-
   align-items: center;
-
   justify-content: space-between;
 
-
-
-  /* respiro lateral elegante */
-
   padding: clamp(24px, 4vw, 64px);
-
 }
 
-
-
-/* Conteúdo da esquerda (título + texto + botões) */
-
+/* Conteúdo da esquerda */
 .featuredContent {
-
   max-width: 780px;
-
-
-
-  /* 🔥 joga um pouco mais pra direita */
-
   margin-left: clamp(20px, 6vw, 120px);
-
-
-
-  /* remove deslocamento antigo */
-
   padding-top: 0;
-
 }
 
-
-
-/* Título principal (nome do Observatório) */
-
+/* Título principal */
 .featuredTitle {
-
   margin: 0;
-
   font-size: clamp(34px, 3.6vw, 60px);
-
   line-height: 1.08;
-
   letter-spacing: -0.8px;
-
   font-weight: 800;
 
-
-
   color: rgba(255, 255, 255, 0.98);
-
   text-shadow: 0 18px 46px rgba(0, 0, 0, 0.55);
-
 }
-
-
 
 /* Texto descritivo */
-
 .featuredExcerpt {
-
   margin: 16px 0 0;
-
   font-size: 16px;
-
   line-height: 1.65;
-
   font-weight: 500;
 
-
-
   color: rgba(255, 255, 255, 0.86);
-
   text-shadow: 0 14px 34px rgba(0, 0, 0, 0.42);
 
-
-
   max-width: 58ch;
-
 }
-
-
 
 /* Botões */
-
 .actions {
-
   margin-top: 22px;
-
   display: flex;
-
   gap: 12px;
-
   flex-wrap: wrap;
-
 }
-
-
 
 .primary,
-
 .secondary {
-
   text-decoration: none;
-
   border-radius: 14px;
-
   padding: 12px 18px;
-
   font-weight: 900;
-
   font-size: 14px;
-
   transition: transform 140ms ease, filter 140ms ease, background 140ms ease;
-
 }
-
-
 
 .primary {
-
   background: linear-gradient(180deg, #fb923c, #f97316);
-
   color: #ffffff;
-
   border: 1px solid rgba(249, 115, 22, 0.35);
-
   box-shadow: 0 22px 46px rgba(0, 0, 0, 0.34);
-
 }
-
-
 
 .primary:hover {
-
   transform: translateY(-1px);
-
   filter: brightness(0.98);
-
 }
-
-
 
 .secondary {
-
   background: rgba(255, 255, 255, 0.12);
-
   color: rgba(255, 255, 255, 0.94);
-
   border: 1px solid rgba(255, 255, 255, 0.22);
-
   backdrop-filter: blur(10px);
-
   -webkit-backdrop-filter: blur(10px);
-
 }
-
-
 
 .secondary:hover {
-
   transform: translateY(-1px);
-
   background: rgba(255, 255, 255, 0.16);
-
 }
 
-
-
-/* Painel "Em alta" (lado direito) */
-
+/* Painel "Em alta" */
 .trending {
-
   position: absolute;
-
   z-index: 2;
 
-
-
   right: clamp(18px, 3vw, 42px);
-
   top: 50%;
-
   transform: translateY(-50%);
 
-
-
   width: min(420px, 36vw);
-
   max-height: calc(100% - 80px);
-
   overflow: auto;
 
-
-
   border-radius: 22px;
-
   padding: 16px;
 
-
-
   background: rgba(255, 255, 255, 0.14);
-
   border: 1px solid rgba(255, 255, 255, 0.22);
-
   box-shadow: 0 22px 70px rgba(0, 0, 0, 0.32);
-
   backdrop-filter: blur(18px) saturate(1.25);
-
   -webkit-backdrop-filter: blur(18px) saturate(1.25);
-
 }
-
-
 
 /* Header do painel */
-
 .rightHeader {
-
   font-size: 12px;
-
   font-weight: 950;
-
   letter-spacing: 1px;
-
   color: rgba(255, 255, 255, 0.92);
 
-
-
   display: flex;
-
   align-items: center;
-
   gap: 10px;
 
-
-
   padding: 4px 6px 12px;
-
 }
-
-
 
 .rightHeader::after {
-
   content: "";
-
   height: 1px;
-
   flex: 1;
-
   background: rgba(255, 255, 255, 0.18);
-
 }
 
-
-
-/* Lista de notícias (DESKTOP/TABLET) */
-
+/* Lista (DESKTOP/TABLET) */
 .list {
-
   display: grid;
-
   gap: 12px;
-
   padding: 0 4px 6px;
-
 }
-
-
 
 .item {
-
   display: grid;
-
   grid-template-columns: 72px 1fr;
-
   gap: 14px;
-
   align-items: center;
 
-
-
   text-decoration: none;
-
   padding: 12px;
-
   border-radius: 16px;
 
-
-
   background: rgba(2, 6, 23, 0.18);
-
   border: 1px solid rgba(255, 255, 255, 0.14);
-
-
 
   transition: transform 140ms ease, background 140ms ease, border-color 140ms ease;
-
 }
-
-
 
 .item:hover {
-
   transform: translateY(-2px);
-
   background: rgba(2, 6, 23, 0.26);
-
   border-color: rgba(255, 255, 255, 0.22);
-
 }
-
-
 
 .thumb {
-
   position: relative;
-
   width: 72px;
-
   height: 72px;
-
   border-radius: 14px;
-
   overflow: hidden;
-
-
 
   background: rgba(255, 255, 255, 0.08);
-
   border: 1px solid rgba(255, 255, 255, 0.14);
-
 }
-
-
 
 .thumbImg {
-
   object-fit: cover;
-
 }
-
-
 
 .meta {
-
   min-width: 0;
-
 }
-
-
 
 .category {
-
   font-size: 12px;
-
   font-weight: 900;
-
   color: rgba(255, 255, 255, 0.9);
-
   margin-bottom: 4px;
-
 }
-
-
 
 .title {
-
   font-size: 15.5px;
-
   font-weight: 900;
-
   line-height: 1.25;
-
   color: rgba(255, 255, 255, 0.96);
 
-
-
   display: -webkit-box;
-
   -webkit-line-clamp: 2;
-
   -webkit-box-orient: vertical;
-
   overflow: hidden;
-
 }
-
-
 
 .time {
-
   margin-top: 6px;
-
   font-size: 12.5px;
-
   color: rgba(255, 255, 255, 0.78);
-
   font-weight: 700;
-
 }
-
-
 
 /* Scrollbar discreto (painel) */
-
 .trending::-webkit-scrollbar {
-
   width: 8px;
-
 }
-
 .trending::-webkit-scrollbar-thumb {
-
   background: rgba(255, 255, 255, 0.18);
-
   border-radius: 999px;
-
 }
-
 .trending::-webkit-scrollbar-track {
-
   background: transparent;
-
 }
-
-
 
 /* RESPONSIVO TABLET */
 @media (max-width: 1100px) {
@@ -504,72 +249,136 @@
 }
 
 /* =========================
-   📱 MOBILE JUSTIFICADO (ARRUMADO)
+   📱 MOBILE (EM ALTA BOM DE VER)
+   ========================= */
+/* =========================
+   📱 MOBILE (1 CARD POR VEZ)
    ========================= */
 @media (max-width: 980px) {
-
-  /* layout do hero */
   .stage {
     flex-direction: column;
-    align-items: center; /* antes estava flex-start (causava desalinhamento) */
+    align-items: center;
     justify-content: center;
-    text-align: justify;
+    text-align: left;
+    padding: 28px 16px 22px;
   }
 
-  /* conteúdo principal */
   .featuredContent {
     margin-left: 0;
     max-width: 100%;
     width: 100%;
-    text-align: justify; /* 🔥 TEXTO JUSTIFICADO */
   }
 
-  /* título centralizado (fica mais premium) */
   .featuredTitle {
     text-align: center;
+    font-size: clamp(26px, 7.2vw, 38px);
+    line-height: 1.15;
   }
 
-  /* descrição JUSTIFICADA como você pediu */
   .featuredExcerpt {
     text-align: justify;
     text-justify: inter-word;
     max-width: 100%;
     font-size: 15.5px;
     line-height: 1.7;
+    margin-top: 14px;
   }
 
-  /* botões centralizados bonitos */
   .actions {
     justify-content: center;
+    gap: 10px;
   }
 
-  /* trending vira bloco inferior */
+  /* Painel EM ALTA */
   .trending {
     position: relative;
     right: auto;
     top: auto;
     transform: none;
+
     width: 100%;
     max-height: none;
-    margin-top: 28px;
+    margin-top: 18px;
+
+    padding: 14px 12px 12px;
     overflow: hidden;
+    border-radius: 18px;
+
+    background: rgba(255, 255, 255, 0.13);
+    border: 1px solid rgba(255, 255, 255, 0.22);
   }
 
-  /* carrossel horizontal */
+  .rightHeader {
+    padding: 6px 8px 12px;
+    font-size: 12px;
+    letter-spacing: 1.2px;
+  }
+
+  /* 🔥 CARROSSEL TRAVADO (1 por vez) */
   .list {
     display: flex;
-    gap: 12px;
-    padding: 0 6px 10px;
+    gap: 14px;
+
     overflow-x: auto;
     overflow-y: hidden;
+
+    /* ESSENCIAL: trava no card */
     scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+
+    /* deixa o snap central bonito */
+    scroll-padding-left: 12px;
+    scroll-padding-right: 12px;
+
     -webkit-overflow-scrolling: touch;
+    padding: 0 12px 10px;
   }
 
+  /* 🔥 CADA CARD OCUPA A TELA (1 por vez) */
   .item {
     flex: 0 0 100%;
     min-width: 100%;
+
+    /* ESSENCIAL: snap por card */
     scroll-snap-align: start;
+    scroll-snap-stop: always;
+
+    padding: 16px;
+    border-radius: 16px;
+
+    grid-template-columns: 82px 1fr;
+    gap: 16px;
+
+    background: rgba(2, 6, 23, 0.30);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+  }
+
+  .thumb {
+    width: 82px;
+    height: 82px;
+    border-radius: 14px;
+  }
+
+  .title {
+    font-size: 16.5px;
+    line-height: 1.25;
+    -webkit-line-clamp: 3;
+  }
+
+  .time {
+    font-size: 13px;
+  }
+
+  /* scrollbar horizontal elegante */
+  .list::-webkit-scrollbar {
+    height: 6px;
+  }
+  .list::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.22);
+    border-radius: 999px;
+  }
+  .list::-webkit-scrollbar-track {
+    background: transparent;
   }
 }
 
@@ -577,10 +386,14 @@
 @media (max-width: 560px) {
   .featuredTitle {
     font-size: 26px;
-    line-height: 1.2;
   }
 
   .featuredExcerpt {
     font-size: 15px;
+  }
+
+  .item {
+    flex-basis: 92%;
+    min-width: 92%;
   }
 }
