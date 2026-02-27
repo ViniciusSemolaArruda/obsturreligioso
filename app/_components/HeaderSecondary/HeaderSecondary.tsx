@@ -15,7 +15,7 @@ export default function HeaderSecondary() {
   const links = useMemo<NavItem[]>(
     () => [
       { label: "Início", href: "/" },
-      { label: "Notícias", href: "/noticias" },
+      { label: "Notícias", href: "/" },
       { label: "Quem Somos", href: "/#quem-somos" },
       { label: "Pilares", href: "/#pilares" },
       { label: "Contato", href: "/#contato" },

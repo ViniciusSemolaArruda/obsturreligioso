@@ -68,7 +68,7 @@ export default async function NoticiaPage({ params }: Props) {
           <nav className={styles.noticiaBreadcrumb}>
             <a className={styles.noticiaBreadcrumbLink} href="/">Início</a>
             <span className={styles.noticiaBreadcrumbSep}>›</span>
-            <a className={styles.noticiaBreadcrumbLink} href="/noticias">Notícias</a>
+            <a className={styles.noticiaBreadcrumbLink} href="/">Notícias</a>
             <span className={styles.noticiaBreadcrumbSep}>›</span>
             <span className={styles.noticiaBreadcrumbCurrent}>{news.category}</span>
           </nav>
