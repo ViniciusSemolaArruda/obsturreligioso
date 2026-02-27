@@ -1,15 +1,17 @@
-"use client";
+"use client"
 
-import { useState } from "react";
-import styles from "./Contact.module.css";
+import { useState } from "react"
+import styles from "./Contact.module.css"
 
 type FormState = {
-  firstName: string;
-  lastName: string;
-  email: string;
-  phone: string;
-  message: string;
-};
+  firstName: string
+  lastName: string
+  email: string
+  phone: string
+  message: string
+}
+
+type Status = "idle" | "sending" | "sent" | "error"
 
 const initial: FormState = {
   firstName: "",
@@ -17,26 +19,60 @@ const initial: FormState = {
   email: "",
   phone: "",
   message: "",
-};
+}
+
+function sanitizeForm(f: FormState): FormState {
+  return {
+    firstName: f.firstName.trim(),
+    lastName: f.lastName.trim(),
+    email: f.email.trim(),
+    phone: f.phone.trim(),
+    message: f.message.trim(),
+  }
+}
 
 export default function Contact() {
-  const [form, setForm] = useState<FormState>(initial);
-  const [status, setStatus] = useState<"idle" | "sending" | "sent">("idle");
+  const [form, setForm] = useState<FormState>(initial)
+  const [status, setStatus] = useState<Status>("idle")
 
   function onChange<K extends keyof FormState>(key: K, value: FormState[K]) {
-    setForm((prev) => ({ ...prev, [key]: value }));
+    setForm((prev) => ({ ...prev, [key]: value }))
   }
 
-  async function onSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    setStatus("sending");
+  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault()
 
-    // Aqui você pode ligar com seu endpoint /api/contact depois.
-    await new Promise((r) => setTimeout(r, 600));
+    if (status === "sending") return
+    setStatus("sending")
 
-    setStatus("sent");
-    setForm(initial);
-    setTimeout(() => setStatus("idle"), 2000);
+    try {
+      const payload = sanitizeForm(form)
+
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      })
+
+      const data: { ok?: boolean; error?: string } = await res
+        .json()
+        .catch(() => ({}))
+
+      if (!res.ok || !data.ok) {
+        alert(data.error || "Não foi possível enviar sua mensagem. Tente novamente.")
+        setStatus("error")
+        setTimeout(() => setStatus("idle"), 1200)
+        return
+      }
+
+      setStatus("sent")
+      setForm(initial)
+      setTimeout(() => setStatus("idle"), 2000)
+    } catch {
+      alert("Falha de rede. Verifique sua internet e tente novamente.")
+      setStatus("error")
+      setTimeout(() => setStatus("idle"), 1200)
+    }
   }
 
   return (
@@ -71,6 +107,7 @@ export default function Contact() {
                 onChange={(e) => onChange("firstName", e.target.value)}
                 placeholder="Primeiro Nome"
                 required
+                disabled={status === "sending"}
               />
             </div>
 
@@ -81,6 +118,7 @@ export default function Contact() {
                 value={form.lastName}
                 onChange={(e) => onChange("lastName", e.target.value)}
                 placeholder="Sobrenome"
+                disabled={status === "sending"}
               />
             </div>
 
@@ -93,6 +131,7 @@ export default function Contact() {
                 onChange={(e) => onChange("email", e.target.value)}
                 placeholder="seuemail@exemplo.com"
                 required
+                disabled={status === "sending"}
               />
             </div>
 
@@ -103,6 +142,7 @@ export default function Contact() {
                 value={form.phone}
                 onChange={(e) => onChange("phone", e.target.value)}
                 placeholder="(21) 9 9999-9999"
+                disabled={status === "sending"}
               />
             </div>
 
@@ -114,6 +154,7 @@ export default function Contact() {
                 onChange={(e) => onChange("message", e.target.value)}
                 placeholder="Escreva aqui o que você deseja realizar..."
                 rows={5}
+                disabled={status === "sending"}
               />
             </div>
           </div>
@@ -122,13 +163,15 @@ export default function Contact() {
             {status === "idle" && "Fale conosco"}
             {status === "sending" && "Enviando..."}
             {status === "sent" && "Enviado ✅"}
+            {status === "error" && "Tentar novamente"}
           </button>
 
           <p className={styles.note}>
-            Ao enviar, você concorda em ser contatado pelo Observatório Internacional do Turismo Religioso Laico no Brasil e na America Latina para retorno.
+            Ao enviar, você concorda em ser contatado pelo Observatório Internacional do Turismo
+            Religioso Laico no Brasil e na America Latina para retorno.
           </p>
         </form>
       </div>
     </section>
-  );
+  )
 }

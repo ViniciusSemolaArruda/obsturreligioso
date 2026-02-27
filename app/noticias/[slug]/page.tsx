@@ -1,4 +1,3 @@
-// app/noticias/[slug]/page.tsx
 /* eslint-disable @next/next/no-html-link-for-pages */
 
 import { notFound } from "next/navigation"
@@ -6,11 +5,9 @@ import Image from "next/image"
 import styles from "./Noticia.module.css"
 import { prisma } from "@/lib/prisma"
 
-// ✅ seus componentes existentes
-
 import Footer from "@/app/_components/Footer/Footer"
-
 import Header from "@/app/_components/Header/Header"
+import NewsletterCardInline from "@/app/_components/Newsletter/NewsletterCardInline"
 
 function formatBR(d: Date) {
   return new Intl.DateTimeFormat("pt-BR", {
@@ -61,14 +58,18 @@ export default async function NoticiaPage({ params }: Props) {
 
   return (
     <>
-      <Header/>
+      <Header />
 
       <main className={styles.noticiaPage}>
         <div className={styles.noticiaContainer}>
           <nav className={styles.noticiaBreadcrumb}>
-            <a className={styles.noticiaBreadcrumbLink} href="/">Início</a>
+            <a className={styles.noticiaBreadcrumbLink} href="/">
+              Início
+            </a>
             <span className={styles.noticiaBreadcrumbSep}>›</span>
-            <a className={styles.noticiaBreadcrumbLink} href="/">Notícias</a>
+            <a className={styles.noticiaBreadcrumbLink} href="/">
+              Notícias
+            </a>
             <span className={styles.noticiaBreadcrumbSep}>›</span>
             <span className={styles.noticiaBreadcrumbCurrent}>{news.category}</span>
           </nav>
@@ -81,13 +82,14 @@ export default async function NoticiaPage({ params }: Props) {
             <h1 className={styles.noticiaTitle}>{news.title}</h1>
 
             <p className={styles.noticiaExcerpt}>
-              Observatório apresenta dados inéditos sobre crescimento do setor e impactos econômicos nas comunidades locais
+              Observatório apresenta dados inéditos sobre crescimento do setor e impactos econômicos nas
+              comunidades locais
             </p>
 
             <div className={styles.noticiaMetaRow}>
               <span className={styles.noticiaMetaItem}>
                 {news.author?.name || news.author?.email ? (
-                  <> {news.author.name || news.author.email}</>
+                  <>{news.author.name || news.author.email}</>
                 ) : (
                   <>Observatório</>
                 )}
@@ -121,7 +123,9 @@ export default async function NoticiaPage({ params }: Props) {
               ))}
 
               <div className={styles.noticiaBackRow}>
-                <a className={styles.noticiaBackLink} href="/">← Voltar para Notícias</a>
+                <a className={styles.noticiaBackLink} href="/">
+                  ← Voltar para Notícias
+                </a>
               </div>
             </article>
 
@@ -156,17 +160,15 @@ export default async function NoticiaPage({ params }: Props) {
                 </div>
               </section>
 
-              <section className={styles.newsletterCard}>
-                <div className={styles.newsletterTitle}>Receba nossas notícias</div>
-                <div className={styles.newsletterText}>
-                  Inscreva-se para receber análises e estudos sobre turismo religioso.
-                </div>
-
-                <form className={styles.newsletterForm} action="#" method="post">
-                  <input className={styles.newsletterInput} placeholder="Seu e-mail" type="email" name="email" />
-                  <button className={styles.newsletterButton} type="submit">Inscrever-se</button>
-                </form>
-              </section>
+              {/* ✅ Newsletter agora FUNCIONAL (salva no banco via /api/newsletter/subscribe) */}
+              <NewsletterCardInline
+                classNameCard={styles.newsletterCard}
+                classNameTitle={styles.newsletterTitle}
+                classNameText={styles.newsletterText}
+                classNameForm={styles.newsletterForm}
+                classNameInput={styles.newsletterInput}
+                classNameButton={styles.newsletterButton}
+              />
             </aside>
           </div>
         </div>

@@ -1,33 +1,54 @@
-//lib\prisma.ts
+// /lib/prisma.ts
 import { PrismaClient } from "@prisma/client"
 import { PrismaPg } from "@prisma/adapter-pg"
 
-// 👇 tipagem segura do global (evita prisma virar any)
+/**
+ * Tipagem do global para evitar:
+ * - múltiplas instâncias do Prisma no Next.js (App Router)
+ * - erro de "PrismaClient is already running"
+ * - e evitar any implícito (ESLint/TS)
+ */
 declare global {
   // eslint-disable-next-line no-var
   var prisma: PrismaClient | undefined
 }
 
 function createPrismaClient(): PrismaClient {
-  const url = process.env.DATABASE_URL
+  const databaseUrl = process.env.DATABASE_URL
 
-  if (!url) {
-    throw new Error("DATABASE_URL is missing in environment variables.")
+  if (!databaseUrl) {
+    throw new Error(
+      "❌ DATABASE_URL não encontrada nas variáveis de ambiente."
+    )
   }
 
-  const adapter = new PrismaPg({ connectionString: url })
-
-  return new PrismaClient({
-    adapter,
-    log: process.env.NODE_ENV === "development" ? ["query", "error", "warn"] : ["error"],
+  // Adapter PG (Neon, Supabase, Postgres, etc)
+  const adapter = new PrismaPg({
+    connectionString: databaseUrl,
   })
+
+  const client = new PrismaClient({
+    adapter,
+    log:
+      process.env.NODE_ENV === "development"
+        ? ["query", "error", "warn"]
+        : ["error"],
+  })
+
+  return client
 }
 
-// 👇 singleton (essencial para Next.js + App Router)
+/**
+ * Singleton do Prisma (ESSENCIAL no Next.js 13+ App Router)
+ * Evita:
+ * - múltiplas conexões no hot reload
+ * - crash em dev
+ * - consumo excessivo de conexões no banco
+ */
 export const prisma: PrismaClient =
   global.prisma ?? createPrismaClient()
 
-// 👇 evita múltiplas instâncias no dev (hot reload)
+// Em desenvolvimento, guarda no global
 if (process.env.NODE_ENV !== "production") {
   global.prisma = prisma
 }

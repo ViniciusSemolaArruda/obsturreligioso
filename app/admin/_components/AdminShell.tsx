@@ -109,7 +109,17 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
           >
             Mensagens
           </Link>
+
+          <Link
+            className={`${styles.item} ${pathname === "/admin/newsletter" ? styles.active : ""}`}
+            href="/admin/newsletter"
+          >
+            Emails
+          </Link>
+        
         </nav>
+        
+
 
         <div className={styles.footerArea}>
           <button className={styles.logout} onClick={handleLogout}>
