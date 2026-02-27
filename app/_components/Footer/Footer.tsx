@@ -10,9 +10,7 @@ export default function Footer() {
       <div className={styles.container}>
         {/* TEXTO CENTRAL */}
         <p className={styles.centerText}>
-          O Turismo Religioso laico, é o porto seguro do segmento, onde o sagrado
-          de cada um ancora, o respeito e os direitos organicamente transcendem,
-          e as culturas se desenvolvem e se perpetuam.
+          O Turismo Religioso laico é o porto seguro do segmento, onde o sagrado de cada um ancora, o respeito e os direitos transcendem organicamente, e as culturas se desenvolvem e se perpetuam.
         </p>
 
         {/* LINHA COM 2 COLUNAS */}
