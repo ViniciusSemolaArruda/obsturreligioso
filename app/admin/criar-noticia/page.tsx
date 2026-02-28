@@ -19,6 +19,7 @@ function slugify(input: string) {
 }
 
 const CATEGORIES = [
+  "Análises Gerais",
   "Catolicismo",
   "Cristianismo",
   "Islamismo",
