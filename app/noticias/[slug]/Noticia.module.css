@@ -71,16 +71,32 @@
 .noticiaMetaItem{ font-weight:600; }
 .noticiaMetaSep{ opacity:.55; }
 
+/* ✅ IMAGEM: GRANDE NO DESKTOP + COMPLETA (SEM CORTE) */
 .noticiaCoverWrap{
   margin-top:22px;
-  position:relative;
   width:100%;
-  height:420px;
   border-radius:22px;
   overflow:hidden;
   background:#f3f4f6;
+  border:1px solid rgba(2,6,23,.08);
 }
-.noticiaCoverImg{ object-fit:cover; }
+
+@media (min-width: 981px) {
+  .noticiaCoverWrap{
+    max-width: 980px;   /* 👈 ajuste aqui: 900 / 980 / 1050 */
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/* a imagem agora controla a própria altura */
+.noticiaCoverImg{
+  width:100% !important;
+  height:auto !important;
+  display:block;
+  object-fit:contain;      /* ✅ não corta */
+  object-position:center;
+}
 
 /* grid */
 .noticiaGrid{
@@ -268,12 +284,11 @@
   .noticiaGrid{ grid-template-columns:1fr; }
   .noticiaSidebar{ position:static; }
   .noticiaTitle{ font-size:42px; }
-  .noticiaCoverWrap{ height:320px; }
   .noticiaP{ max-width:100%; }
 }
 
 @media (max-width: 520px){
   .noticiaTitle{ font-size:36px; }
   .noticiaExcerpt{ font-size:18px; }
-  .noticiaCoverWrap{ height:260px; border-radius:18px; }
+  .noticiaCoverWrap{ border-radius:18px; }
 }

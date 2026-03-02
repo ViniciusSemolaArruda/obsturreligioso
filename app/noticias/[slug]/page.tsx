@@ -67,7 +67,7 @@ export default async function NoticiaPage({ params }: Props) {
               Início
             </a>
             <span className={styles.noticiaBreadcrumbSep}>›</span>
-            <a className={styles.noticiaBreadcrumbLink} href="/">
+            <a className={styles.noticiaBreadcrumbLink} href="/noticias">
               Notícias
             </a>
             <span className={styles.noticiaBreadcrumbSep}>›</span>
@@ -100,12 +100,14 @@ export default async function NoticiaPage({ params }: Props) {
               </time>
             </div>
 
+            {/* ✅ IMAGEM GRANDE + COMPLETA + SEM CORTAR */}
             {news.imageUrl ? (
               <div className={styles.noticiaCoverWrap}>
                 <Image
                   src={news.imageUrl}
                   alt={news.title}
-                  fill
+                  width={1600}
+                  height={1000}
                   priority
                   className={styles.noticiaCoverImg}
                   sizes="(max-width: 980px) 100vw, 1200px"
@@ -123,7 +125,7 @@ export default async function NoticiaPage({ params }: Props) {
               ))}
 
               <div className={styles.noticiaBackRow}>
-                <a className={styles.noticiaBackLink} href="/">
+                <a className={styles.noticiaBackLink} href="/noticias">
                   ← Voltar para Notícias
                 </a>
               </div>
@@ -160,7 +162,6 @@ export default async function NoticiaPage({ params }: Props) {
                 </div>
               </section>
 
-              {/* ✅ Newsletter agora FUNCIONAL (salva no banco via /api/newsletter/subscribe) */}
               <NewsletterCardInline
                 classNameCard={styles.newsletterCard}
                 classNameTitle={styles.newsletterTitle}
