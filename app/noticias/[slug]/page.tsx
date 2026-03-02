@@ -67,7 +67,7 @@ export default async function NoticiaPage({ params }: Props) {
               Início
             </a>
             <span className={styles.noticiaBreadcrumbSep}>›</span>
-            <a className={styles.noticiaBreadcrumbLink} href="/noticias">
+            <a className={styles.noticiaBreadcrumbLink} href="/">
               Notícias
             </a>
             <span className={styles.noticiaBreadcrumbSep}>›</span>
@@ -125,7 +125,7 @@ export default async function NoticiaPage({ params }: Props) {
               ))}
 
               <div className={styles.noticiaBackRow}>
-                <a className={styles.noticiaBackLink} href="/noticias">
+                <a className={styles.noticiaBackLink} href="/">
                   ← Voltar para Notícias
                 </a>
               </div>
