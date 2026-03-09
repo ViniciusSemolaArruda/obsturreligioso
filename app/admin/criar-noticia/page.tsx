@@ -1,6 +1,6 @@
 "use client"
 
-import { useMemo, useState } from "react"
+import { useEffect, useMemo, useRef, useState } from "react"
 import styles from "./CriarNoticia.module.css"
 import ImageDropzone from "../_components/ImageDropzone"
 
@@ -32,6 +32,8 @@ const CATEGORIES = [
 ]
 
 export default function CriarNoticiaPage() {
+  const editorRef = useRef<HTMLDivElement | null>(null)
+
   const [title, setTitle] = useState("")
   const [slug, setSlug] = useState("")
   const [category, setCategory] = useState("")
@@ -43,12 +45,71 @@ export default function CriarNoticiaPage() {
   const [loading, setLoading] = useState(false)
   const [msg, setMsg] = useState<{ type: "ok" | "err"; text: string } | null>(null)
 
+  const [fontSize, setFontSize] = useState("3")
+  const [textColor, setTextColor] = useState("#111827")
+
   const slugPreview = useMemo(() => {
     const s = autoSlug ? slugify(title) : slugify(slug)
     return s || "noticia"
   }, [autoSlug, title, slug])
 
-  const canSubmit = title.trim().length >= 6 && category && content.trim().length >= 40 && !loading
+  const plainTextLength = useMemo(() => {
+    if (!content) return 0
+    const temp = document.createElement("div")
+    temp.innerHTML = content
+    return (temp.textContent || temp.innerText || "").trim().length
+  }, [content])
+
+  const canSubmit =
+    title.trim().length >= 6 &&
+    category &&
+    plainTextLength >= 40 &&
+    !loading
+
+  useEffect(() => {
+    if (!editorRef.current) return
+    if (editorRef.current.innerHTML !== content) {
+      editorRef.current.innerHTML = content || ""
+    }
+  }, [content])
+
+  function syncEditorContent() {
+    if (!editorRef.current) return
+    setContent(editorRef.current.innerHTML)
+  }
+
+  function focusEditor() {
+    editorRef.current?.focus()
+  }
+
+  function exec(command: string, value?: string) {
+    focusEditor()
+    document.execCommand(command, false, value)
+    syncEditorContent()
+  }
+
+  function handleFontSizeChange(value: string) {
+    setFontSize(value)
+    exec("fontSize", value)
+  }
+
+  function handleTextColorChange(value: string) {
+    setTextColor(value)
+    exec("foreColor", value)
+  }
+
+  function handleCreateLink() {
+    const url = window.prompt("Cole a URL do link:")
+    if (!url) return
+    exec("createLink", url)
+  }
+
+  function handleRemoveFormat() {
+    focusEditor()
+    document.execCommand("removeFormat", false)
+    document.execCommand("unlink", false)
+    syncEditorContent()
+  }
 
   async function uploadIfNeeded(): Promise<string> {
     if (!imageFile) return ""
@@ -69,8 +130,12 @@ export default function CriarNoticiaPage() {
 
   async function handleSubmit() {
     setMsg(null)
+
     if (!canSubmit) {
-      setMsg({ type: "err", text: "Preencha título, categoria e conteúdo (mín. 40 caracteres)." })
+      setMsg({
+        type: "err",
+        text: "Preencha título, categoria e conteúdo (mín. 40 caracteres de texto).",
+      })
       return
     }
 
@@ -87,7 +152,7 @@ export default function CriarNoticiaPage() {
           slug: autoSlug ? "" : slug.trim(),
           category,
           imageUrl: uploadedUrl,
-          content: content.trim(),
+          content: content.trim(), // HTML formatado
         }),
       })
 
@@ -117,6 +182,12 @@ export default function CriarNoticiaPage() {
     setContent("")
     setAutoSlug(true)
     setImageFile(null)
+    setFontSize("3")
+    setTextColor("#111827")
+
+    if (editorRef.current) {
+      editorRef.current.innerHTML = ""
+    }
   }
 
   return (
@@ -125,7 +196,7 @@ export default function CriarNoticiaPage() {
         <div className={styles.titles}>
           <h1 className={styles.h1}>Criar notícia</h1>
           <p className={styles.sub}>
-            Publique uma notícia com título, categoria, imagem e conteúdo.
+            Publique uma notícia com título, categoria, imagem e conteúdo formatado.
           </p>
         </div>
 
@@ -188,7 +259,7 @@ export default function CriarNoticiaPage() {
               <div className={styles.label}>
                 Imagem (opcional)
                 <ImageDropzone value={imageFile} onChange={setImageFile} maxMB={2} />
-                <div className={styles.help}>Clique ou arraste a imagem (igual ao print).</div>
+                <div className={styles.help}>Clique ou arraste a imagem.</div>
               </div>
             </div>
 
@@ -223,20 +294,186 @@ export default function CriarNoticiaPage() {
               </div>
             </div>
 
-            <label className={styles.label}>
+            <div className={styles.label}>
               Conteúdo <span className={styles.req}>*</span>
-              <textarea
-                className={styles.textarea}
-                value={content}
-                onChange={(e) => setContent(e.target.value)}
-                placeholder="Escreva a notícia completa..."
-                rows={14}
-                disabled={loading}
-              />
-              <div className={styles.help}>
-                {content.trim().length} caracteres — mínimo: 40+
+
+              <div className={styles.editorWrap}>
+                <div className={styles.toolbar}>
+                  <div className={styles.toolbarGroup}>
+                    <button
+                      type="button"
+                      className={styles.toolButton}
+                      onClick={() => exec("bold")}
+                      disabled={loading}
+                      title="Negrito"
+                    >
+                      <b>B</b>
+                    </button>
+
+                    <button
+                      type="button"
+                      className={styles.toolButton}
+                      onClick={() => exec("italic")}
+                      disabled={loading}
+                      title="Itálico"
+                    >
+                      <i>I</i>
+                    </button>
+
+                    <button
+                      type="button"
+                      className={styles.toolButton}
+                      onClick={() => exec("underline")}
+                      disabled={loading}
+                      title="Sublinhado"
+                    >
+                      <u>U</u>
+                    </button>
+                  </div>
+
+                  <div className={styles.toolbarGroup}>
+                    <label className={styles.toolbarLabel}>
+                      Fonte
+                      <select
+                        className={styles.toolbarSelect}
+                        value={fontSize}
+                        onChange={(e) => handleFontSizeChange(e.target.value)}
+                        disabled={loading}
+                      >
+                        <option value="1">Muito pequena</option>
+                        <option value="2">Pequena</option>
+                        <option value="3">Normal</option>
+                        <option value="4">Média</option>
+                        <option value="5">Grande</option>
+                        <option value="6">Muito grande</option>
+                        <option value="7">Gigante</option>
+                      </select>
+                    </label>
+
+                    <label className={styles.toolbarLabel}>
+                      Cor
+                      <input
+                        type="color"
+                        className={styles.colorInput}
+                        value={textColor}
+                        onChange={(e) => handleTextColorChange(e.target.value)}
+                        disabled={loading}
+                        title="Cor do texto"
+                      />
+                    </label>
+                  </div>
+
+                  <div className={styles.toolbarGroup}>
+                    <button
+                      type="button"
+                      className={styles.toolButton}
+                      onClick={() => exec("justifyLeft")}
+                      disabled={loading}
+                      title="Alinhar à esquerda"
+                    >
+                      ⬅
+                    </button>
+
+                    <button
+                      type="button"
+                      className={styles.toolButton}
+                      onClick={() => exec("justifyCenter")}
+                      disabled={loading}
+                      title="Centralizar"
+                    >
+                      ↔
+                    </button>
+
+                    <button
+                      type="button"
+                      className={styles.toolButton}
+                      onClick={() => exec("justifyRight")}
+                      disabled={loading}
+                      title="Alinhar à direita"
+                    >
+                      ➡
+                    </button>
+                  </div>
+
+                  <div className={styles.toolbarGroup}>
+                    <button
+                      type="button"
+                      className={styles.toolButton}
+                      onClick={() => exec("insertUnorderedList")}
+                      disabled={loading}
+                      title="Lista com marcadores"
+                    >
+                      • Lista
+                    </button>
+
+                    <button
+                      type="button"
+                      className={styles.toolButton}
+                      onClick={() => exec("insertOrderedList")}
+                      disabled={loading}
+                      title="Lista numerada"
+                    >
+                      1. Lista
+                    </button>
+                  </div>
+
+                  <div className={styles.toolbarGroup}>
+                    <button
+                      type="button"
+                      className={styles.toolButton}
+                      onClick={handleCreateLink}
+                      disabled={loading}
+                      title="Inserir link"
+                    >
+                      🔗 Link
+                    </button>
+
+                    <button
+                      type="button"
+                      className={styles.toolButton}
+                      onClick={() => exec("undo")}
+                      disabled={loading}
+                      title="Desfazer"
+                    >
+                      ↶
+                    </button>
+
+                    <button
+                      type="button"
+                      className={styles.toolButton}
+                      onClick={() => exec("redo")}
+                      disabled={loading}
+                      title="Refazer"
+                    >
+                      ↷
+                    </button>
+
+                    <button
+                      type="button"
+                      className={styles.toolButton}
+                      onClick={handleRemoveFormat}
+                      disabled={loading}
+                      title="Limpar formatação"
+                    >
+                      Limpar
+                    </button>
+                  </div>
+                </div>
+
+                <div
+                  ref={editorRef}
+                  className={styles.editor}
+                  contentEditable={!loading}
+                  suppressContentEditableWarning
+                  onInput={syncEditorContent}
+                  data-placeholder="Escreva a notícia completa..."
+                />
               </div>
-            </label>
+
+              <div className={styles.help}>
+                {plainTextLength} caracteres de texto — mínimo: 40+
+              </div>
+            </div>
 
             <div className={styles.actionsBottom}>
               <button className={styles.secondary} onClick={handleClear} disabled={loading}>
@@ -276,15 +513,17 @@ export default function CriarNoticiaPage() {
 
               <div className={styles.previewTitle}>{title.trim() || "Título da notícia"}</div>
 
-              <div className={styles.previewText}>
-                {(content.trim() || "O conteúdo aparecerá aqui...").slice(0, 220)}
-                {content.trim().length > 220 ? "…" : ""}
-              </div>
+              <div
+                className={styles.previewRichText}
+                dangerouslySetInnerHTML={{
+                  __html: content.trim() || "<p>O conteúdo aparecerá aqui...</p>",
+                }}
+              />
             </div>
           </div>
 
           <div className={styles.previewFooter}>
-            Dica: comece com um parágrafo inicial forte (lead) e use subtítulos no conteúdo.
+            Dica: comece com um parágrafo inicial forte e use subtítulos no conteúdo.
           </div>
         </aside>
       </div>

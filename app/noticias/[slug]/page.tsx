@@ -17,12 +17,50 @@ function formatBR(d: Date) {
   }).format(d)
 }
 
-function splitParagraphs(text: string) {
-  return text
-    .replace(/\r\n/g, "\n")
-    .split("\n\n")
-    .map((p) => p.trim())
-    .filter(Boolean)
+/**
+ * Normaliza o HTML vindo do editor para garantir
+ * que negrito/itálico/sublinhado apareçam corretamente.
+ */
+function normalizeRichText(html: string) {
+  if (!html) return "<p>Conteúdo não disponível.</p>"
+
+  let normalized = html
+
+  // remove espaços estranhos entre tags
+  normalized = normalized.replace(/\r\n/g, "\n").trim()
+
+  // converte spans/font com negrito inline para strong
+  normalized = normalized.replace(
+    /<(span|font)([^>]*?)style=(['"])([^'"]*font-weight\s*:\s*(bold|700|800|900)[^'"]*)\3([^>]*)>(.*?)<\/\1>/gis,
+    "<strong>$7</strong>"
+  )
+
+  // converte spans/font com italico inline para em
+  normalized = normalized.replace(
+    /<(span|font)([^>]*?)style=(['"])([^'"]*font-style\s*:\s*italic[^'"]*)\3([^>]*)>(.*?)<\/\1>/gis,
+    "<em>$6</em>"
+  )
+
+  // converte spans/font com underline inline para u
+  normalized = normalized.replace(
+    /<(span|font)([^>]*?)style=(['"])([^'"]*text-decoration\s*:\s*underline[^'"]*)\3([^>]*)>(.*?)<\/\1>/gis,
+    "<u>$6</u>"
+  )
+
+  // remove font tags restantes, mas mantém conteúdo interno
+  normalized = normalized.replace(/<font[^>]*>/gi, "")
+  normalized = normalized.replace(/<\/font>/gi, "")
+
+  // limpa spans vazios sem style relevante
+  normalized = normalized.replace(/<span[^>]*>(.*?)<\/span>/gis, "$1")
+
+  // se o editor gerar divs, mantém
+  // se vier vazio, fallback
+  if (!normalized.trim()) {
+    return "<p>Conteúdo não disponível.</p>"
+  }
+
+  return normalized
 }
 
 type RouteParams = { slug: string }
@@ -47,14 +85,20 @@ export default async function NoticiaPage({ params }: Props) {
 
   if (!news) return notFound()
 
-  const paragraphs = splitParagraphs(news.content)
-
   const latest = await prisma.news.findMany({
     where: { slug: { not: news.slug } },
     orderBy: { createdAt: "desc" },
     take: 5,
-    select: { slug: true, title: true, category: true, createdAt: true, imageUrl: true },
+    select: {
+      slug: true,
+      title: true,
+      category: true,
+      createdAt: true,
+      imageUrl: true,
+    },
   })
+
+  const normalizedContent = normalizeRichText(news.content)
 
   return (
     <>
@@ -83,7 +127,7 @@ export default async function NoticiaPage({ params }: Props) {
 
             <p className={styles.noticiaExcerpt}>
               Observatório apresenta dados inéditos sobre crescimento do setor e impactos econômicos nas
-              comunidades locais
+              comunidades locais.
             </p>
 
             <div className={styles.noticiaMetaRow}>
@@ -100,7 +144,6 @@ export default async function NoticiaPage({ params }: Props) {
               </time>
             </div>
 
-            {/* ✅ IMAGEM GRANDE + COMPLETA + SEM CORTAR */}
             {news.imageUrl ? (
               <div className={styles.noticiaCoverWrap}>
                 <Image
@@ -118,11 +161,12 @@ export default async function NoticiaPage({ params }: Props) {
 
           <div className={styles.noticiaGrid}>
             <article className={styles.noticiaArticle}>
-              {paragraphs.map((p, i) => (
-                <p key={i} className={styles.noticiaP} data-first={i === 0 ? "true" : "false"}>
-                  {p}
-                </p>
-              ))}
+              <div
+                className={styles.noticiaContent}
+                dangerouslySetInnerHTML={{
+                  __html: normalizedContent,
+                }}
+              />
 
               <div className={styles.noticiaBackRow}>
                 <a className={styles.noticiaBackLink} href="/">
@@ -142,7 +186,7 @@ export default async function NoticiaPage({ params }: Props) {
                         {n.imageUrl ? (
                           <Image
                             src={n.imageUrl}
-                            alt=""
+                            alt={n.title}
                             fill
                             className={styles.noticiaSideThumbImg}
                             sizes="84px"
