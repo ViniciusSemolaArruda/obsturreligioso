@@ -2,7 +2,7 @@
 
 import Image from "next/image"
 import Link from "next/link"
-import { useCallback, useEffect, useMemo, useRef, useState } from "react"
+import { useCallback, useEffect, useMemo, useState } from "react"
 import { usePathname, useRouter } from "next/navigation"
 import styles from "./HeaderObservatorio.module.css"
 
@@ -11,11 +11,7 @@ export default function Header() {
   const pathname = usePathname()
 
   const [open, setOpen] = useState(false)
-  const [hidden, setHidden] = useState(false)
-  const lastScrollY = useRef(0)
 
-  // ✅ agora os links SEMPRE apontam para a HOME + hash
-  // Assim, em páginas secundárias, o clique te leva para "/" e para a seção correta.
   const leftLinks = useMemo(
     () => [
       { label: "Início", href: "/#inicio" },
@@ -39,28 +35,6 @@ export default function Header() {
   const close = useCallback(() => setOpen(false), [])
   const toggleMenu = useCallback(() => setOpen((v) => !v), [])
 
-  /* 🔽🔼 ESCONDE / MOSTRA HEADER NO SCROLL (MAS NÃO SOME COM MENU ABERTO) */
-  useEffect(() => {
-    const onScroll = () => {
-      if (open) return
-
-      const currentY = window.scrollY
-
-      if (Math.abs(currentY - lastScrollY.current) < 10) return
-
-      if (currentY > lastScrollY.current && currentY > 120) {
-        setHidden(true)
-      } else {
-        setHidden(false)
-      }
-
-      lastScrollY.current = currentY
-    }
-
-    window.addEventListener("scroll", onScroll, { passive: true })
-    return () => window.removeEventListener("scroll", onScroll)
-  }, [open])
-
   /* ESC fecha menu */
   useEffect(() => {
     function onKeyDown(e: KeyboardEvent) {
@@ -82,10 +56,6 @@ export default function Header() {
     }
   }, [open])
 
-  /**
-   * ✅ scroll com offset REAL (SÓ QUANDO JÁ ESTÁ NA HOME)
-   * Mantive sua lógica e seu "gap" exatamente como estava.
-   */
   const scrollToHash = useCallback((hash: string) => {
     const id = hash.replace("#", "")
     const el = document.getElementById(id)
@@ -94,39 +64,28 @@ export default function Header() {
     const header = document.getElementById("site-header")
     const headerH = header?.getBoundingClientRect().height ?? 0
 
-    // ⚠️ mantém seu ajuste fino
     const gap = -230
 
     const y = window.scrollY + el.getBoundingClientRect().top - headerH - gap
     window.scrollTo({ top: Math.max(0, y), behavior: "smooth" })
   }, [])
 
-  /**
-   * ✅ Clique inteligente:
-   * - Se estiver na HOME: faz scroll suave com offset.
-   * - Se estiver em página secundária: navega pra "/#secao" (home + âncora).
-   */
   const onNavClick = useCallback(
     (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-      // pega apenas a parte do hash (aceita "/#x" e "#x")
       const hashIndex = href.indexOf("#")
       if (hashIndex === -1) return
 
       e.preventDefault()
 
-      const hash = href.slice(hashIndex) // "#inicio"
+      const hash = href.slice(hashIndex)
 
-      // garante header visível, fecha menu
-      setHidden(false)
       close()
 
       if (pathname !== "/") {
-        // ✅ está fora da home: vai pra home com hash
         router.push(`/${hash}`)
         return
       }
 
-      // ✅ já está na home: scroll com offset (seu comportamento atual)
       requestAnimationFrame(() => {
         requestAnimationFrame(() => {
           scrollToHash(hash)
@@ -138,9 +97,10 @@ export default function Header() {
 
   return (
     <>
-      <header id="site-header" className={`${styles.header} ${hidden ? styles.headerHidden : ""}`}>
+      <header id="site-header" className={styles.header}>
         <nav className={styles.nav}>
-          {/* Esquerda (desktop) */}
+          
+          {/* esquerda */}
           <div className={styles.side}>
             {leftLinks.map((l) => (
               <Link
@@ -154,7 +114,7 @@ export default function Header() {
             ))}
           </div>
 
-          {/* Logo */}
+          {/* logo */}
           <Link
             href="/#inicio"
             className={styles.logoWrap}
@@ -171,7 +131,7 @@ export default function Header() {
             />
           </Link>
 
-          {/* Direita (desktop) + burger (mobile) */}
+          {/* direita */}
           <div className={styles.sideRight}>
             {rightLinks.map((l) => (
               <Link
@@ -184,11 +144,14 @@ export default function Header() {
               </Link>
             ))}
 
-            <Link href="/#noticias" className={styles.cta} onClick={(e) => onNavClick(e, "/#noticias")}>
+            <Link
+              href="/#noticias"
+              className={styles.cta}
+              onClick={(e) => onNavClick(e, "/#noticias")}
+            >
               Notícias
             </Link>
 
-            {/* Burger aparece no mobile via CSS */}
             <button
               type="button"
               className={styles.burger}
@@ -204,7 +167,7 @@ export default function Header() {
         </nav>
       </header>
 
-      {/* Overlay */}
+      {/* overlay */}
       <button
         type="button"
         aria-label="Fechar menu"
@@ -212,7 +175,7 @@ export default function Header() {
         onClick={close}
       />
 
-      {/* Menu mobile */}
+      {/* menu mobile */}
       <div className={`${styles.mobileMenu} ${open ? styles.mobileMenuOpen : ""}`}>
         <div className={styles.mobileMenuInner}>
           {allLinks.map((l) => (
@@ -226,7 +189,11 @@ export default function Header() {
             </Link>
           ))}
 
-          <Link href="/#noticias" className={styles.mobileCTA} onClick={(e) => onNavClick(e, "/#noticias")}>
+          <Link
+            href="/#noticias"
+            className={styles.mobileCTA}
+            onClick={(e) => onNavClick(e, "/#noticias")}
+          >
             Notícias
           </Link>
         </div>
