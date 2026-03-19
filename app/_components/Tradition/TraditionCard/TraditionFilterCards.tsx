@@ -1,4 +1,3 @@
-// app_components/Tradition/TraditionCard/TraditionFilterCards.tsx
 "use client"
 
 import Image from "next/image"
@@ -26,19 +25,16 @@ type Item = {
 
 const ITEMS: Item[] = [
   { key: "Todos", label: "Todos", icon: "/icons/menu-aberto.png" },
-
   {
     key: "Cristianismo",
-    label: "Cristianismo",
-    icon: "/icons/cruz.png", // 🔥 representa todos os cristãos
+    label: "Católicos e Protestantes",
+    icon: "/icons/cruz.png",
   },
-
   { key: "Islamismo", label: "Islamismo", icon: "/icons/islamismo.png" },
   { key: "Judaísmo", label: "Judaísmo", icon: "/icons/judaismo.png" },
   { key: "Hinduísmo", label: "Hinduísmo", icon: "/icons/hinduismo.png" },
   { key: "Budismo", label: "Budismo", icon: "/icons/buda.png" },
   { key: "Espiritismo", label: "Espiritismo", icon: "/icons/meditacao.png" },
-
   {
     key: "Matriz Africana",
     label: "Matriz Africana",
@@ -108,7 +104,6 @@ export default function TraditionFilterCards({
 
   return (
     <div className={styles.wrap} aria-label="Filtro por tradição">
-      {/* fade esquerda */}
       <div
         className={[
           styles.fade,
@@ -121,6 +116,7 @@ export default function TraditionFilterCards({
       <div className={styles.scroller} ref={scrollerRef}>
         {cards.map(({ key, label, icon }) => {
           const active = value === key
+
           return (
             <button
               key={key}
@@ -140,13 +136,13 @@ export default function TraditionFilterCards({
                   priority={key === "Todos" || key === "Cristianismo"}
                 />
               </span>
+
               <span className={styles.label}>{label}</span>
             </button>
           )
         })}
       </div>
 
-      {/* fade direita */}
       <div
         className={[
           styles.fade,
@@ -156,7 +152,6 @@ export default function TraditionFilterCards({
         aria-hidden="true"
       />
 
-      {/* botão > */}
       <button
         type="button"
         className={styles.nextBtn}

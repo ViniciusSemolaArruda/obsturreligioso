@@ -23,8 +23,14 @@ type NewsCard = {
 function guessTradition(category: string): Tradition | "Todos" {
   const c = (category || "").toLowerCase()
 
-  if (c.includes("cat")) return "Catolicismo"
-  if (c.includes("crist")) return "Cristianismo"
+  if (
+    c.includes("cat") ||
+    c.includes("protest") ||
+    c.includes("crist")
+  ) {
+    return "Cristianismo"
+  }
+
   if (c.includes("isl")) return "Islamismo"
   if (c.includes("juda")) return "Judaísmo"
   if (c.includes("hind")) return "Hinduísmo"

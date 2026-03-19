@@ -34,8 +34,7 @@ function slugify(input: string) {
 }
 
 const CATEGORIES = [
-  "Catolicismo",
-  "Cristianismo",
+  "Católicos e Protestantes",
   "Islamismo",
   "Judaísmo",
   "Hinduísmo",
@@ -75,7 +74,6 @@ export default function EditarNoticiaPage() {
     !loading &&
     !boot
 
-  // ✅ carrega dados da notícia e preenche
   useEffect(() => {
     if (!id) return
 
@@ -97,7 +95,7 @@ export default function EditarNoticiaPage() {
         setCategory(data.news.category || "")
         setContent(data.news.content || "")
         setCurrentImageUrl(data.news.imageUrl || "")
-        setAutoSlug(false) // começa manual, mantendo o slug atual
+        setAutoSlug(false)
       } catch (e) {
         console.error(e)
         setMsg({ type: "err", text: "Falha de conexão com o servidor." })
@@ -134,7 +132,6 @@ export default function EditarNoticiaPage() {
 
     setLoading(true)
     try {
-      // ✅ se escolher nova imagem, faz upload; senão mantém a atual
       const uploadedUrl = await uploadIfNeeded()
       const finalImageUrl = uploadedUrl || currentImageUrl || ""
 
@@ -144,7 +141,7 @@ export default function EditarNoticiaPage() {
         credentials: "include",
         body: JSON.stringify({
           title: title.trim(),
-          slug: (autoSlug ? slugPreview : slug).trim(), // PATCH atualiza slug se vier preenchido
+          slug: (autoSlug ? slugPreview : slug).trim(),
           category,
           imageUrl: finalImageUrl,
           content: content.trim(),
@@ -159,7 +156,6 @@ export default function EditarNoticiaPage() {
         return
       }
 
-      // mantém estado atualizado (caso slug normalize)
       setSlug(data.news.slug)
       setCurrentImageUrl(finalImageUrl)
       setImageFile(null)
@@ -242,7 +238,6 @@ export default function EditarNoticiaPage() {
       )}
 
       <div className={styles.grid}>
-        {/* FORM */}
         <section className={styles.card} aria-label="Formulário">
           <div className={styles.cardHead}>
             <h2 className={styles.h2}>Dados da publicação</h2>
@@ -354,11 +349,9 @@ export default function EditarNoticiaPage() {
           </div>
         </section>
 
-        {/* PREVIEW */}
         <aside className={styles.preview} aria-label="Pré-visualização">
           <div className={styles.previewMedia}>
             {previewImage ? (
-              // eslint-disable-next-line @next/next/no-img-element
               <img
                 src={previewImage}
                 alt=""

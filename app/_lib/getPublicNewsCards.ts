@@ -30,13 +30,17 @@ function makeExcerpt(content: string, max = 160) {
   return clean.slice(0, max).trimEnd() + "…"
 }
 
-// Se você não tiver campo "tradition" no banco, a gente “deduz”
-// Você pode ajustar depois (ou criar coluna tradition no Prisma)
 function guessTradition(category: string) {
   const c = (category || "").toLowerCase()
 
-  if (c.includes("cat")) return "Catolicismo"
-  if (c.includes("crist")) return "Cristianismo"
+  if (
+    c.includes("cat") ||
+    c.includes("protest") ||
+    c.includes("crist")
+  ) {
+    return "Católicos e Protestantes"
+  }
+
   if (c.includes("isl")) return "Islamismo"
   if (c.includes("juda")) return "Judaísmo"
   if (c.includes("hind")) return "Hinduísmo"
@@ -72,6 +76,6 @@ export async function getPublicNewsCards(take = 8): Promise<NewsCard[]> {
     author: n.author?.name || n.author?.email || "Redação",
     tradition: guessTradition(n.category),
     href: `/noticias/${n.slug}`,
-    image: n.imageUrl || "/bu1.png", // fallback se não tiver imagem
+    image: n.imageUrl || "/bu1.png",
   }))
 }

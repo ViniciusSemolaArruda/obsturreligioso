@@ -34,17 +34,21 @@ function makeExcerpt(content: string, max = 140) {
 }
 
 // Como você não tem "tradition" no model, deduzimos por category.
-// Se depois você criar um campo "tradition" no Prisma, é só trocar aqui.
+// Católicos, protestantes e cristãos entram todos no mesmo grupo visual.
 function guessTradition(category: string) {
   const c = (category || "").toLowerCase()
-  if (c.includes("cat")) return "Catolicismo"
-  if (c.includes("crist")) return "Cristianismo"
+
+  if (c.includes("cat") || c.includes("protest") || c.includes("crist")) {
+    return "Católicos e Protestantes"
+  }
+
   if (c.includes("isl")) return "Islamismo"
   if (c.includes("juda")) return "Judaísmo"
   if (c.includes("hind")) return "Hinduísmo"
   if (c.includes("bud")) return "Budismo"
   if (c.includes("espir")) return "Espiritismo"
   if (c.includes("matriz") || c.includes("afric")) return "Matriz Africana"
+
   return "Espiritualidade"
 }
 
@@ -52,16 +56,14 @@ export async function GET(req: Request) {
   try {
     const { searchParams } = new URL(req.url)
 
-    // take: 1..10 (default 1)
     const takeRaw = Number(searchParams.get("take") ?? "1")
     const take = Math.min(10, Math.max(1, Number.isFinite(takeRaw) ? takeRaw : 1))
 
-    // opcional: tradition=Catolicismo (filtra por category via guess)
     const tradition = (searchParams.get("tradition") ?? "").trim().toLowerCase()
 
     const latest = await prisma.news.findMany({
       orderBy: { createdAt: "desc" },
-      take: tradition ? 20 : take, // se for filtrar, pega mais e filtra em memória
+      take: tradition ? 20 : take,
       select: {
         id: true,
         title: true,
@@ -92,7 +94,6 @@ export async function GET(req: Request) {
         .slice(0, take)
     }
 
-    // ✅ sem cache pra refletir notícia nova imediatamente
     return NextResponse.json(
       { ok: true, items },
       {
