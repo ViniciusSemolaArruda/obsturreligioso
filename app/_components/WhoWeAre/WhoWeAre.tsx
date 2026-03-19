@@ -81,7 +81,7 @@ export default function WhoWeAre() {
         <div className={styles.right}>
           <div className={styles.rightSticky}>
             <Image
-              src="/novaLOGO3.png"
+              src="/novaLOGO5.png"
               alt="Observatório Internacional do Turismo Religioso Laico no Brasil e na América Latina"
               width={1400}
               height={900}

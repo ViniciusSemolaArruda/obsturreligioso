@@ -49,7 +49,7 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
 
         <div className={styles.mobileBrand}>
           <Image
-            src="/novaLOGO3.png"
+            src="/novaLOGO5.png"
             alt="Logo"
             width={160}
             height={48}
@@ -74,7 +74,7 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
       <aside className={`${styles.sidebar} ${open ? styles.sidebarOpen : ""}`}>
         <div className={styles.brand}>
           <Image
-            src="/novaLOGO3.png"
+            src="/novaLOGO5.png"
             alt="Logo"
             width={190}
             height={56}

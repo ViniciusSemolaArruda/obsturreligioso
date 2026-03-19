@@ -60,7 +60,7 @@ export default function HeaderSecondary() {
           {/* Logo */}
           <Link href="/" className={styles.logoWrap} aria-label="Voltar para o início">
             <Image
-              src="/novaLOGO3.png"
+              src="/novaLOGO5.png"
               alt="Observatório Internacional do Turismo Religioso Laico no Brasil e na America Latina"
               width={320}
               height={320}

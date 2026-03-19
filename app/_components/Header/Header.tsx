@@ -122,7 +122,7 @@ export default function Header() {
             aria-label="Voltar ao início"
           >
             <Image
-              src="/novaLOGO3.png"
+              src="/novaLOGO5.png"
               alt="INSTITUTO EU ACREDITO"
               width={400}
               height={400}
