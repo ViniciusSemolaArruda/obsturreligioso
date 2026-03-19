@@ -1,4 +1,4 @@
-//app\_components\Tradition\TraditionCard\TraditionFilterCards.tsx
+// app_components/Tradition/TraditionCard/TraditionFilterCards.tsx
 "use client"
 
 import Image from "next/image"
@@ -7,7 +7,6 @@ import { ChevronRight } from "lucide-react"
 import styles from "./TraditionFilterCards.module.css"
 
 export type Tradition =
-  | "Catolicismo"
   | "Cristianismo"
   | "Islamismo"
   | "Judaísmo"
@@ -16,41 +15,43 @@ export type Tradition =
   | "Espiritismo"
   | "Matriz Africana"
   | "Povos Originários"
-  | "Quilambolas"
+  | "Quilombolas"
   | "Ciganos"
 
 type Item = {
   key: Tradition | "Todos"
   label: string
-  icon: string // caminho dentro do /public
+  icon: string
 }
 
 const ITEMS: Item[] = [
   { key: "Todos", label: "Todos", icon: "/icons/menu-aberto.png" },
-  { key: "Catolicismo", label: "Catolicismo", icon: "/icons/cruz.png" },
+
   {
     key: "Cristianismo",
     label: "Cristianismo",
-    icon: "/icons/cristianismo.png",
+    icon: "/icons/cruz.png", // 🔥 representa todos os cristãos
   },
-  { key: "Islamismo", label: "Islamismo", icon: "/icons/islamismo.png" }, // ✅ seu arquivo
+
+  { key: "Islamismo", label: "Islamismo", icon: "/icons/islamismo.png" },
   { key: "Judaísmo", label: "Judaísmo", icon: "/icons/judaismo.png" },
   { key: "Hinduísmo", label: "Hinduísmo", icon: "/icons/hinduismo.png" },
   { key: "Budismo", label: "Budismo", icon: "/icons/buda.png" },
   { key: "Espiritismo", label: "Espiritismo", icon: "/icons/meditacao.png" },
+
   {
     key: "Matriz Africana",
     label: "Matriz Africana",
     icon: "/icons/mulher-africana.png",
   },
-    {
+  {
     key: "Povos Originários",
     label: "Povos Originários",
     icon: "/icons/escudo.png",
   },
   {
-    key: "Quilambolas",
-    label: "Quilambolas",
+    key: "Quilombolas",
+    label: "Quilombolas",
     icon: "/icons/african-drum.png",
   },
   {
@@ -58,7 +59,6 @@ const ITEMS: Item[] = [
     label: "Ciganos",
     icon: "/icons/cigano.png",
   },
-  
 ]
 
 export default function TraditionFilterCards({
@@ -98,7 +98,10 @@ export default function TraditionFilterCards({
     const el = scrollerRef.current
     if (!el) return
     const amount = Math.max(260, Math.floor(el.clientWidth * 0.6))
-    el.scrollBy({ left: dir === "right" ? amount : -amount, behavior: "smooth" })
+    el.scrollBy({
+      left: dir === "right" ? amount : -amount,
+      behavior: "smooth",
+    })
   }
 
   const cards = useMemo(() => ITEMS, [])
@@ -134,7 +137,7 @@ export default function TraditionFilterCards({
                   width={24}
                   height={24}
                   className={styles.icon}
-                  priority={key === "Todos" || key === "Islamismo"}
+                  priority={key === "Todos" || key === "Cristianismo"}
                 />
               </span>
               <span className={styles.label}>{label}</span>
