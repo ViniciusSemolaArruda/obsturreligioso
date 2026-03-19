@@ -23,9 +23,9 @@ export default function Footer() {
             <div className={styles.contactBlock}>
               <a
                 className={styles.link}
-                href="mailto:contato.capadociaeventos@gmail.com"
+                href="mailto:obsinternacionaltur.religioso@gmail.com"
               >
-                contato.capadociaeventos@gmail.com
+                obsinternacionaltur.religioso@gmail.com
               </a>
 
               <a
