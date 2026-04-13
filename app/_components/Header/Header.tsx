@@ -6,13 +6,19 @@ import { useCallback, useEffect, useMemo, useState } from "react"
 import { usePathname, useRouter } from "next/navigation"
 import styles from "./HeaderObservatorio.module.css"
 
+type NavLink = {
+  label: string
+  href: string
+  isESG?: boolean
+}
+
 export default function Header() {
   const router = useRouter()
   const pathname = usePathname()
 
   const [open, setOpen] = useState(false)
 
-  const leftLinks = useMemo(
+  const leftLinks = useMemo<NavLink[]>(
     () => [
       { label: "Início", href: "/#inicio" },
       { label: "Quem Somos", href: "/#quem-somos" },
@@ -22,35 +28,40 @@ export default function Header() {
     []
   )
 
-  const rightLinks = useMemo(
+  const rightLinks = useMemo<NavLink[]>(
     () => [
+      { label: "ESG", href: "/#esg", isESG: true },
       { label: "Perguntas Frequentes", href: "/#faq" },
       { label: "Contato", href: "/#contato" },
     ],
     []
   )
 
-  const allLinks = useMemo(() => [...leftLinks, ...rightLinks], [leftLinks, rightLinks])
+  const allLinks = useMemo<NavLink[]>(
+    () => [...leftLinks, ...rightLinks],
+    [leftLinks, rightLinks]
+  )
 
   const close = useCallback(() => setOpen(false), [])
-  const toggleMenu = useCallback(() => setOpen((v) => !v), [])
+  const toggleMenu = useCallback(() => setOpen((value) => !value), [])
 
-  /* ESC fecha menu */
   useEffect(() => {
     function onKeyDown(e: KeyboardEvent) {
       if (e.key === "Escape") close()
     }
+
     document.addEventListener("keydown", onKeyDown)
     return () => document.removeEventListener("keydown", onKeyDown)
   }, [close])
 
-  /* trava scroll do body quando menu abre */
   useEffect(() => {
     if (!open) {
       document.body.style.overflow = ""
       return
     }
+
     document.body.style.overflow = "hidden"
+
     return () => {
       document.body.style.overflow = ""
     }
@@ -62,12 +73,16 @@ export default function Header() {
     if (!el) return
 
     const header = document.getElementById("site-header")
-    const headerH = header?.getBoundingClientRect().height ?? 0
-
+    const headerHeight = header?.getBoundingClientRect().height ?? 0
     const gap = -230
 
-    const y = window.scrollY + el.getBoundingClientRect().top - headerH - gap
-    window.scrollTo({ top: Math.max(0, y), behavior: "smooth" })
+    const y =
+      window.scrollY + el.getBoundingClientRect().top - headerHeight - gap
+
+    window.scrollTo({
+      top: Math.max(0, y),
+      behavior: "smooth",
+    })
   }, [])
 
   const onNavClick = useCallback(
@@ -78,7 +93,6 @@ export default function Header() {
       e.preventDefault()
 
       const hash = href.slice(hashIndex)
-
       close()
 
       if (pathname !== "/") {
@@ -99,22 +113,19 @@ export default function Header() {
     <>
       <header id="site-header" className={styles.header}>
         <nav className={styles.nav}>
-          
-          {/* esquerda */}
           <div className={styles.side}>
-            {leftLinks.map((l) => (
+            {leftLinks.map((link) => (
               <Link
-                key={l.href}
-                href={l.href}
+                key={link.href}
+                href={link.href}
                 className={styles.link}
-                onClick={(e) => onNavClick(e, l.href)}
+                onClick={(e) => onNavClick(e, link.href)}
               >
-                {l.label}
+                {link.label}
               </Link>
             ))}
           </div>
 
-          {/* logo */}
           <Link
             href="/#inicio"
             className={styles.logoWrap}
@@ -131,16 +142,16 @@ export default function Header() {
             />
           </Link>
 
-          {/* direita */}
           <div className={styles.sideRight}>
-            {rightLinks.map((l) => (
+            {rightLinks.map((link) => (
               <Link
-                key={l.href}
-                href={l.href}
-                className={styles.link}
-                onClick={(e) => onNavClick(e, l.href)}
+                key={link.href}
+                href={link.href}
+                className={link.isESG ? styles.linkESG : styles.link}
+                onClick={(e) => onNavClick(e, link.href)}
               >
-                {l.label}
+                {link.isESG && <span className={styles.leafIcon} aria-hidden="true" />}
+                {link.label}
               </Link>
             ))}
 
@@ -167,7 +178,6 @@ export default function Header() {
         </nav>
       </header>
 
-      {/* overlay */}
       <button
         type="button"
         aria-label="Fechar menu"
@@ -175,17 +185,17 @@ export default function Header() {
         onClick={close}
       />
 
-      {/* menu mobile */}
       <div className={`${styles.mobileMenu} ${open ? styles.mobileMenuOpen : ""}`}>
         <div className={styles.mobileMenuInner}>
-          {allLinks.map((l) => (
+          {allLinks.map((link) => (
             <Link
-              key={`m-${l.href}`}
-              href={l.href}
-              className={styles.mobileLink}
-              onClick={(e) => onNavClick(e, l.href)}
+              key={`m-${link.href}`}
+              href={link.href}
+              className={link.isESG ? styles.mobileLinkESG : styles.mobileLink}
+              onClick={(e) => onNavClick(e, link.href)}
             >
-              {l.label}
+              {link.isESG && <span className={styles.mobileLeafIcon} aria-hidden="true" />}
+              {link.label}
             </Link>
           ))}
 

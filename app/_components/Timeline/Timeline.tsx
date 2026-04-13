@@ -100,51 +100,119 @@ export default function Timeline() {
 
     const ctx = gsap.context(() => {
       const cards = gsap.utils.toArray<HTMLElement>(`.${styles.text}`)
+      const leftBlock = root.querySelector(`.${styles.left}`)
 
-      // ✅ estado inicial BEM perceptível
-      gsap.set(cards, {
-        opacity: reduceMotion ? 1 : 0,
-        y: reduceMotion ? 0 : 26,
-        filter: reduceMotion ? "none" : "blur(22px)",
-        willChange: "transform, opacity, filter",
-      })
+      if (reduceMotion) {
+        gsap.set(cards, {
+          opacity: 1,
+          y: 0,
+          filter: "none",
+          clearProps: "transform",
+        })
+        gsap.set(progress, { height: "100%" })
+        if (leftBlock) gsap.set(leftBlock, { opacity: 1, y: 0, filter: "none" })
+        return
+      }
 
-      // ✅ cards entram quando VOCÊ REALMENTE CHEGA neles
-      cards.forEach((el) => {
-        const tween = gsap.to(el, {
+      if (leftBlock) {
+        gsap.set(leftBlock, {
+          opacity: 0,
+          y: 20,
+          filter: "blur(8px)",
+        })
+
+        gsap.to(leftBlock, {
           opacity: 1,
           y: 0,
           filter: "blur(0px)",
           duration: 0.9,
           ease: "power3.out",
-          paused: true,
+          scrollTrigger: {
+            trigger: leftBlock,
+            start: "top 80%",
+            once: true,
+            invalidateOnRefresh: true,
+          },
+        })
+      }
+
+      cards.forEach((card) => {
+        const icon = card.querySelector(`.${styles.iconBox}`)
+        const badge = card.querySelector(`.${styles.badge}`)
+
+        gsap.set(card, {
+          opacity: 1,
+          y: 24,
+          scale: 0.985,
+          filter: "blur(18px)",
+          transformOrigin: "center center",
+          willChange: "transform, filter",
         })
 
-        ScrollTrigger.create({
-          trigger: el,
-
-          // 🔥 mais tarde (antes era 85%)
-          start: "top 60%",
-          end: "top 40%",
-
-          // ✅ ajuda em layouts responsivos
-          invalidateOnRefresh: true,
-          refreshPriority: 1,
-
-          // ✅ anima só uma vez (não “some” quando volta)
-          once: true,
-
-          onEnter: () => tween.play(),
-
-          // Se você quiser voltar ao rolar pra cima, remova once:true e use isso:
-          // onLeaveBack: () => tween.reverse(),
-
-          // DEBUG (se quiser calibrar):
-          // markers: true,
+        gsap.to(card, {
+          y: 0,
+          scale: 1,
+          filter: "blur(0px)",
+          ease: "none",
+          scrollTrigger: {
+            trigger: card,
+            start: "top 88%",
+            end: "top 45%",
+            scrub: 1,
+            invalidateOnRefresh: true,
+          },
         })
+
+        gsap.to(card, {
+          boxShadow: "0 16px 34px rgba(0, 0, 0, 0.12)",
+          ease: "none",
+          scrollTrigger: {
+            trigger: card,
+            start: "top 70%",
+            end: "top 45%",
+            scrub: 1,
+            invalidateOnRefresh: true,
+          },
+        })
+
+        if (icon) {
+          gsap.fromTo(
+            icon,
+            { scale: 0.92, rotate: -6 },
+            {
+              scale: 1,
+              rotate: 0,
+              ease: "none",
+              scrollTrigger: {
+                trigger: card,
+                start: "top 82%",
+                end: "top 52%",
+                scrub: 1,
+                invalidateOnRefresh: true,
+              },
+            }
+          )
+        }
+
+        if (badge) {
+          gsap.fromTo(
+            badge,
+            { scale: 0.88 },
+            {
+              scale: 1,
+              ease: "none",
+              scrollTrigger: {
+                trigger: card,
+                start: "top 82%",
+                end: "top 52%",
+                scrub: 1,
+                invalidateOnRefresh: true,
+              },
+            }
+          )
+        }
       })
 
-      // ✅ linha de progresso com scrub (pode ficar)
       gsap.fromTo(
         progress,
         { height: "0%" },
@@ -153,15 +221,14 @@ export default function Timeline() {
           ease: "none",
           scrollTrigger: {
             trigger: line,
-            start: "top 78%",
-            end: "bottom 35%",
-            scrub: true,
+            start: "top 82%",
+            end: "bottom 28%",
+            scrub: 1,
             invalidateOnRefresh: true,
           },
         }
       )
 
-      // força recalcular após montar
       ScrollTrigger.refresh()
     }, root)
 
@@ -172,10 +239,13 @@ export default function Timeline() {
     <section ref={rootRef} className={styles.pai} id="como-fazemos">
       <div className={styles.layout}>
         <aside className={styles.left}>
-          <h2 className={styles.title}>Como geramos impacto</h2>
-          <p className={styles.subtitle}>
-            Um caminho claro: da escuta à ação, com transparência e resultados.
-          </p>
+          <div className={styles.headingWrap}>
+            <span className={styles.kicker} aria-hidden="true" />
+            <h2 className={styles.title}>Como geramos impacto</h2>
+            <p className={styles.subtitle}>
+              Um caminho claro: da escuta à ação, com transparência e resultados.
+            </p>
+          </div>
         </aside>
 
         <div className={styles.right}>
